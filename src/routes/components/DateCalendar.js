@@ -8,6 +8,7 @@ function CustomCalendar() {
   // 예시로 사용할 스케줄 데이터
   const scheduleData = [
     { date: "2023-03-01", schedule: "Meeting with clients" },
+    { date: "2023-03-01", schedule: "hello" },
     { date: "2023-03-03", schedule: "Lunch with colleagues" },
     { date: "2023-03-05", schedule: "Dinner with family" },
   ];
@@ -21,6 +22,7 @@ function CustomCalendar() {
 
   return (
     <div className="react-calendar">
+      이번달 SELS 일정
       <Calendar
         locale="en-US"
         onChange={setDate}
