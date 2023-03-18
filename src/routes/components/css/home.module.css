@@ -35,7 +35,7 @@
 
 .grid > div {
   text-align: center;
-  font-size: 30px;
+  /* font-size: 30px; */
 }
 
 .section {
@@ -193,8 +193,4 @@
 
 .photos {
   flex: 1;
-}
-
-.react-datepicker-popper {
-  z-index: 3;
 }
