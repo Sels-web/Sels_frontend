@@ -23,7 +23,7 @@ function Menu() {
       <StyledLink to="1" spy={true} smooth={true}>
         <span className={style.top_menu} style={{ paddingLeft: "150px" }}>
           <Button variant="text" sx={styles}>
-            <div style={{ fontSize: "14px" }}>Section1</div>
+            <div style={{ fontSize: "14px" }}>이번달 SELS 일정</div>
           </Button>
         </span>
       </StyledLink>
