@@ -4,6 +4,16 @@ import "./css/Calendar.css";
 import AddScheduleModal from "./elements/ScheduleModal";
 import Modal from "react-modal";
 
+import Zoom from "@mui/material/Zoom";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Zoom timeout={1000} ref={ref} {...props} />;
+});
+
 function CustomCalendar() {
   const [selectedDate, setSelectedDate] = useState(new Date());
 
@@ -15,30 +25,17 @@ function CustomCalendar() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [schedule, setSchedule] = useState({ title: "", description: "" });
 
-  const events = [
-    {
-      date: "2023-03-18",
-      title: "Event 1",
-      content: "This is event 1",
-    },
-    {
-      date: "2023-03-18",
-      title: "Event 2",
-      content: "This is event 2",
-    },
-    {
-      date: "2023-03-20",
-      title: "Event 3",
-      content: "This is event 3",
-    },
-  ];
+  const [events, setEvents] = useState([]);
 
   const onClickDay = (value) => {
     const selectedDate = value.toISOString().slice(0, 10);
     const event = events.find((event) => event.date === selectedDate);
+    console.log(event);
     if (event) {
       setSelectedEvent(event);
       setShowEvent(true);
+    } else {
+      setShowEvent(false);
     }
   };
 
@@ -75,6 +72,7 @@ function CustomCalendar() {
       ...prevSchedule,
       title: e.target.value,
     }));
+    console.log(schedule);
   };
 
   const handleDescriptionChange = (e) => {
@@ -82,27 +80,29 @@ function CustomCalendar() {
       ...prevSchedule,
       description: e.target.value,
     }));
+    console.log(schedule);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const newSchedule = {
-      date: selectedDate,
-      title: schedule.title,
-      description: schedule.description,
-    };
-    setSchedule((prevSchedules) => [...prevSchedules, newSchedule]);
+    setEvents((prevEvent) => [
+      ...prevEvent,
+      {
+        date: selectedDate.toISOString().slice(0, 10),
+        title: schedule.title,
+        content: schedule.description,
+      },
+    ]);
 
     setModalIsOpen(false);
   };
 
   return (
-    <div style={{ border: "2px solid red" }} className="react-calendar">
-      <div style={{ border: "1px solid red" }}>이번달 SELS 일정</div>
+    <div className="react-calendar">
+      <div>이번달 SELS 일정</div>
       <div
         style={{
-          border: "2px solid red",
           display: "flex",
           flexDirection: "row",
         }}
@@ -115,7 +115,7 @@ function CustomCalendar() {
           next2Label={null}
           prev2Label={null}
         />
-        <div style={{ border: "2px solid red" }}>
+        <div>
           {" "}
           <button onClick={openModal}>스케줄 추가</button>
           <Modal isOpen={modalIsOpen} onRequestClose={closeModal}>
@@ -141,7 +141,6 @@ function CustomCalendar() {
               <button type="submit">추가</button>
               <button onClick={closeModal}>닫기</button>
             </form>
-            <button onClick={closeModal}>닫기</button>
           </Modal>
         </div>
       </div>
