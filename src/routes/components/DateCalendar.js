@@ -1,9 +1,18 @@
 import React, { useState } from "react";
 import Calendar from "react-calendar";
 import "./css/Calendar.css";
+import AddScheduleModal from "./elements/ScheduleModal";
+import Modal from "react-modal";
 
 function CustomCalendar() {
-  const [date, setDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
+
+  //이미 있는 스케줄을 보여주는 모달
+  const [showEvent, setShowEvent] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState({});
+
+  //스케줄 추가 기능 구현을 위한 모달
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const events = [
     {
@@ -22,9 +31,6 @@ function CustomCalendar() {
       content: "This is event 3",
     },
   ];
-
-  const [showEvent, setShowEvent] = useState(false);
-  const [selectedEvent, setSelectedEvent] = useState({});
 
   const onClickDay = (value) => {
     const selectedDate = value.toISOString().slice(0, 10);
@@ -55,14 +61,42 @@ function CustomCalendar() {
     </div>
   );
 
+  const openModal = () => {
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
+
   return (
-    <div className="react-calendar">
-      이번달 SELS 일정
-      <Calendar
-        value={date}
-        onClickDay={onClickDay}
-        tileContent={tileContent}
-      />
+    <div style={{ border: "2px solid red" }} className="react-calendar">
+      <div style={{ border: "1px solid red" }}>이번달 SELS 일정</div>
+      <div
+        style={{
+          border: "2px solid red",
+          display: "flex",
+          flexDirection: "row",
+        }}
+      >
+        <Calendar
+          value={selectedDate}
+          onClickDay={onClickDay}
+          tileContent={tileContent}
+          onChange={setSelectedDate}
+          next2Label={null}
+          prev2Label={null}
+        />
+        <div style={{ border: "2px solid red" }}>
+          {" "}
+          <button onClick={openModal}>스케줄 추가</button>
+          <Modal isOpen={modalIsOpen} onRequestClose={closeModal}>
+            <h2>스케줄 추가</h2>
+            {/* 스케줄 추가 폼 */}
+            <button onClick={closeModal}>닫기</button>
+          </Modal>
+        </div>
+      </div>
       {showEvent && eventModal}
     </div>
   );

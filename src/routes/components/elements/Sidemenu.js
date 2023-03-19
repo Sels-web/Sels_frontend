@@ -20,7 +20,7 @@ function Sidemenu() {
       <StyledLink to="1" spy={true} smooth={true}>
         <span>
           <Button variant="text" sx={styles}>
-            Section1
+            이번달 SELS 일정
           </Button>
         </span>
       </StyledLink>

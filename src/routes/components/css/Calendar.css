@@ -1,6 +1,7 @@
 .react-calendar {
-  /* width: 350px; */
+  /* width: 80%; */
   /* height: 500px; */
+  /* flex: 2; */
   max-width: 100%;
   background: white;
   /* border: 1px solid #a0a096; */
@@ -40,6 +41,22 @@
   margin-bottom: 1em;
   margin-top: 2em;
 }
+/* 달력에 오늘 표시 */
+/* .react-calendar__tile--now {
+  background: black;
+  color: black;
+}
+.react-calendar__tile--now:enabled:hover,
+.react-calendar__tile--now:enabled:focus {
+  color: black;
+} */
+
+.react-calendar__navigation__label > span {
+  font-size: 14px;
+  font-weight: bold;
+  color: black;
+}
+
 .react-calendar__navigation button {
   min-width: 44px;
   background: none;
@@ -125,7 +142,8 @@
   width: 6px;
   height: 6px;
   margin: 0 auto;
-  background-color: #007acc;
+  background-color: skyblue;
   border-radius: 50%;
   margin-top: 1px;
+  /* border: 1px solid red; */
 }
