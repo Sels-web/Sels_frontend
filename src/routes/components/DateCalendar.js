@@ -13,6 +13,7 @@ function CustomCalendar() {
 
   //스케줄 추가 기능 구현을 위한 모달
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [schedule, setSchedule] = useState({ title: "", description: "" });
 
   const events = [
     {
@@ -69,6 +70,33 @@ function CustomCalendar() {
     setModalIsOpen(false);
   };
 
+  const handleTitleChange = (e) => {
+    setSchedule((prevSchedule) => ({
+      ...prevSchedule,
+      title: e.target.value,
+    }));
+  };
+
+  const handleDescriptionChange = (e) => {
+    setSchedule((prevSchedule) => ({
+      ...prevSchedule,
+      description: e.target.value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const newSchedule = {
+      date: selectedDate,
+      title: schedule.title,
+      description: schedule.description,
+    };
+    setSchedule((prevSchedules) => [...prevSchedules, newSchedule]);
+
+    setModalIsOpen(false);
+  };
+
   return (
     <div style={{ border: "2px solid red" }} className="react-calendar">
       <div style={{ border: "1px solid red" }}>이번달 SELS 일정</div>
@@ -92,7 +120,27 @@ function CustomCalendar() {
           <button onClick={openModal}>스케줄 추가</button>
           <Modal isOpen={modalIsOpen} onRequestClose={closeModal}>
             <h2>스케줄 추가</h2>
-            {/* 스케줄 추가 폼 */}
+            <form onSubmit={handleSubmit}>
+              <div>
+                <label htmlFor="title">제목</label>
+                <input
+                  type="text"
+                  id="title"
+                  value={schedule.title}
+                  onChange={handleTitleChange}
+                />
+              </div>
+              <div>
+                <label htmlFor="description">내용</label>
+                <textarea
+                  id="description"
+                  value={schedule.description}
+                  onChange={handleDescriptionChange}
+                />
+              </div>
+              <button type="submit">추가</button>
+              <button onClick={closeModal}>닫기</button>
+            </form>
             <button onClick={closeModal}>닫기</button>
           </Modal>
         </div>
