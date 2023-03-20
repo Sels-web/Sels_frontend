@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
-import timeGridPlugin from "@fullcalendar/timegrid";
-import bootstrapPlugin from "@fullcalendar/bootstrap";
+// import timeGridPlugin from "@fullcalendar/timegrid";
+// import bootstrapPlugin from "@fullcalendar/bootstrap";
 import interactionPlugin from "@fullcalendar/interaction";
 import {
   Dialog,
@@ -12,7 +12,7 @@ import {
   TextField,
   Button,
 } from "@mui/material";
-// import { GithubPicker } from "react-color";
+import { GithubPicker } from "react-color";
 import "./css/Calendar.css";
 
 function getRandomColor() {
@@ -34,6 +34,7 @@ function getRandomColor() {
     "#bed3f3",
     "#d4c4fb",
   ];
+  console.log(colors[Math.floor(Math.random() * colors.length)]);
   return colors[Math.floor(Math.random() * colors.length)];
 }
 
@@ -41,17 +42,36 @@ function App() {
   const [events, setEvents] = useState([]);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [newEvent, setNewEvent] = useState({});
-  const [profilecolor, setProfilecolor] = useState("#fff");
+  const [selectedColor, setSelectedColor] = useState("#000000");
 
-  const handleDateSelect = (arg) => {
-    console.log(arg);
+  const handleDialogOpen = (arg) => {
     setNewEvent({
       title: "",
       start: arg.startStr,
       end: arg.endStr,
+      // color: selectedColor,
       color: getRandomColor(),
     });
     setDialogOpen(true);
+    console.log(newEvent);
+  };
+
+  const handleColorChange = (color) => {
+    console.log(color);
+    setSelectedColor(color.hex);
+    setNewEvent((prevEvent) => ({
+      ...prevEvent,
+      [color]: color.hex,
+    }));
+    console.log(newEvent);
+  };
+
+  function handleEventRender(info) {
+    info.el.style.backgroundColor = selectedColor;
+  }
+
+  const handleEventClick = (arg) => {
+    alert(`Event ${arg.event.title} was clicked`);
   };
 
   const handleDialogClose = () => {
@@ -60,15 +80,13 @@ function App() {
   };
 
   const handleInputChange = (event) => {
+    console.log(event.target);
     const { name, value } = event.target;
     setNewEvent((prevEvent) => ({
       ...prevEvent,
       [name]: value,
     }));
-  };
-
-  const handleEventRender = (info) => {
-    info.el.style.backgroundColor = info.event.extendedProps.color;
+    console.log(newEvent);
   };
 
   const handleFormSubmit = (event) => {
@@ -77,25 +95,16 @@ function App() {
     handleDialogClose();
   };
 
-  const handleChangeComplete = (color, event) => {
-    setProfilecolor(color.hex);
-  };
-
   return (
     <div className="react-calendar">
       <div>이번달 SELS 일정</div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-        }}
-      ></div>
       <FullCalendar
         plugins={[dayGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
         selectable={true}
-        select={handleDateSelect}
+        select={handleDialogOpen}
         events={events}
+        eventClick={handleEventClick}
         eventRender={handleEventRender}
       />
       <Dialog open={dialogOpen} onClose={handleDialogClose}>
@@ -130,10 +139,11 @@ function App() {
               value={newEvent.end}
               onChange={handleInputChange}
             />
-            {/* <GithubPicker
+            <GithubPicker
               triangle="hide"
-              onChangeComplete={handleChangeComplete}
-            /> */}
+              color={selectedColor}
+              onChange={handleColorChange}
+            />
           </DialogContent>
           <DialogActions>
             <Button onClick={handleDialogClose}>취소</Button>
