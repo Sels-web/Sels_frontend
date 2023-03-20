@@ -71,7 +71,7 @@ function App() {
   }
 
   const handleEventClick = (arg) => {
-    alert(`Event ${arg.event.title} was clicked`);
+    alert(`${arg.event.title}${arg.event.start}~${arg.event.end}`);
   };
 
   const handleDialogClose = () => {
