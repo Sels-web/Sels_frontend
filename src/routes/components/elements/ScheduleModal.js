@@ -1,49 +1,68 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
 import Modal from "react-modal";
 
-function AddScheduleModal({ isOpen, onRequestClose, onAddSchedule }) {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+Modal.setAppElement("#root");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+function ScheduleModal({
+  isOpen,
+  onClose,
+  onAddSchedule,
+  onUpdateSchedule,
+  onDeleteSchedule,
+  date,
+}) {
+  const [schedule, setSchedule] = useState({ title: "", description: "" });
+  const [action, setAction] = useState("add");
 
-    // 제목과 내용을 입력받아 새로운 스케줄을 생성
-    const newSchedule = {
-      title,
-      description,
-    };
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (action === "add") {
+      onAddSchedule({ date, ...schedule });
+    } else if (action === "update") {
+      onUpdateSchedule({ date, ...schedule });
+    }
+    onClose();
+  };
 
-    // 생성된 스케줄을 부모 컴포넌트로 전달하여 추가
-    onAddSchedule(newSchedule);
-
-    // 모달창 닫기
-    onRequestClose();
+  const handleDelete = () => {
+    onDeleteSchedule(date);
+    onClose();
   };
 
   return (
-    <Modal isOpen={isOpen} onRequestClose={onRequestClose}>
-      <h2>Add Schedule</h2>
+    <Modal isOpen={isOpen} onRequestClose={onClose}>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label>Title:</label>
+        <h2>{action === "add" ? "Add Schedule" : "Edit Schedule"}</h2>
+        <label>
+          Title
           <input
             type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            value={schedule.title}
+            onChange={(event) =>
+              setSchedule({ ...schedule, title: event.target.value })
+            }
           />
-        </div>
-        <div>
-          <label>Description:</label>
+        </label>
+        <label>
+          Description
           <textarea
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            value={schedule.description}
+            onChange={(event) =>
+              setSchedule({ ...schedule, description: event.target.value })
+            }
           />
-        </div>
-        <button type="submit">Add</button>
+        </label>
+        <button type="submit">{action === "add" ? "Add" : "Save"}</button>
+        {action === "update" && (
+          <button type="button" onClick={handleDelete}>
+            Delete
+          </button>
+        )}
       </form>
     </Modal>
   );
 }
 
-export default AddScheduleModal;
+export default ScheduleModal;

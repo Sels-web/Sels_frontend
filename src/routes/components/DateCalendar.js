@@ -12,14 +12,18 @@ import {
   TextField,
   Button,
 } from "@mui/material";
+// import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+// import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
+// import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { GithubPicker } from "react-color";
 import "./css/Calendar.css";
 
-function App() {
+function Calender() {
   const [events, setEvents] = useState([]);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [newEvent, setNewEvent] = useState({});
   const [selectedColor, setSelectedColor] = useState("#000000");
+  const [selectedEvent, setSelectedEvent] = useState(null);
 
   const handleDialogOpen = (arg) => {
     // console.log(arg);
@@ -29,8 +33,13 @@ function App() {
       end: arg.endStr,
       color: "",
     });
+    // console.log(newEvent.start);
     setDialogOpen(true);
-    console.log(newEvent);
+  };
+
+  const handleDialogClose = () => {
+    setNewEvent({});
+    setDialogOpen(false);
   };
 
   const handleColorChange = (color) => {
@@ -40,27 +49,28 @@ function App() {
       ...prevEvent,
       color: color.hex,
     }));
-    console.log(newEvent);
   };
 
   const handleEventClick = (arg) => {
-    alert(`${arg.event.title}${arg.event.start}~${arg.event.end}`);
+    // alert(
+    //   `${
+    //     arg.event.title
+    //   } ${arg.event.start.toLocaleString()}~${arg.event.end.toLocaleString()}`
+    // );
+    setSelectedEvent(arg.event);
   };
 
-  const handleDialogClose = () => {
-    setNewEvent({});
-    setDialogOpen(false);
+  const handleCloseEvent = () => {
+    setSelectedEvent(null);
   };
 
   const handleInputChange = (event) => {
     // console.log(event.target);
     const { name, value } = event.target;
-    console.log(name, value);
     setNewEvent((prevEvent) => ({
       ...prevEvent,
       [name]: value,
     }));
-    console.log(newEvent);
   };
 
   const handleFormSubmit = (event) => {
@@ -101,8 +111,11 @@ function App() {
               type="datetime-local"
               fullWidth
               name="start"
-              value={newEvent.start}
+              defaultvalue={newEvent.start}
               onChange={handleInputChange}
+              InputLabelProps={{
+                shrink: true,
+              }}
             />
             <TextField
               margin="dense"
@@ -110,9 +123,15 @@ function App() {
               type="datetime-local"
               fullWidth
               name="end"
-              value={newEvent.end}
+              defaultvalue={newEvent.end}
               onChange={handleInputChange}
+              InputLabelProps={{
+                shrink: true,
+              }}
             />
+            {/* <DemoItem label={'"day", "hours"'}>
+              <DateTimePicker views={["day", "hours"]} />
+            </DemoItem> */}
             <GithubPicker triangle="hide" onChange={handleColorChange} />
           </DialogContent>
           <DialogActions>
@@ -123,8 +142,16 @@ function App() {
           </DialogActions>
         </form>
       </Dialog>
+      {selectedEvent && (
+        <div className="event-modal">
+          <h2>{selectedEvent.title}</h2>
+          <p>{selectedEvent.start.toLocaleString()}</p>
+          <p>{selectedEvent.end.toLocaleString()}</p>
+          <button onClick={handleCloseEvent}>Close</button>
+        </div>
+      )}
     </div>
   );
 }
 
-export default App;
+export default Calender;

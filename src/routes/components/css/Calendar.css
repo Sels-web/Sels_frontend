@@ -1,10 +1,10 @@
 .fc-day-sun a {
-  color: red;
+  color: #f7670b;
 }
 
 /* 토요일 날짜: 파란색 */
 .fc-day-sat a {
-  color: blue;
+  color: #50bcdf;
 }
 
 :root {
@@ -14,12 +14,12 @@
   --fc-neutral-text-color: grey;
   --fc-border-color: #ddd;
   --fc-button-text-color: #fff;
-  --fc-button-bg-color: #2c3e50;
-  --fc-button-border-color: #2c3e50;
-  --fc-button-hover-bg-color: #1e2b37;
-  --fc-button-hover-border-color: #1a252f;
-  --fc-button-active-bg-color: #1a252f;
-  --fc-button-active-border-color: #151e27;
+  --fc-button-bg-color: rgb(245, 195, 66);
+  --fc-button-border-color: rgb(245, 195, 66);
+  --fc-button-hover-bg-color: rgb(245, 165, 66);
+  --fc-button-hover-border-color: rgb(245, 165, 66);
+  --fc-button-active-bg-color: rgb(245, 165, 66);
+  --fc-button-active-border-color: rgb(245, 165, 66);
   --fc-event-bg-color: #3788d8;
   --fc-event-border-color: #3788d8;
   --fc-event-text-color: #fff;
