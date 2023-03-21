@@ -15,29 +15,6 @@ import {
 import { GithubPicker } from "react-color";
 import "./css/Calendar.css";
 
-function getRandomColor() {
-  const colors = [
-    "#b80000",
-    "#db3e00",
-    "#fccb00",
-    "#008b02",
-    "#006b76",
-    "#1273de",
-    "#004dcf",
-    "#5300eb",
-    "#eb9694",
-    "#fad0c3",
-    "#fef3bd",
-    "#c1e1c5",
-    "#bedadc",
-    "#c4def6",
-    "#bed3f3",
-    "#d4c4fb",
-  ];
-  console.log(colors[Math.floor(Math.random() * colors.length)]);
-  return colors[Math.floor(Math.random() * colors.length)];
-}
-
 function App() {
   const [events, setEvents] = useState([]);
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -45,30 +22,26 @@ function App() {
   const [selectedColor, setSelectedColor] = useState("#000000");
 
   const handleDialogOpen = (arg) => {
+    // console.log(arg);
     setNewEvent({
       title: "",
       start: arg.startStr,
       end: arg.endStr,
-      // color: selectedColor,
-      color: getRandomColor(),
+      color: "",
     });
     setDialogOpen(true);
     console.log(newEvent);
   };
 
   const handleColorChange = (color) => {
-    console.log(color);
-    setSelectedColor(color.hex);
+    // console.log(color);
+    // setSelectedColor(color.hex);
     setNewEvent((prevEvent) => ({
       ...prevEvent,
-      [color]: color.hex,
+      color: color.hex,
     }));
     console.log(newEvent);
   };
-
-  function handleEventRender(info) {
-    info.el.style.backgroundColor = selectedColor;
-  }
 
   const handleEventClick = (arg) => {
     alert(`${arg.event.title}${arg.event.start}~${arg.event.end}`);
@@ -80,8 +53,9 @@ function App() {
   };
 
   const handleInputChange = (event) => {
-    console.log(event.target);
+    // console.log(event.target);
     const { name, value } = event.target;
+    console.log(name, value);
     setNewEvent((prevEvent) => ({
       ...prevEvent,
       [name]: value,
@@ -105,7 +79,7 @@ function App() {
         select={handleDialogOpen}
         events={events}
         eventClick={handleEventClick}
-        eventRender={handleEventRender}
+        // eventRender={handleEventRender}
       />
       <Dialog open={dialogOpen} onClose={handleDialogClose}>
         <DialogTitle>일정 추가</DialogTitle>
@@ -139,11 +113,7 @@ function App() {
               value={newEvent.end}
               onChange={handleInputChange}
             />
-            <GithubPicker
-              triangle="hide"
-              color={selectedColor}
-              onChange={handleColorChange}
-            />
+            <GithubPicker triangle="hide" onChange={handleColorChange} />
           </DialogContent>
           <DialogActions>
             <Button onClick={handleDialogClose}>취소</Button>
