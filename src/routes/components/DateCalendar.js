@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
-// import timeGridPlugin from "@fullcalendar/timegrid";
-// import bootstrapPlugin from "@fullcalendar/bootstrap";
 import interactionPlugin from "@fullcalendar/interaction";
 import {
   Dialog,
@@ -12,28 +10,28 @@ import {
   TextField,
   Button,
 } from "@mui/material";
-// import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
-// import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
-// import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+
 import { GithubPicker } from "react-color";
 import "./css/Calendar.css";
+import Attendence from "./Attendence";
+import { v4 as uuidv4 } from "uuid";
 
 function Calender() {
   const [events, setEvents] = useState([]);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [newEvent, setNewEvent] = useState({});
-  const [selectedColor, setSelectedColor] = useState("#000000");
   const [selectedEvent, setSelectedEvent] = useState(null);
 
   const handleDialogOpen = (arg) => {
-    // console.log(arg);
+    console.log(arg);
     setNewEvent({
+      id: uuidv4(),
       title: "",
       start: arg.startStr,
       end: arg.endStr,
       color: "",
     });
-    // console.log(newEvent.start);
+
     setDialogOpen(true);
   };
 
@@ -52,11 +50,7 @@ function Calender() {
   };
 
   const handleEventClick = (arg) => {
-    // alert(
-    //   `${
-    //     arg.event.title
-    //   } ${arg.event.start.toLocaleString()}~${arg.event.end.toLocaleString()}`
-    // );
+    scrollToDown();
     setSelectedEvent(arg.event);
   };
 
@@ -76,7 +70,15 @@ function Calender() {
   const handleFormSubmit = (event) => {
     event.preventDefault();
     setEvents((prevEvents) => [...prevEvents, newEvent]);
+    console.log(events);
     handleDialogClose();
+  };
+
+  const scrollToDown = () => {
+    window.scroll({
+      top: 900,
+      behavior: "smooth",
+    });
   };
 
   return (
@@ -89,7 +91,6 @@ function Calender() {
         select={handleDialogOpen}
         events={events}
         eventClick={handleEventClick}
-        // eventRender={handleEventRender}
       />
       <Dialog open={dialogOpen} onClose={handleDialogClose}>
         <DialogTitle>일정 추가</DialogTitle>
@@ -129,9 +130,6 @@ function Calender() {
                 shrink: true,
               }}
             />
-            {/* <DemoItem label={'"day", "hours"'}>
-              <DateTimePicker views={["day", "hours"]} />
-            </DemoItem> */}
             <GithubPicker triangle="hide" onChange={handleColorChange} />
           </DialogContent>
           <DialogActions>
@@ -147,6 +145,7 @@ function Calender() {
           <h2>{selectedEvent.title}</h2>
           <p>{selectedEvent.start.toLocaleString()}</p>
           <p>{selectedEvent.end.toLocaleString()}</p>
+          <Attendence eventId={selectedEvent.id}></Attendence>
           <button onClick={handleCloseEvent}>Close</button>
         </div>
       )}

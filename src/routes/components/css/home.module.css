@@ -195,3 +195,25 @@
 .photos {
   flex: 1;
 }
+
+.MainList {
+  height: 60vh;
+  width: 70%;
+  min-width: 800px;
+  max-width: 1100px;
+  margin: 0 auto;
+
+  overflow-y: auto;
+
+  text-align: center;
+}
+.Header_list,
+.Main_List {
+  margin-bottom: 5px;
+  border-bottom: 1px solid #efefef;
+  font-size: 12px;
+
+  width: 110px;
+  flex-shrink: 0;
+  text-align: center;
+}

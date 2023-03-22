@@ -5,7 +5,6 @@ function Section({ cnt }) {
   return (
     <div style={{ border: "1px solid red" }} className={styles.section}>
       Section{cnt}
-      {/* <Calendar /> */}
     </div>
   );
 }
