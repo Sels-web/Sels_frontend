@@ -46,6 +46,7 @@ function Attendence({ selectedEvent }) {
 
     console.log(newUser);
     setUsers((prevUsers) => [...prevUsers, newUser]);
+    console.log(Users);
     handleDialogClose();
   };
 

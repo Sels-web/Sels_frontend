@@ -42,7 +42,7 @@
 .section {
   padding-top: 150px;
   margin: 5px;
-  /* height: 1200px; */
+  height: 1200px;
   z-index: 1;
   /* border: 10px solid red; */
 }

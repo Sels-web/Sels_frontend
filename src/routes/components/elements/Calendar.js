@@ -24,6 +24,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 function Calender() {
   const [events, setEvents] = useState([]);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [attendOpen, setAttendOpen] = useState(false);
   const [newEvent, setNewEvent] = useState({});
   const [selectedEvent, setSelectedEvent] = useState(null);
 
@@ -55,8 +56,17 @@ function Calender() {
   };
 
   const handleEventClick = (arg) => {
-    scrollToDown();
+    // scrollToDown();
+    handleAttendOpen();
     setSelectedEvent(arg.event);
+  };
+
+  const handleAttendOpen = () => {
+    setAttendOpen(true);
+  };
+
+  const handleAttendClose = () => {
+    setAttendOpen(false);
   };
 
   const handleInputChange = (event) => {
@@ -75,12 +85,12 @@ function Calender() {
     handleDialogClose();
   };
 
-  const scrollToDown = () => {
-    window.scroll({
-      top: 900,
-      behavior: "smooth",
-    });
-  };
+  //   const scrollToDown = () => {
+  //     window.scroll({
+  //       top: 900,
+  //       behavior: "smooth",
+  //     });
+  //   };
 
   return (
     <div className="react-calendar">
@@ -145,7 +155,16 @@ function Calender() {
           </DialogActions>
         </form>
       </Dialog>
-      {selectedEvent && <Attendence selectedEvent={selectedEvent}></Attendence>}
+      <Dialog
+        open={attendOpen}
+        onClose={handleAttendClose}
+        TransitionComponent={Transition}
+        fullScreen="true"
+      >
+        {selectedEvent && (
+          <Attendence selectedEvent={selectedEvent}></Attendence>
+        )}
+      </Dialog>
     </div>
   );
 }

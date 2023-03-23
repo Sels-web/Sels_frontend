@@ -15,7 +15,7 @@ function Menu() {
 
   const styles = {
     "&.MuiButton-text": {
-      color: "black",
+      color: "#D2691E",
       fontWeight: "bold",
     },
   };
