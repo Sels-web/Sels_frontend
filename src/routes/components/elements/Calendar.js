@@ -9,12 +9,17 @@ import {
   DialogActions,
   TextField,
   Button,
+  Zoom,
 } from "@mui/material";
 
 import { GithubPicker } from "react-color";
 import "../css/Calendar.css";
 import Attendence from "./Attendence";
 import { v4 as uuidv4 } from "uuid";
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Zoom timeout={2000} ref={ref} {...props} />;
+});
 
 function Calender() {
   const [events, setEvents] = useState([]);
@@ -88,7 +93,11 @@ function Calender() {
         events={events}
         eventClick={handleEventClick}
       />
-      <Dialog open={dialogOpen} onClose={handleDialogClose}>
+      <Dialog
+        open={dialogOpen}
+        onClose={handleDialogClose}
+        TransitionComponent={Transition}
+      >
         <DialogTitle>일정 추가</DialogTitle>
         <form onSubmit={handleFormSubmit}>
           <DialogContent>

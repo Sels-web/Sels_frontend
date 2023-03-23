@@ -18,8 +18,9 @@ function Attendence({ selectedEvent }) {
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const handleDialogOpen = () => {
+    console.log(selectedEvent);
     setNewUser({
-      eventKey: selectedEvent.eventId,
+      eventKey: selectedEvent.id,
       Username: "", //이름
       key: "", //인덱스
     });
@@ -52,7 +53,7 @@ function Attendence({ selectedEvent }) {
     Users.length > 0 &&
     Users.map(
       (user) =>
-        selectedEvent.eventId === user.eventKey && (
+        selectedEvent.id === user.eventKey && (
           <tr key={user.length}>
             <td>{user.key}</td>
             <td>{user.Username}</td>
@@ -128,7 +129,12 @@ function Attendence({ selectedEvent }) {
         </span>
       </div>
       <div className="MainList" style={{ border: "1px solid red" }}>
-        <Button variant="text" sx={styled} onClick={handleDialogOpen}>
+        <Button
+          style={{ position: "relative", left: "350px" }}
+          variant="text"
+          sx={styled}
+          onClick={handleDialogOpen}
+        >
           참석 인원 추가
         </Button>
         <Dialog open={dialogOpen} onClose={handleDialogClose}>
