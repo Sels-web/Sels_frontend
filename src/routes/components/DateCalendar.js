@@ -15,6 +15,7 @@ import { GithubPicker } from "react-color";
 import "./css/Calendar.css";
 import Attendence from "./Attendence";
 import { v4 as uuidv4 } from "uuid";
+import AttendOk from "./AttendOk";
 
 function Calender() {
   const [events, setEvents] = useState([]);
@@ -141,12 +142,27 @@ function Calender() {
         </form>
       </Dialog>
       {selectedEvent && (
-        <div className="event-modal">
-          <h2>{selectedEvent.title}</h2>
-          <p>{selectedEvent.start.toLocaleString()}</p>
-          <p>{selectedEvent.end.toLocaleString()}</p>
+        <div
+          style={{
+            width: "100%",
+          }}
+        >
+          <div className="MainHeader" style={{ height: "150px" }}>
+            <font color={selectedEvent.backgroundColor}>
+              <h3 style={{ margin: 0, fontSize: "20px" }}>
+                {selectedEvent.title}
+              </h3>
+            </font>
+            {/* <p>{selectedEvent.start.toLocaleString()}</p> */}
+            {/* <p>{selectedEvent.end.toLocaleString()}</p> */}
+            <h2>출석 리스트</h2>
+            <span style={{ margin: 0, fontSize: "15px" }}>
+              {selectedEvent.start.toLocaleString()}
+            </span>
+            {/* <AttendOk eventId={selectedEvent.id}></AttendOk> */}
+            {/* <button onClick={handleCloseEvent}>Close</button> */}
+          </div>
           <Attendence eventId={selectedEvent.id}></Attendence>
-          <button onClick={handleCloseEvent}>Close</button>
         </div>
       )}
     </div>
