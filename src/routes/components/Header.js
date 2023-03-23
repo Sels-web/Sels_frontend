@@ -1,12 +1,9 @@
 import styles from "../components/css/home.module.css";
 import Menu from "./elements/Menu";
-import LoginModal from "./elements/LoginModal";
 import { useMediaQuery } from "react-responsive";
 import Sidebar from "./elements/Sidebar";
 import Sidemenu from "./elements/Sidemenu";
 import React, { useEffect, useState } from "react";
-import DiscordLoginModal from "./elements/DiscordLogin";
-// import DiscordLogin from "./elements/DiscordLogin";
 
 export const Small = ({ children }) => {
   const isSmall = useMediaQuery({

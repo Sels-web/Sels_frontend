@@ -88,9 +88,16 @@ function Attendence({ eventId }) {
         )
     );
 
+  const styled = {
+    "&.MuiButton-text": {
+      color: "black",
+    },
+  };
   return (
     <div className="MainList" style={{ border: "1px solid red" }}>
-      <button onClick={handleDialogOpen}>참석 인원 추가</button>
+      <Button variant="text" sx={styled} onClick={handleDialogOpen}>
+        참석 인원 추가
+      </Button>
       <Dialog open={dialogOpen} onClose={handleDialogClose}>
         <DialogTitle>참석 인원 추가</DialogTitle>
         <form onSubmit={handleFormSubmit}>
@@ -111,12 +118,12 @@ function Attendence({ eventId }) {
           </DialogActions>
         </form>
       </Dialog>
-      <table style={{ border: "1px solid red" }} width="100%">
+      <table width="100%">
         <thead style={{ fontSize: "20px" }}>
           <tr>
-            <th>번호</th>
-            <th>이름</th>
-            <th>출석 여부</th>
+            <th width="20%">번호</th>
+            <th width="40%">이름</th>
+            <th width="40%">출석 여부</th>
           </tr>
         </thead>
         <tbody style={{ fontSize: "15px" }}>{renderUserList(Users)}</tbody>

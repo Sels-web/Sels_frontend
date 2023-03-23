@@ -15,7 +15,6 @@ import { GithubPicker } from "react-color";
 import "./css/Calendar.css";
 import Attendence from "./Attendence";
 import { v4 as uuidv4 } from "uuid";
-import AttendOk from "./AttendOk";
 
 function Calender() {
   const [events, setEvents] = useState([]);
@@ -145,22 +144,35 @@ function Calender() {
         <div
           style={{
             width: "100%",
+            border: "1px solid red",
           }}
         >
-          <div className="MainHeader" style={{ height: "150px" }}>
-            <font color={selectedEvent.backgroundColor}>
-              <h3 style={{ margin: 0, fontSize: "20px" }}>
-                {selectedEvent.title}
-              </h3>
-            </font>
-            {/* <p>{selectedEvent.start.toLocaleString()}</p> */}
-            {/* <p>{selectedEvent.end.toLocaleString()}</p> */}
-            <h2>출석 리스트</h2>
-            <span style={{ margin: 0, fontSize: "15px" }}>
+          <div
+            className="MainHeader"
+            style={{ border: "1px solid red", height: "150px" }}
+          >
+            <div style={{ width: "40%" }}>
+              <font color={selectedEvent.backgroundColor}>
+                <h3
+                  style={{
+                    margin: 0,
+                    fontSize: "20px",
+                  }}
+                >
+                  {selectedEvent.title}
+                </h3>
+              </font>
+            </div>
+            <h2 style={{ width: "20%" }}>출석 리스트</h2>
+            <span
+              style={{
+                margin: 0,
+                fontSize: "15px",
+                width: "40%",
+              }}
+            >
               {selectedEvent.start.toLocaleString()}
             </span>
-            {/* <AttendOk eventId={selectedEvent.id}></AttendOk> */}
-            {/* <button onClick={handleCloseEvent}>Close</button> */}
           </div>
           <Attendence eventId={selectedEvent.id}></Attendence>
         </div>
