@@ -10,8 +10,9 @@ import {
   TextField,
   Button,
   Zoom,
+  IconButton,
 } from "@mui/material";
-
+import ClearIcon from "@mui/icons-material/Clear";
 import { GithubPicker } from "react-color";
 import "../css/Calendar.css";
 import Attendence from "./Attendence";
@@ -62,6 +63,7 @@ function Calender() {
   };
 
   const handleAttendOpen = () => {
+    console.log(events);
     setAttendOpen(true);
   };
 
@@ -162,8 +164,22 @@ function Calender() {
         fullScreen="true"
       >
         {selectedEvent && (
-          <Attendence selectedEvent={selectedEvent}></Attendence>
+          <Attendence
+            selectedEvent={selectedEvent}
+            events={events}
+          ></Attendence>
         )}
+        <DialogActions>
+          <IconButton
+            style={{ position: "absolute", top: "0" }}
+            size="large"
+            aria-label="clear"
+            onClick={handleAttendClose}
+            sx={{ color: "black" }}
+          >
+            <ClearIcon />
+          </IconButton>
+        </DialogActions>
       </Dialog>
     </div>
   );

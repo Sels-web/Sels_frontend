@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Table from "react-bootstrap/Table";
+import ListGroup from "react-bootstrap/ListGroup";
 import {
   Dialog,
   DialogTitle,
@@ -10,7 +11,7 @@ import {
 } from "@mui/material";
 import "../css/Calendar.css";
 
-function Attendence({ selectedEvent }) {
+function Attendence({ selectedEvent, events }) {
   const [Users, setUsers] = useState([]);
   const [newUser, setNewUser] = useState({});
   const [SearchUser, setSearchUser] = useState([]);
@@ -18,13 +19,11 @@ function Attendence({ selectedEvent }) {
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const handleDialogOpen = () => {
-    console.log(selectedEvent);
     setNewUser({
       eventKey: selectedEvent.id,
       Username: "", //이름
       key: "", //인덱스
     });
-    console.log(newUser);
     setDialogOpen(true);
   };
 
@@ -43,12 +42,35 @@ function Attendence({ selectedEvent }) {
 
   const handleFormSubmit = (user) => {
     user.preventDefault();
-
     console.log(newUser);
     setUsers((prevUsers) => [...prevUsers, newUser]);
     console.log(Users);
     handleDialogClose();
   };
+
+  const renderScheduleList = (events) =>
+    events.length > 0 &&
+    events.map((event) => (
+      <li style={{ listStyle: "none" }} key={event.id}>
+        <span
+          style={{
+            fontSize: "20px",
+            display: "block",
+            margin: 0,
+          }}
+        >
+          {event.title}
+        </span>
+
+        <span
+          style={{
+            fontSize: "12px",
+          }}
+        >
+          {/* {schedule.year}-{schedule.month}-{schedule.day} */}
+        </span>
+      </li>
+    ));
 
   const renderUserList = (Users) =>
     Users.length > 0 &&
@@ -98,77 +120,107 @@ function Attendence({ selectedEvent }) {
   return (
     <div
       style={{
-        width: "100%",
-        border: "1px solid red",
+        display: "flex",
+        height: "100vh",
+        fontFamily: "IBMPlexSansKR-Text",
       }}
     >
+      {/* 사이트 리스트 */}
       <div
-        className="MainHeader"
-        style={{ border: "1px solid red", height: "150px" }}
+        style={{
+          minWidth: "300px",
+          // backgroundColor: "#F2A240",
+          padding: "2rem 1rem",
+        }}
       >
-        <div style={{ width: "40%" }}>
-          <font color={selectedEvent.backgroundColor}>
-            <h3
-              style={{
-                margin: 0,
-                fontSize: "20px",
-              }}
-            >
-              {selectedEvent.title}
-            </h3>
-          </font>
-        </div>
-        <h2 style={{ width: "20%" }}>출석 리스트</h2>
-        <span
+        {/* <SidePanel /> */}
+        <ListGroup style={{ maxHeight: "500px", overflowY: "auto" }}>
+          {renderScheduleList(events)}
+        </ListGroup>
+      </div>
+      {/* 메인 리스트 */}
+      <div
+        style={{
+          width: "100%",
+        }}
+      >
+        <div
           style={{
-            margin: 0,
-            fontSize: "15px",
-            width: "40%",
+            width: "100%",
+            border: "1px solid red",
           }}
         >
-          {selectedEvent.start.toLocaleString()}
-        </span>
-      </div>
-      <div className="MainList" style={{ border: "1px solid red" }}>
-        <Button
-          style={{ position: "relative", left: "350px" }}
-          variant="text"
-          sx={styled}
-          onClick={handleDialogOpen}
-        >
-          참석 인원 추가
-        </Button>
-        <Dialog open={dialogOpen} onClose={handleDialogClose}>
-          <DialogTitle>참석 인원 추가</DialogTitle>
-          <form onSubmit={handleFormSubmit}>
-            <DialogContent>
-              <TextField
-                autoFocus
-                margin="dense"
-                label="이름"
-                type="text"
-                fullWidth
-                name="Username"
-                onChange={handleInputChange}
-              />
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={handleDialogClose}>취소</Button>
-              <Button type="submit">추가</Button>
-            </DialogActions>
-          </form>
-        </Dialog>
-        <Table striped bordered hover width="100%">
-          <thead style={{ fontSize: "20px" }}>
-            <tr>
-              <th width="20%">번호</th>
-              <th width="30%">이름</th>
-              <th width="30%">출석 여부</th>
-              <th width="20%">출석 상태</th>
-            </tr>
-          </thead>
-          <tbody style={{ fontSize: "15px" }}>{renderUserList(Users)}</tbody>
-        </Table>
+          <div
+            className="MainHeader"
+            style={{ border: "1px solid red", height: "150px" }}
+          >
+            <div style={{ width: "40%" }}>
+              <font color={selectedEvent.backgroundColor}>
+                <h3
+                  style={{
+                    margin: 0,
+                    fontSize: "20px",
+                  }}
+                >
+                  {selectedEvent.title}
+                </h3>
+              </font>
+            </div>
+            <h2 style={{ width: "20%" }}>출석 리스트</h2>
+            <span
+              style={{
+                margin: 0,
+                fontSize: "15px",
+                width: "40%",
+              }}
+            >
+              {selectedEvent.start.toLocaleString()}
+            </span>
+          </div>
+          <div className="MainList" style={{ border: "1px solid red" }}>
+            <Button
+              style={{ position: "relative", left: "350px" }}
+              variant="text"
+              sx={styled}
+              onClick={handleDialogOpen}
+            >
+              참석 인원 추가
+            </Button>
+            <Dialog open={dialogOpen} onClose={handleDialogClose}>
+              <DialogTitle>참석 인원 추가</DialogTitle>
+              <form onSubmit={handleFormSubmit}>
+                <DialogContent>
+                  <TextField
+                    autoFocus
+                    margin="dense"
+                    label="이름"
+                    type="text"
+                    fullWidth
+                    name="Username"
+                    onChange={handleInputChange}
+                  />
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleDialogClose}>취소</Button>
+                  <Button type="submit">추가</Button>
+                </DialogActions>
+              </form>
+            </Dialog>
+            <Table striped bordered hover width="100%">
+              <thead style={{ fontSize: "20px" }}>
+                <tr>
+                  <th width="20%">번호</th>
+                  <th width="30%">이름</th>
+                  <th width="30%">출석 여부</th>
+                  <th width="20%">출석 상태</th>
+                </tr>
+              </thead>
+              <tbody style={{ fontSize: "15px" }}>
+                {renderUserList(Users)}
+              </tbody>
+            </Table>
+          </div>
+        </div>
       </div>
     </div>
   );
