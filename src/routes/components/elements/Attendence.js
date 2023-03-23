@@ -8,9 +8,9 @@ import {
   TextField,
   Button,
 } from "@mui/material";
-import "./css/Calendar.css";
+import "../css/Calendar.css";
 
-function Attendence({ eventId }) {
+function Attendence({ selectedEvent }) {
   const [Users, setUsers] = useState([]);
   const [newUser, setNewUser] = useState({});
   const [SearchUser, setSearchUser] = useState([]);
@@ -19,7 +19,7 @@ function Attendence({ eventId }) {
 
   const handleDialogOpen = () => {
     setNewUser({
-      eventKey: eventId,
+      eventKey: selectedEvent.eventId,
       Username: "", //이름
       key: "", //인덱스
     });
@@ -52,7 +52,7 @@ function Attendence({ eventId }) {
     Users.length > 0 &&
     Users.map(
       (user) =>
-        eventId === user.eventKey && (
+        selectedEvent.eventId === user.eventKey && (
           <tr key={user.length}>
             <td>{user.key}</td>
             <td>{user.Username}</td>
@@ -94,40 +94,75 @@ function Attendence({ eventId }) {
     },
   };
   return (
-    <div className="MainList" style={{ border: "1px solid red" }}>
-      <Button variant="text" sx={styled} onClick={handleDialogOpen}>
-        참석 인원 추가
-      </Button>
-      <Dialog open={dialogOpen} onClose={handleDialogClose}>
-        <DialogTitle>참석 인원 추가</DialogTitle>
-        <form onSubmit={handleFormSubmit}>
-          <DialogContent>
-            <TextField
-              autoFocus
-              margin="dense"
-              label="이름"
-              type="text"
-              fullWidth
-              name="Username"
-              onChange={handleInputChange}
-            />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleDialogClose}>취소</Button>
-            <Button type="submit">추가</Button>
-          </DialogActions>
-        </form>
-      </Dialog>
-      <table width="100%">
-        <thead style={{ fontSize: "20px" }}>
-          <tr>
-            <th width="20%">번호</th>
-            <th width="40%">이름</th>
-            <th width="40%">출석 여부</th>
-          </tr>
-        </thead>
-        <tbody style={{ fontSize: "15px" }}>{renderUserList(Users)}</tbody>
-      </table>
+    <div
+      style={{
+        width: "100%",
+        border: "1px solid red",
+      }}
+    >
+      <div
+        className="MainHeader"
+        style={{ border: "1px solid red", height: "150px" }}
+      >
+        <div style={{ width: "40%" }}>
+          <font color={selectedEvent.backgroundColor}>
+            <h3
+              style={{
+                margin: 0,
+                fontSize: "20px",
+              }}
+            >
+              {selectedEvent.title}
+            </h3>
+          </font>
+        </div>
+        <h2 style={{ width: "20%" }}>출석 리스트</h2>
+        <span
+          style={{
+            margin: 0,
+            fontSize: "15px",
+            width: "40%",
+          }}
+        >
+          {selectedEvent.start.toLocaleString()}
+        </span>
+      </div>
+      <div className="MainList" style={{ border: "1px solid red" }}>
+        <Button variant="text" sx={styled} onClick={handleDialogOpen}>
+          참석 인원 추가
+        </Button>
+        <Dialog open={dialogOpen} onClose={handleDialogClose}>
+          <DialogTitle>참석 인원 추가</DialogTitle>
+          <form onSubmit={handleFormSubmit}>
+            <DialogContent>
+              <TextField
+                autoFocus
+                margin="dense"
+                label="이름"
+                type="text"
+                fullWidth
+                name="Username"
+                onChange={handleInputChange}
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleDialogClose}>취소</Button>
+              <Button type="submit">추가</Button>
+            </DialogActions>
+          </form>
+        </Dialog>
+        <Table striped bordered hover width="100%">
+          <thead style={{ fontSize: "20px" }}>
+            <tr>
+              <th width="20%">번호</th>
+              <th width="30%">이름</th>
+              <th width="30%">출석 여부</th>
+              <th width="20%">출석 상태</th>
+            </tr>
+          </thead>
+          <tbody style={{ fontSize: "15px" }}>{renderUserList(Users)}</tbody>
+        </Table>
+      </div>
     </div>
   );
 }

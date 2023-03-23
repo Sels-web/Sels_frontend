@@ -4,30 +4,16 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Section from "./components/Section";
 import TopButton from "./components/elements/TopButton";
-import Calendar from "./components/DateCalendar";
+import Calendar from "./components/Main";
+import Main from "./components/Main";
 
 function Home() {
   return (
     <div className={styles.all}>
       <Header />
       <div className={styles.grid}>
-        <div className={styles.Main}>
-          <div id="1">
-            <div className={styles.section}>
-              <Calendar />
-            </div>
-          </div>
-          <div id="2">
-            <Section cnt="2" />
-          </div>
-          <div id="3">
-            <Section cnt="3" />
-          </div>
-          <div id="4">
-            <Section cnt="4" />
-          </div>
-          <TopButton />
-        </div>
+        <Main />
+        <TopButton />
         <div className={styles.Footer}>Footer</div>
       </div>
     </div>

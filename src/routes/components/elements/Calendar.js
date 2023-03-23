@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 
 import { GithubPicker } from "react-color";
-import "./css/Calendar.css";
+import "../css/Calendar.css";
 import Attendence from "./Attendence";
 import { v4 as uuidv4 } from "uuid";
 
@@ -54,10 +54,6 @@ function Calender() {
     setSelectedEvent(arg.event);
   };
 
-  const handleCloseEvent = () => {
-    setSelectedEvent(null);
-  };
-
   const handleInputChange = (event) => {
     // console.log(event.target);
     const { name, value } = event.target;
@@ -83,7 +79,7 @@ function Calender() {
 
   return (
     <div className="react-calendar">
-      <div>이번달 SELS 일정</div>
+      <h2>이번 달 SELS 일정</h2>
       <FullCalendar
         plugins={[dayGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
@@ -140,43 +136,7 @@ function Calender() {
           </DialogActions>
         </form>
       </Dialog>
-      {selectedEvent && (
-        <div
-          style={{
-            width: "100%",
-            border: "1px solid red",
-          }}
-        >
-          <div
-            className="MainHeader"
-            style={{ border: "1px solid red", height: "150px" }}
-          >
-            <div style={{ width: "40%" }}>
-              <font color={selectedEvent.backgroundColor}>
-                <h3
-                  style={{
-                    margin: 0,
-                    fontSize: "20px",
-                  }}
-                >
-                  {selectedEvent.title}
-                </h3>
-              </font>
-            </div>
-            <h2 style={{ width: "20%" }}>출석 리스트</h2>
-            <span
-              style={{
-                margin: 0,
-                fontSize: "15px",
-                width: "40%",
-              }}
-            >
-              {selectedEvent.start.toLocaleString()}
-            </span>
-          </div>
-          <Attendence eventId={selectedEvent.id}></Attendence>
-        </div>
-      )}
+      {selectedEvent && <Attendence selectedEvent={selectedEvent}></Attendence>}
     </div>
   );
 }
