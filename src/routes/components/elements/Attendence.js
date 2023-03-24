@@ -128,6 +128,10 @@ function Attendence({ selectedEvent, events }) {
         )
     );
 
+  const filteredUsers = selectedEvent
+    ? Users.filter((user) => user.eventKey === selectedEvent.id)
+    : Users;
+
   const styled = {
     "&.MuiButton-text": {
       color: "black",
