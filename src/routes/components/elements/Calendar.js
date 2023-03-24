@@ -63,7 +63,6 @@ function Calender() {
   };
 
   const handleAttendOpen = () => {
-    console.log(events);
     setAttendOpen(true);
   };
 

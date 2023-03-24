@@ -8,14 +8,16 @@ import {
   DialogActions,
   TextField,
   Button,
+  IconButton,
 } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
 import "../css/Calendar.css";
 
 function Attendence({ selectedEvent, events }) {
   const [Users, setUsers] = useState([]);
   const [newUser, setNewUser] = useState({});
   const [SearchUser, setSearchUser] = useState([]);
-
+  const [SelectedEvent, setSelectedEvent] = useState(selectedEvent);
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const handleDialogOpen = () => {
@@ -48,6 +50,14 @@ function Attendence({ selectedEvent, events }) {
     handleDialogClose();
   };
 
+  const changeEvent = (event) => {
+    setSelectedEvent(event);
+    // console.log(events);
+    // events.map((selectevent) => {
+    //   selectedEvent.id === event.target.id;
+    // });
+  };
+
   const renderScheduleList = (events) =>
     events.length > 0 &&
     events.map((event) => (
@@ -59,9 +69,14 @@ function Attendence({ selectedEvent, events }) {
             margin: 0,
           }}
         >
-          {event.title}
+          <Button
+            key={event.id}
+            id={event.id}
+            onClick={() => changeEvent(event)}
+          >
+            {event.title}
+          </Button>
         </span>
-
         <span
           style={{
             fontSize: "12px",
@@ -71,6 +86,11 @@ function Attendence({ selectedEvent, events }) {
         </span>
       </li>
     ));
+  // events.map((event) => (
+  //   <Button key={event.id} id={event.id} onClick={handleClick}>
+  //     {event.title}
+  //   </Button>
+  // ));
 
   const renderUserList = (Users) =>
     Users.length > 0 &&
@@ -129,7 +149,7 @@ function Attendence({ selectedEvent, events }) {
       <div
         style={{
           minWidth: "300px",
-          // backgroundColor: "#F2A240",
+          backgroundColor: "rgba(247, 230, 167)",
           padding: "2rem 1rem",
         }}
       >
@@ -154,38 +174,49 @@ function Attendence({ selectedEvent, events }) {
             className="MainHeader"
             style={{ border: "1px solid red", height: "150px" }}
           >
-            <div style={{ width: "40%" }}>
-              <font color={selectedEvent.backgroundColor}>
+            <div>
+              <font color={SelectedEvent.backgroundColor}>
                 <h3
                   style={{
                     margin: 0,
                     fontSize: "20px",
+                    border: "1px solid red",
                   }}
                 >
-                  {selectedEvent.title}
+                  {SelectedEvent.title}
                 </h3>
               </font>
             </div>
-            <h2 style={{ width: "20%" }}>출석 리스트</h2>
+            <h2 style={{ border: "1px solid red" }}>출석 리스트</h2>
             <span
               style={{
                 margin: 0,
                 fontSize: "15px",
-                width: "40%",
+                border: "1px solid red",
               }}
             >
-              {selectedEvent.start.toLocaleString()}
+              {SelectedEvent.start.toLocaleString()}
             </span>
           </div>
+          {/* <div className="MainHeader" style={{ height: "150px" }}>
+            <span style={{ margin: 0, fontSize: "15px" }}>
+              {SelectedEvent.start.toLocaleString()}{" "}
+            </span>
+            <h2>출석 리스트</h2>
+            <h3 style={{ margin: 0, fontSize: "20px" }}>
+              {SelectedEvent.title}
+            </h3>
+          </div> */}
           <div className="MainList" style={{ border: "1px solid red" }}>
-            <Button
-              style={{ position: "relative", left: "350px" }}
-              variant="text"
-              sx={styled}
+            <IconButton
+              style={{ position: "absolute", top: "0" }}
+              size="large"
+              aria-label="clear"
               onClick={handleDialogOpen}
+              sx={{ color: "black" }}
             >
-              참석 인원 추가
-            </Button>
+              <AddIcon />
+            </IconButton>
             <Dialog open={dialogOpen} onClose={handleDialogClose}>
               <DialogTitle>참석 인원 추가</DialogTitle>
               <form onSubmit={handleFormSubmit}>
