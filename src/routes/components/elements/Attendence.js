@@ -52,10 +52,6 @@ function Attendence({ selectedEvent, events }) {
 
   const changeEvent = (event) => {
     setSelectedEvent(event);
-    // console.log(events);
-    // events.map((selectevent) => {
-    //   selectedEvent.id === event.target.id;
-    // });
   };
 
   const renderScheduleList = (events) =>
