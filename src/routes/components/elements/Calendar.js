@@ -85,7 +85,15 @@ function Calender() {
   const handleEventClick = (arg) => {
     // scrollToDown();
     handleAttendOpen();
-    setSelectedEvent(arg.event);
+    // setSelectedEvent(arg.event);
+    setSelectedEvent({
+      id: arg.event.id,
+      title: arg.event.title,
+      start: arg.event.startStr,
+      end: arg.event.endStr,
+      color: arg.event.backgroundColor,
+    });
+    console.log(selectedEvent);
   };
 
   const handleAttendOpen = () => {

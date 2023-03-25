@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Table from "react-bootstrap/Table";
 import ListGroup from "react-bootstrap/ListGroup";
+
 import {
   Dialog,
   DialogTitle,
@@ -12,6 +13,8 @@ import {
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import "../css/Calendar.css";
+import { FaRegCalendarPlus } from "react-icons/fa";
+import { AiOutlineUserAdd } from "react-icons/ai";
 
 function Attendence({ selectedEvent, events }) {
   const [Users, setUsers] = useState([]);
@@ -55,10 +58,45 @@ function Attendence({ selectedEvent, events }) {
     console.log(SelectedEvent);
   };
 
-  const renderScheduleList = (events) =>
-    events.length > 0 &&
-    events.map((event) => (
-      <li style={{ listStyle: "none" }} key={event.id}>
+  // const renderScheduleList = (events) =>
+  //   events.length > 0 &&
+  //   events.map((event) => (
+  //     <li style={{ listStyle: "none" }} key={event.id}>
+  //       <span
+  //         style={{
+  //           fontSize: "20px",
+  //           display: "block",
+  //           margin: 0,
+  //         }}
+  //       >
+  //         <Button
+  //           key={event.id}
+  //           id={event.id}
+  //           onClick={() => changeEvent(event)}
+  //         >
+  //           {event.title}
+  //         </Button>
+  //       </span>
+  //       <span
+  //         style={{
+  //           fontSize: "12px",
+  //         }}
+  //       >
+  //         {/* {schedule.year}-{schedule.month}-{schedule.day} */}
+  //       </span>
+  //     </li>
+  //   ));
+  // 스케줄 출력하기
+  const renderScheduleList = (Schedules) =>
+    Schedules.length > 0 &&
+    Schedules.map((schedule) => (
+      <ListGroup.Item
+        key={schedule.id}
+        style={{
+          backgroundColor: SelectedEvent.id === schedule.id && "#e4e4e4",
+        }}
+        onClick={() => changeEvent(schedule)}
+      >
         <span
           style={{
             fontSize: "20px",
@@ -66,22 +104,17 @@ function Attendence({ selectedEvent, events }) {
             margin: 0,
           }}
         >
-          <Button
-            key={event.id}
-            id={event.id}
-            onClick={() => changeEvent(event)}
-          >
-            {event.title}
-          </Button>
+          {schedule.title}
         </span>
+
         <span
           style={{
             fontSize: "12px",
           }}
         >
-          {/* {schedule.year}-{schedule.month}-{schedule.day} */}
+          {schedule.start}
         </span>
-      </li>
+      </ListGroup.Item>
     ));
 
   const renderUserList = (Users) =>
@@ -141,110 +174,28 @@ function Attendence({ selectedEvent, events }) {
       {/* 사이트 리스트 */}
       <div
         style={{
-          minWidth: "300px",
+          minWidth: "250px",
           backgroundColor: "rgba(247, 230, 167)",
           padding: "2rem 1rem",
         }}
       >
-        {/* <SidePanel /> */}
-        <ListGroup style={{ maxHeight: "500px", overflowY: "auto" }}>
-          {renderScheduleList(events)}
-        </ListGroup>
-      </div>
-      {/* 메인 리스트 */}
-      <div
-        style={{
-          width: "100%",
-        }}
-      >
         <div
           style={{
-            width: "100%",
-            border: "1px solid red",
+            minWidth: "250px",
+            padding: "2rem 1rem",
           }}
         >
-          <div
-            className="MainHeader"
-            style={{ border: "1px solid red", height: "150px" }}
-          >
-            <div>
-              <font color={SelectedEvent.backgroundColor}>
-                <h3
-                  style={{
-                    margin: 0,
-                    fontSize: "20px",
-                    border: "1px solid red",
-                  }}
-                >
-                  {SelectedEvent.title}
-                </h3>
-              </font>
-            </div>
-            <h2 style={{ border: "1px solid red" }}>출석 리스트</h2>
-            <span
-              style={{
-                margin: 0,
-                fontSize: "15px",
-                border: "1px solid red",
-              }}
-            >
-              {SelectedEvent.start.toLocaleString()}
-            </span>
-          </div>
-          {/* <div className="MainHeader" style={{ height: "150px" }}>
-            <span style={{ margin: 0, fontSize: "15px" }}>
-              {SelectedEvent.start.toLocaleString()}{" "}
-            </span>
-            <h2>출석 리스트</h2>
-            <h3 style={{ margin: 0, fontSize: "20px" }}>
-              {SelectedEvent.title}
-            </h3>
-          </div> */}
-          <div className="MainList" style={{ border: "1px solid red" }}>
-            <IconButton
-              style={{ position: "absolute", top: "0" }}
-              size="large"
-              aria-label="clear"
-              onClick={handleDialogOpen}
-              sx={{ color: "black" }}
-            >
-              <AddIcon />
-            </IconButton>
-            <Dialog open={dialogOpen} onClose={handleDialogClose}>
-              <DialogTitle>참석 인원 추가</DialogTitle>
-              <form onSubmit={handleFormSubmit}>
-                <DialogContent>
-                  <TextField
-                    autoFocus
-                    margin="dense"
-                    label="이름"
-                    type="text"
-                    fullWidth
-                    name="Username"
-                    onChange={handleInputChange}
-                  />
-                </DialogContent>
-                <DialogActions>
-                  <Button onClick={handleDialogClose}>취소</Button>
-                  <Button type="submit">추가</Button>
-                </DialogActions>
-              </form>
-            </Dialog>
-            <Table striped bordered hover width="100%">
-              <thead style={{ fontSize: "20px" }}>
-                <tr>
-                  <th width="20%">번호</th>
-                  <th width="30%">이름</th>
-                  <th width="30%">출석 여부</th>
-                  <th width="20%">출석 상태</th>
-                </tr>
-              </thead>
-              <tbody style={{ fontSize: "15px" }}>
-                {renderUserList(Users)}
-              </tbody>
-            </Table>
-          </div>
+          <ListGroup style={{ maxHeight: "500px", overflowY: "auto" }}>
+            {renderScheduleList(events)}
+          </ListGroup>
         </div>
+      </div>
+      <div className="MainHeader" style={{ height: "150px" }}>
+        <span style={{ margin: 0, fontSize: "15px" }}>
+          {SelectedEvent.start.toLocaleString()}
+        </span>
+        <h2>출석 리스트</h2>
+        <h3 style={{ margin: 0, fontSize: "20px" }}>{SelectedEvent.title}</h3>
       </div>
     </div>
   );
