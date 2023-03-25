@@ -52,6 +52,7 @@ function Attendence({ selectedEvent, events }) {
 
   const changeEvent = (event) => {
     setSelectedEvent(event);
+    console.log(selectedEvent);
   };
 
   const renderScheduleList = (events) =>
