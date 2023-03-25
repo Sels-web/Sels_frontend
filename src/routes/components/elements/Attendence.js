@@ -174,28 +174,58 @@ function Attendence({ selectedEvent, events }) {
       {/* 사이트 리스트 */}
       <div
         style={{
-          minWidth: "250px",
-          backgroundColor: "rgba(247, 230, 167)",
+          minWidth: "300px",
+          backgroundColor: "#F2A240",
           padding: "2rem 1rem",
         }}
       >
         <div
           style={{
             minWidth: "250px",
+            backgroundColor: "whitesmoke",
             padding: "2rem 1rem",
           }}
         >
-          <ListGroup style={{ maxHeight: "500px", overflowY: "auto" }}>
-            {renderScheduleList(events)}
-          </ListGroup>
+          <div
+            style={{
+              minWidth: "250px",
+              padding: "2rem 1rem",
+            }}
+          >
+            <ListGroup style={{ maxHeight: "500px", overflowY: "auto" }}>
+              {renderScheduleList(events)}
+            </ListGroup>
+          </div>
         </div>
       </div>
-      <div className="MainHeader" style={{ height: "150px" }}>
-        <span style={{ margin: 0, fontSize: "15px" }}>
-          {SelectedEvent.start.toLocaleString()}
-        </span>
-        <h2>출석 리스트</h2>
-        <h3 style={{ margin: 0, fontSize: "20px" }}>{SelectedEvent.title}</h3>
+      {/* 메인 리스트 */}
+      <div
+        style={{
+          width: "100%",
+        }}
+      >
+        <main style={{ display: "flex", flexDirection: "column" }}>
+          <div className="MainHeader" style={{ height: "150px" }}>
+            <span style={{ margin: 0, fontSize: "15px" }}>
+              {SelectedEvent.start.toLocaleString()}
+            </span>
+            <h2>출석 리스트</h2>
+            <h3 style={{ margin: 0, fontSize: "20px" }}>
+              {SelectedEvent.title}
+            </h3>
+          </div>
+          <Table striped bordered hover width="100%">
+            <thead style={{ fontSize: "20px" }}>
+              <tr>
+                <th width="20%">번호</th>
+                <th width="30%">이름</th>
+                <th width="30%">출석 여부</th>
+                <th width="20%">출석 상태</th>
+              </tr>
+            </thead>
+            <tbody style={{ fontSize: "15px" }}>{renderUserList(Users)}</tbody>
+          </Table>
+        </main>
       </div>
     </div>
   );
