@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Table from "react-bootstrap/Table";
 import ListGroup from "react-bootstrap/ListGroup";
-
+import Clock from "react-live-clock";
 import {
   Dialog,
   DialogTitle,
@@ -178,6 +178,11 @@ function Attendence({ selectedEvent, events }) {
       >
         <main style={{ display: "flex", flexDirection: "column" }}>
           <div className="MainHeader" style={{ height: "150px" }}>
+            <Clock
+              format={"YYYY-MM-DD HH:mm:ss"}
+              ticking={true}
+              timezone={"Asia/Seoul"}
+            />
             <span style={{ margin: 0, fontSize: "15px" }}>
               {SelectedEvent.start.toLocaleString()}
             </span>
