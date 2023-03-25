@@ -22,7 +22,7 @@ function Attendence({ selectedEvent, events }) {
 
   const handleDialogOpen = () => {
     setNewUser({
-      eventKey: selectedEvent.id,
+      eventKey: SelectedEvent.id,
       Username: "", //이름
       key: "", //인덱스
     });
@@ -52,7 +52,7 @@ function Attendence({ selectedEvent, events }) {
 
   const changeEvent = (event) => {
     setSelectedEvent(event);
-    console.log(selectedEvent);
+    console.log(SelectedEvent);
   };
 
   const renderScheduleList = (events) =>
@@ -83,17 +83,12 @@ function Attendence({ selectedEvent, events }) {
         </span>
       </li>
     ));
-  // events.map((event) => (
-  //   <Button key={event.id} id={event.id} onClick={handleClick}>
-  //     {event.title}
-  //   </Button>
-  // ));
 
   const renderUserList = (Users) =>
     Users.length > 0 &&
     Users.map(
       (user) =>
-        selectedEvent.id === user.eventKey && (
+        SelectedEvent.id === user.eventKey && (
           <tr key={user.length}>
             <td>{user.key}</td>
             <td>{user.Username}</td>
@@ -129,15 +124,12 @@ function Attendence({ selectedEvent, events }) {
         )
     );
 
-  const filteredUsers = selectedEvent
-    ? Users.filter((user) => user.eventKey === selectedEvent.id)
-    : Users;
-
   const styled = {
     "&.MuiButton-text": {
       color: "black",
     },
   };
+
   return (
     <div
       style={{
