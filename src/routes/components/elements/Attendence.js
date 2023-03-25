@@ -58,35 +58,6 @@ function Attendence({ selectedEvent, events }) {
     console.log(SelectedEvent);
   };
 
-  // const renderScheduleList = (events) =>
-  //   events.length > 0 &&
-  //   events.map((event) => (
-  //     <li style={{ listStyle: "none" }} key={event.id}>
-  //       <span
-  //         style={{
-  //           fontSize: "20px",
-  //           display: "block",
-  //           margin: 0,
-  //         }}
-  //       >
-  //         <Button
-  //           key={event.id}
-  //           id={event.id}
-  //           onClick={() => changeEvent(event)}
-  //         >
-  //           {event.title}
-  //         </Button>
-  //       </span>
-  //       <span
-  //         style={{
-  //           fontSize: "12px",
-  //         }}
-  //       >
-  //         {/* {schedule.year}-{schedule.month}-{schedule.day} */}
-  //       </span>
-  //     </li>
-  //   ));
-  // 스케줄 출력하기
   const renderScheduleList = (Schedules) =>
     Schedules.length > 0 &&
     Schedules.map((schedule) => (
@@ -117,45 +88,46 @@ function Attendence({ selectedEvent, events }) {
       </ListGroup.Item>
     ));
 
-  const renderUserList = (Users) =>
+  const renderUserList = (Users) => {
     Users.length > 0 &&
-    Users.map(
-      (user) =>
-        SelectedEvent.id === user.eventKey && (
-          <tr key={user.length}>
-            <td>{user.key}</td>
-            <td>{user.Username}</td>
-            {/* <td>{user.Department}</td> */}
-            <td>
-              <form>
-                출석
-                <input
-                  style={{ marginRight: "1rem" }}
-                  type="radio"
-                  name={user.id}
-                  value="출석"
-                  // onChange={(e) => handleAttend(user, schedule, e.target.value)}
-                />
-                지각
-                <input
-                  style={{ marginRight: "1rem" }}
-                  type="radio"
-                  name={user.id}
-                  value="지각"
-                  // onChange={(e) => handleAttend(user, schedule, e.target.value)}
-                />
-                결석
-                <input
-                  type="radio"
-                  name={user.id}
-                  value="결석"
-                  // onChange={(e) => handleAttend(user, schedule, e.target.value)}
-                />
-              </form>
-            </td>
-          </tr>
-        )
-    );
+      Users.map(
+        (user) =>
+          SelectedEvent.id === user.eventKey && (
+            <tr key={user.length}>
+              <td>{user.key}</td>
+              <td>{user.Username}</td>
+              {/* <td>{user.Department}</td> */}
+              <td>
+                <form>
+                  출석
+                  <input
+                    style={{ marginRight: "1rem" }}
+                    type="radio"
+                    name={user.id}
+                    value="출석"
+                    // onChange={(e) => handleAttend(user, schedule, e.target.value)}
+                  />
+                  지각
+                  <input
+                    style={{ marginRight: "1rem" }}
+                    type="radio"
+                    name={user.id}
+                    value="지각"
+                    // onChange={(e) => handleAttend(user, schedule, e.target.value)}
+                  />
+                  결석
+                  <input
+                    type="radio"
+                    name={user.id}
+                    value="결석"
+                    // onChange={(e) => handleAttend(user, schedule, e.target.value)}
+                  />
+                </form>
+              </td>
+            </tr>
+          )
+      );
+  };
 
   const styled = {
     "&.MuiButton-text": {
@@ -175,7 +147,7 @@ function Attendence({ selectedEvent, events }) {
       <div
         style={{
           minWidth: "300px",
-          backgroundColor: "#F2A240",
+          backgroundColor: "rgba(247, 230, 167)",
           padding: "2rem 1rem",
         }}
       >
@@ -217,7 +189,7 @@ function Attendence({ selectedEvent, events }) {
           <Table striped bordered hover width="100%">
             <thead style={{ fontSize: "20px" }}>
               <tr>
-                <th width="20%">번호</th>
+                <th width="20%">학번</th>
                 <th width="30%">이름</th>
                 <th width="30%">출석 여부</th>
                 <th width="20%">출석 상태</th>

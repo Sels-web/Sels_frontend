@@ -147,11 +147,6 @@ function Calender() {
     console.log(newEvent);
     handleDialogClose();
   };
-  //     window.scroll({
-  //       top: 900,
-  //       behavior: "smooth",
-  //     });
-  //   };
 
   return (
     <div className="react-calendar">
