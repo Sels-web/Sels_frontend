@@ -62,7 +62,7 @@ function Calender() {
       title: "",
       start: arg.startStr,
       end: arg.endStr,
-      color: "",
+      color: "#fccb00", //default 노란색
     });
 
     setDialogOpen(true);
@@ -74,7 +74,7 @@ function Calender() {
   };
 
   const handleColorChange = (color) => {
-    // console.log(color);
+    console.log(color.hex);
     // setSelectedColor(color.hex);
     setNewEvent((prevEvent) => ({
       ...prevEvent,
@@ -215,7 +215,8 @@ function Calender() {
         open={attendOpen}
         onClose={handleAttendClose}
         TransitionComponent={Transition}
-        fullScreen="true"
+        fullScreen={true}
+        // maxWidth="lg"
       >
         {selectedEvent && (
           <Attendance

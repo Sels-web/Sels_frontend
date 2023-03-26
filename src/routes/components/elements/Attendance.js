@@ -9,17 +9,13 @@ import {
   DialogActions,
   TextField,
   Button,
-  IconButton,
 } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
 import "../css/attedance.css";
-import { FaRegCalendarPlus } from "react-icons/fa";
 import { AiOutlineUserAdd } from "react-icons/ai";
 
 function Attendence({ selectedEvent, events }) {
   const [Users, setUsers] = useState([]);
   const [newUser, setNewUser] = useState({});
-  const [SearchUser, setSearchUser] = useState([]);
   const [SelectedEvent, setSelectedEvent] = useState(selectedEvent);
   const [dialogOpen, setDialogOpen] = useState(false);
 
@@ -129,12 +125,6 @@ function Attendence({ selectedEvent, events }) {
         )
     );
 
-  const styled = {
-    "&.MuiButton-text": {
-      color: "black",
-    },
-  };
-
   return (
     <div
       style={{
@@ -156,7 +146,7 @@ function Attendence({ selectedEvent, events }) {
             <div className="SideHeader">
               <img
                 src="/assets/img/Sels_Logo.jpeg"
-                style={{ width: "150px", height: "100px" }}
+                style={{ width: "100px", height: "65px" }}
                 alt=""
               />
               <h2
@@ -177,7 +167,7 @@ function Attendence({ selectedEvent, events }) {
                 timezone={"Asia/Seoul"}
                 style={{
                   position: "absolute",
-                  top: "140px",
+                  top: "110px",
                   left: "80px",
                   fontSize: "20px",
                   color: "#F2A240",
@@ -269,6 +259,8 @@ function Attendence({ selectedEvent, events }) {
           style={{
             display: "flex",
             flexDirection: "column",
+            // paddingLeft: "50px",
+            // paddingRight: "50px",
           }}
         >
           <div className="MainHeader" style={{ height: "150px" }}>
@@ -287,7 +279,7 @@ function Attendence({ selectedEvent, events }) {
               overflow: "auto",
             }}
           >
-            <Table striped bordered hover width="100%">
+            <Table border={1} striped bordered hover width="100%">
               <thead style={{ fontSize: "20px" }}>
                 <tr>
                   <th width="20%">학번</th>
@@ -296,7 +288,7 @@ function Attendence({ selectedEvent, events }) {
                   <th width="20%">출석 상태</th>
                 </tr>
               </thead>
-              <tbody style={{ fontSize: "15px" }}>
+              <tbody style={{ fontSize: "20px" }}>
                 {renderUserList(Users)}
               </tbody>
             </Table>
