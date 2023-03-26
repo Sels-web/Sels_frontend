@@ -62,6 +62,7 @@ function Attendence({ selectedEvent, events }) {
         key={schedule.id}
         style={{
           backgroundColor: SelectedEvent.id === schedule.id && "#e4e4e4",
+          height: "50px",
         }}
         onClick={() => changeEvent(schedule)}
       >
@@ -206,6 +207,7 @@ function Attendence({ selectedEvent, events }) {
                     fontSize: "30px",
                     color: "#F2A240",
                     fontWeight: "bold",
+                    paddingTop: "10px",
                   }}
                   onClick={handleDialogOpen}
                 />
@@ -279,7 +281,7 @@ function Attendence({ selectedEvent, events }) {
               overflow: "auto",
             }}
           >
-            <Table border={1} striped bordered hover width="100%">
+            <Table striped bordered hover width="100%">
               <thead style={{ fontSize: "20px" }}>
                 <tr>
                   <th width="20%">학번</th>
