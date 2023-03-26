@@ -15,7 +15,7 @@ import {
 import ClearIcon from "@mui/icons-material/Clear";
 import { GithubPicker } from "react-color";
 import "../css/Calendar.css";
-import Attendence from "./Attendence";
+import Attendance from "./Attendance";
 import { v4 as uuidv4 } from "uuid";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -218,10 +218,10 @@ function Calender() {
         fullScreen="true"
       >
         {selectedEvent && (
-          <Attendence
+          <Attendance
             selectedEvent={selectedEvent}
             events={events}
-          ></Attendence>
+          ></Attendance>
         )}
         <DialogActions>
           <IconButton

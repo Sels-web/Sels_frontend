@@ -165,10 +165,11 @@ function Attendence({ selectedEvent, events }) {
                   margin: 0,
                   padding: "1rem 0",
                   fontSize: "27px",
+                  color: "whitesmoke",
                 }}
               >
                 {" "}
-                세션리스트
+                출석부
               </h2>
               <Clock
                 format={"YYYY-MM-DD HH:mm:ss"}
@@ -188,18 +189,24 @@ function Attendence({ selectedEvent, events }) {
                 margin: "0rem auto 1rem",
                 width: "150px",
                 display: "inline-block",
-                backgroundColor: "white",
+                backgroundColor: "#f2a240",
                 padding: "3px",
                 textAlign: "center",
                 borderRadius: "20px",
+                color: "whitesmoke",
               }}
-              // onClick={handleDialogOpen}
+              // onClick={handleDialogClose}
             >
-              전체 출석 리스트 보기
+              이번 달 일정 보기
             </span>
           </>
           <div className="SideList">
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+            >
               <h4 style={{ color: "#F2A240", fontWeight: "bold" }}>
                 일정 리스트
               </h4>
@@ -258,7 +265,12 @@ function Attendence({ selectedEvent, events }) {
           width: "100%",
         }}
       >
-        <main style={{ display: "flex", flexDirection: "column" }}>
+        <main
+          style={{
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
           <div className="MainHeader" style={{ height: "150px" }}>
             <span style={{ margin: 0, fontSize: "15px" }}>
               {SelectedEvent.start.toLocaleString()}
@@ -270,7 +282,10 @@ function Attendence({ selectedEvent, events }) {
           </div>
           <div
             className="MainList"
-            style={{ height: "500px", overflow: "auto" }}
+            style={{
+              height: "500px",
+              overflow: "auto",
+            }}
           >
             <Table striped bordered hover width="100%">
               <thead style={{ fontSize: "20px" }}>
