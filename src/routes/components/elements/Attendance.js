@@ -12,6 +12,8 @@ import {
 } from "@mui/material";
 import "../css/attedance.css";
 import { AiOutlineUserAdd } from "react-icons/ai";
+import moment from "moment";
+import "moment/locale/ko";
 
 function Attendence({ selectedEvent, events }) {
   const [Users, setUsers] = useState([]);
@@ -52,6 +54,7 @@ function Attendence({ selectedEvent, events }) {
 
   const changeEvent = (event) => {
     setSelectedEvent(event);
+    console.log(SelectedEvent);
     // console.log(SelectedEvent);
   };
 
@@ -267,7 +270,7 @@ function Attendence({ selectedEvent, events }) {
         >
           <div className="MainHeader" style={{ height: "150px" }}>
             <span style={{ margin: 0, fontSize: "15px" }}>
-              {SelectedEvent.start.toLocaleString()}
+              {moment(SelectedEvent.start).format("YYYY년 MM월 DD일 HH:mm:ss")}
             </span>
             <h2>출석 리스트</h2>
             <h3 style={{ margin: 0, fontSize: "20px" }}>

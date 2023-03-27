@@ -58,7 +58,7 @@ function Calender() {
   //   }, []);
 
   const handleDialogOpen = (arg) => {
-    console.log(arg);
+    // console.log(arg);
     setNewEvent({
       id: uuidv4(),
       title: "",
@@ -66,6 +66,8 @@ function Calender() {
       end: arg.endStr,
       color: "#fccb00", //default 노란색
     });
+
+    // console.log(newEvent);
 
     setDialogOpen(true);
   };
@@ -87,12 +89,12 @@ function Calender() {
   const handleEventClick = (arg) => {
     // scrollToDown();
     handleAttendOpen();
-    // setSelectedEvent(arg.event);
+    console.log(arg.event);
     setSelectedEvent({
       id: arg.event.id,
       title: arg.event.title,
       start: arg.event.startStr,
-      end: arg.event.endStr,
+      end: arg.event.startStr,
       color: arg.event.backgroundColor,
     });
     console.log(selectedEvent);
