@@ -1,4 +1,4 @@
-import styles from "../components/css/home.module.css";
+import styles from "./elements/css/home.module.css";
 // import Calendar from "../components/Calender";
 
 function Section({ cnt }) {

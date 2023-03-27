@@ -162,6 +162,11 @@ function Calender() {
         select={handleDialogOpen}
         events={events}
         eventClick={handleEventClick}
+        eventTimeFormat={{
+          hour: "numeric",
+          minute: "2-digit",
+          hour12: false,
+        }}
       />
       <Dialog
         open={dialogOpen}

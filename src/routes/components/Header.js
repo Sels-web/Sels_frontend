@@ -1,8 +1,8 @@
-import styles from "../components/css/home.module.css";
-import Menu from "./elements/Menu";
+import styles from "./elements/css/home.module.css";
+import Menu from "./elements/Headerelem/Menu";
 import { useMediaQuery } from "react-responsive";
-import Sidebar from "./elements/Sidebar";
-import Sidemenu from "./elements/Sidemenu";
+import Sidebar from "./elements/Headerelem/Sidebar";
+import Sidemenu from "./elements/Headerelem/Sidemenu";
 import React, { useEffect, useState } from "react";
 
 export const Small = ({ children }) => {
@@ -35,9 +35,6 @@ function Header() {
               padding: 0,
             }}
           />
-          {/* <span className={styles.Logo}>Logo</span> */}
-          {/* <LoginModal /> */}
-          {/* <DiscordLoginModal /> */}
           <Sidebar width={360}>
             <Sidemenu />
           </Sidebar>
@@ -56,10 +53,7 @@ function Header() {
               padding: 0,
             }}
           />
-          {/* <span className={styles.Logo}>Logo</span> */}
           <Menu />
-          {/* <LoginModal /> */}
-          {/* <DiscordLoginModal /> */}
         </div>
       </Big>
     </>

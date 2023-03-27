@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import styles from "../components/css/home.module.css";
+import styles from "./elements/css/home.module.css";
 import Section from "../components/Section";
-import TopButton from "./elements/TopButton";
-import Calendar from "./elements/Calendar";
+import TopButton from "./elements/Mainelem/TopButton";
+import Calendar from "./elements/Mainelem/Calendar";
 
 function Main() {
   return (
