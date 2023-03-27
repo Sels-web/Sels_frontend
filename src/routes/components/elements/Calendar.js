@@ -22,6 +22,8 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Zoom timeout={2000} ref={ref} {...props} />;
 });
 
+const today = new Date();
+
 function Calender() {
   const [events, setEvents] = useState([]);
   const [dialogOpen, setDialogOpen] = useState(false);
