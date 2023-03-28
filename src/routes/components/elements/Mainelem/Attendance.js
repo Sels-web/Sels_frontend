@@ -268,12 +268,19 @@ function Attendence({ selectedEvent, events }) {
             // paddingRight: "50px",
           }}
         >
-          <div className="MainHeader" style={{ height: "150px" }}>
-            <span style={{ margin: 0, fontSize: "15px" }}>
+          <div
+            className="MainHeader"
+            style={{ height: "150px", border: "1px solid red" }}
+          >
+            <span
+              style={{ margin: 0, fontSize: "15px", border: "1px solid red" }}
+            >
               {moment(SelectedEvent.start).format("YYYY년 MM월 DD일 HH:mm:ss")}
             </span>
-            <h2>출석 리스트</h2>
-            <h3 style={{ margin: 0, fontSize: "20px" }}>
+            <h2 style={{ border: "1px solid red" }}>출석 리스트</h2>
+            <h3
+              style={{ margin: 0, fontSize: "20px", border: "1px solid red" }}
+            >
               {SelectedEvent.title}
             </h3>
           </div>
