@@ -133,6 +133,7 @@ function Calender() {
         headers: {
           "Content-Type": `application/json`,
         },
+        body: New_event,
       })
       .then((response) => {
         console.log(response);
