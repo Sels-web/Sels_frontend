@@ -121,11 +121,11 @@ function Calender() {
   const handleFormSubmit = (event) => {
     event.preventDefault();
     const New_event = {
-      color: newEvent.color,
-      end: newEvent.end,
       eventId: newEvent.id,
-      start: newEvent.start,
       title: newEvent.title,
+      start: newEvent.start,
+      end: newEvent.end,
+      color: newEvent.color,
     };
     axios
       .post("http://localhost:8080/api/events/add", New_event, {
@@ -176,7 +176,7 @@ function Calender() {
               type="text"
               fullWidth
               name="title"
-              value={newEvent.title}
+              value={newEvent.title || ""}
               onChange={handleInputChange}
             />
             <TextField
@@ -185,7 +185,7 @@ function Calender() {
               type="datetime-local"
               fullWidth
               name="start"
-              value={moment(newEvent.start).format("YYYY-MM-DD 00:00:00")}
+              value={moment(newEvent.start).format("YYYY-MM-DD 00:00:00") || ""}
               // value={newEvent.startStr}
               onChange={handleInputChange}
               InputLabelProps={{
@@ -198,7 +198,7 @@ function Calender() {
               type="datetime-local"
               fullWidth
               name="end"
-              value={moment(newEvent.end).format("YYYY-MM-DD 00:00:00")}
+              value={moment(newEvent.end).format("YYYY-MM-DD 00:00:00") || ""}
               // value={newEvent.endStr}
               onChange={handleInputChange}
               InputLabelProps={{
