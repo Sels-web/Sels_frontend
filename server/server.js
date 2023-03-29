@@ -1,20 +1,24 @@
+const path = require("path");
 const express = require("express");
-const mysql = require("./database")();
+const cors = require("cors");
+const app = express();
 
-const connection = mysql.init();
+app.use("", express.static(path.join(__dirname, "public")));
+app.use(cors());
 
-mysql.db_open(connection);
-
-connection.query("SELECT * FROM  USERS", function (error, results, fields) {
-  if (error) {
-    console.log(error);
-  }
-  console.log(results);
+app.get("/", (request, response) => {
+  return response.sendFile("main.html", { root: "." });
 });
 
-const app = express();
-const port = 8080;
+app.post("/api/events/add", (request, response) => {
+  console.log(request.body);
+  response.send(request.body);
+  // const { color, end, eventId, start, title, name } = request.body;
+  //이 사이에 이제 DB랑 BACK에 넘겨준 response랑 비교해서 회원이 되있으면 redirect
+  // return response.redirect("http://localhost:3000");
+});
 
-app.get("/", (req, res) => res.send("Server Start"));
-
-app.listen(port, () => console.log(`Server Start. Port : ${port}`));
+const port = "8080";
+app.listen(port, () =>
+  console.log(`App listening at http://localhost:${port}`)
+);

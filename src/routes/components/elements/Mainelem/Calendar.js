@@ -18,6 +18,8 @@ import "../css/Calendar.css";
 import Attendance from "./Attendance";
 import { v4 as uuidv4 } from "uuid";
 
+import axios from "axios";
+
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Zoom timeout={2000} ref={ref} {...props} />;
 });
@@ -47,7 +49,7 @@ function Calender() {
   //           end: data.end, //string
   //           id: data.eventId, //string  이벤트의 아이디
   //           start: data.start, //string
-  //           title: data.title, //string
+  //           title: data.tcoitle, //string
   //         };
 
   //         setEvents(getEvents);
@@ -119,36 +121,27 @@ function Calender() {
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    // const New_event = {
-    //     color : newEvent.color,
-    //     end : newEvent.end,
-    //     eventId : newEvent.id,
-    //     start : newEvent.start,
-    //     title : newEvent.title
-    //   };
-    //   console.log(New_event);
-
-    //   fetch("새로운 이벤트 Post", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify(New_event),
-    //   })
-    //     .then((response) => {
-    //       if (response.ok === true) {
-    //         return response.json();
-    //       }
-    //       throw new Error("에러 발생!");
-    //     })
-    //     .catch((error) => {
-    //       alert(error);
-    //     })
-    //     .then((data) => {
-    //       console.log(data);
-    //     });
+    const New_event = {
+      color: newEvent.color,
+      end: newEvent.end,
+      eventId: newEvent.id,
+      start: newEvent.start,
+      title: newEvent.title,
+    };
+    axios
+      .post("http://localhost:8080/api/events/add", New_event, {
+        headers: {
+          "Content-Type": `application/json`,
+        },
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((response) => {
+        console.log("Error!");
+      });
     setEvents((prevEvents) => [...prevEvents, newEvent]);
-    console.log(newEvent);
+    // console.log(newEvent);
     handleDialogClose();
   };
 
