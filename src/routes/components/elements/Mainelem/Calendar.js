@@ -8,12 +8,14 @@ import {
   DialogContent,
   DialogActions,
   TextField,
+  // DateTimeField,
   Button,
   Zoom,
   IconButton,
 } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
 import { GithubPicker } from "react-color";
+import moment from "moment";
 import "../css/Calendar.css";
 import Attendance from "./Attendance";
 import { v4 as uuidv4 } from "uuid";
@@ -64,12 +66,10 @@ function Calender() {
     setNewEvent({
       id: uuidv4(),
       title: "",
-      start: arg.startStr,
-      end: arg.endStr,
+      start: moment(arg.startStr).format("YYYY-MM-DD 00:00:00"),
+      end: moment(arg.endStr).format("YYYY-MM-DD 00:00:00"),
       color: "#fccb00", //default 노란색
     });
-
-    // console.log(newEvent);
 
     setDialogOpen(true);
   };
@@ -89,14 +89,13 @@ function Calender() {
   };
 
   const handleEventClick = (arg) => {
-    // scrollToDown();
     handleAttendOpen();
     console.log(arg.event);
     setSelectedEvent({
       id: arg.event.id,
       title: arg.event.title,
-      start: arg.event.startStr,
-      end: arg.event.startStr,
+      start: arg.event.start,
+      end: arg.event.end,
       color: arg.event.backgroundColor,
     });
     console.log(selectedEvent);
@@ -186,7 +185,8 @@ function Calender() {
               type="datetime-local"
               fullWidth
               name="start"
-              defaultvalue={newEvent.start}
+              value={moment(newEvent.start).format("YYYY-MM-DD 00:00:00")}
+              // value={newEvent.startStr}
               onChange={handleInputChange}
               InputLabelProps={{
                 shrink: true,
@@ -198,7 +198,8 @@ function Calender() {
               type="datetime-local"
               fullWidth
               name="end"
-              defaultvalue={newEvent.end}
+              value={moment(newEvent.end).format("YYYY-MM-DD 00:00:00")}
+              // value={newEvent.endStr}
               onChange={handleInputChange}
               InputLabelProps={{
                 shrink: true,
