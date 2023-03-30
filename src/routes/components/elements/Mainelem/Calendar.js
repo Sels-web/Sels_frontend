@@ -35,31 +35,39 @@ function Calender() {
   const [newEvent, setNewEvent] = useState({});
   const [selectedEvent, setSelectedEvent] = useState(null);
 
-  //   useEffect(() => {
-  //     fetch("/이벤트에 대한 정보 load")
-  //       .then((response) => {
-  //         if (response.ok) {
-  //           return response.json();
-  //         }
-  //         throw new Error("Network response was not ok.");
-  //       })
-  //       .then((data) => {
-  //         console.log(JSON.stringify(data));
+  useEffect(() => {
+    axios
+      .get("/이벤트에 대한 정보 load")
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((response) => {
+        console.log("Error!");
+      });
+    // fetch("/이벤트에 대한 정보 load")
+    //   .then((response) => {
+    //     if (response.ok) {
+    //       return response.json();
+    //     }
+    //     throw new Error("Network response was not ok.");
+    //   })
+    //   .then((data) => {
+    //     console.log(JSON.stringify(data));
 
-  //         const getEvents = {
-  //           color: data.color, //string
-  //           end: data.end, //string
-  //           id: data.eventId, //string  이벤트의 아이디
-  //           start: data.start, //string
-  //           title: data.tcoitle, //string
-  //         };
+    //     const getEvents = {
+    //       color: data.color, //string
+    //       end: data.end, //string
+    //       id: data.eventId, //string  이벤트의 아이디
+    //       start: data.start, //string
+    //       title: data.tcoitle, //string
+    //     };
 
-  //         setEvents(getEvents);
-  //       })
-  //       .catch((error) => {
-  //         console.log(`error: ${error}`);
-  //       });
-  //   }, []);
+    //     setEvents(getEvents);
+    //   })
+    //   .catch((error) => {
+    //     console.log(`error: ${error}`);
+    //   });
+  }, []);
 
   const handleDialogOpen = (arg) => {
     // console.log(arg);
