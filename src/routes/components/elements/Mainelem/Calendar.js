@@ -185,7 +185,7 @@ function Calender() {
               type="datetime-local"
               fullWidth
               name="start"
-              value={moment(newEvent.start).format("YYYY-MM-DD 00:00:00") || ""}
+              value={moment(newEvent.start).format("YYYY-MM-DD HH:mm:ss") || ""}
               // value={newEvent.startStr}
               onChange={handleInputChange}
               InputLabelProps={{
@@ -198,7 +198,7 @@ function Calender() {
               type="datetime-local"
               fullWidth
               name="end"
-              value={moment(newEvent.end).format("YYYY-MM-DD 00:00:00") || ""}
+              value={moment(newEvent.end).format("YYYY-MM-DD HH:mm:ss") || ""}
               // value={newEvent.endStr}
               onChange={handleInputChange}
               InputLabelProps={{
