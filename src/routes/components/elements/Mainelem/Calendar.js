@@ -72,7 +72,7 @@ function Calender() {
   const handleDialogOpen = (arg) => {
     // console.log(arg);
     setNewEvent({
-      id: uuidv4(),
+      id: Math.random().toString(36).substring(2, 11),
       title: "",
       start: moment(arg.startStr).format("YYYY-MM-DD 00:00:00"),
       end: moment(arg.endStr).format("YYYY-MM-DD 00:00:00"),

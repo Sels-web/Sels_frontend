@@ -44,6 +44,10 @@ td {
   vertical-align: middle;
 }
 
+.user:hover {
+  background-color: hsla(0, 0%, 82%, 0.3);
+}
+
 .SideFooter {
   text-align: center;
   bottom: 0;

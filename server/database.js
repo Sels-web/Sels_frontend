@@ -8,7 +8,7 @@ module.exports = function () {
         port: "3306",
         user: "root",
         password: "3860",
-        database: "TEST",
+        database: "sels",
       });
     },
 

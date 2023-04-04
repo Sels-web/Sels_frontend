@@ -94,7 +94,7 @@ function Attendence({ selectedEvent, events }) {
     Users.map(
       (user) =>
         SelectedEvent.id === user.eventKey && (
-          <tr key={user.length}>
+          <tr className="user" key={user.length}>
             <td width="20%">{user.key}</td>
             <td width="30%">{user.Username}</td>
             {/* <td>{user.Department}</td> */}
@@ -314,7 +314,7 @@ function Attendence({ selectedEvent, events }) {
               overflow: "auto",
             }}
           >
-            <Table striped bordered hover width="100%">
+            <Table striped bordered width="100%">
               <thead style={{ fontSize: "20px" }}>
                 <tr>
                   <th width="20%">학번</th>

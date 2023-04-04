@@ -20,19 +20,14 @@ app.post("/api/events/add", (request, response) => {
   console.log(request.body);
   response.send(request.body);
   const { eventId, title, start, end, color } = request.body;
-  const query =
-    "INSERT INTO Schedule (eventId, title, start, end, color) VALUES";
+  const sql = `INSERT INTO Calendar (eventId, title, start, end, color) VALUES (${eventId}, ${title},${start},${end},${color})`;
 
-  connection.query(
-    query,
-    (eventId, title, start, end, color),
-    function (error, results, fields) {
-      if (error) {
-        console.log(error);
-      }
-      console.log(results);
-    }
-  );
+  console.log(sql);
+
+  connection.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("1 record inserted");
+  });
 
   //이 사이에 이제 DB랑 BACK에 넘겨준 response랑 비교해서 회원이 되있으면 redirect
   // return response.redirect("http://localhost:3000");
