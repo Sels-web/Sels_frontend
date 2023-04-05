@@ -136,7 +136,7 @@ function Calender() {
       color: newEvent.color,
     };
     axios
-      .post("http://localhost:8080/api/events/add", New_event, {
+      .post("http://localhost:8000/api/events/add", New_event, {
         headers: {
           "Content-Type": `application/json`,
         },
