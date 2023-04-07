@@ -37,10 +37,21 @@ function Calender() {
 
   useEffect(() => {
     axios
-      .get("/이벤트에 대한 정보 load")
+      .get("http://localhost:8000/sels/getAllCalendar")
       .then((response) => {
         console.log(response.data);
+
+        // const getEvents = {
+        //   color: response.data.color, //string
+        //   end: response.data.end, //string
+        //   id: response.data.eventId, //string  이벤트의 아이디
+        //   start: response.data.start, //string
+        //   title: response.data.tcoitle, //string
+        // };
+
+        // setEvents(getEvents);
       })
+
       .catch((response) => {
         console.log("Error!");
       });
@@ -54,12 +65,12 @@ function Calender() {
     //   .then((data) => {
     //     console.log(JSON.stringify(data));
 
-    //     const getEvents = {
-    //       color: data.color, //string
-    //       end: data.end, //string
-    //       id: data.eventId, //string  이벤트의 아이디
-    //       start: data.start, //string
-    //       title: data.tcoitle, //string
+    // const getEvents = {
+    //   color: data.color, //string
+    //   end: data.end, //string
+    //   id: data.eventId, //string  이벤트의 아이디
+    //   start: data.start, //string
+    //   title: data.tcoitle, //string
     //     };
 
     //     setEvents(getEvents);
@@ -136,7 +147,7 @@ function Calender() {
       color: newEvent.color,
     };
     axios
-      .post("http://localhost:8000/api/events/add", New_event, {
+      .post("http://localhost:8000/sels/postCalendar", New_event, {
         headers: {
           "Content-Type": `application/json`,
         },
@@ -149,7 +160,7 @@ function Calender() {
         console.log("Error!");
       });
     setEvents((prevEvents) => [...prevEvents, newEvent]);
-    // console.log(newEvent);
+    console.log(events);
     handleDialogClose();
   };
 
