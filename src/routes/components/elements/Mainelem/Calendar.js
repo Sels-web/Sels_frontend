@@ -39,7 +39,7 @@ function Calender() {
     axios
       .get("http://localhost:8000/sels/getAllCalendar")
       .then((response) => {
-        console.log(response.data);
+        console.log(response.data["orders"]);
 
         // const getEvents = {
         //   color: response.data.color, //string
@@ -49,7 +49,8 @@ function Calender() {
         //   title: response.data.tcoitle, //string
         // };
 
-        // setEvents(getEvents);
+        // setEvents(response.data["orders"]);
+        console.log(events);
       })
 
       .catch((response) => {
