@@ -39,50 +39,22 @@ function Calender() {
     axios
       .get("http://localhost:8000/sels/getAllCalendar")
       .then((response) => {
-        console.log(response.data["orders"]);
-
-        // const getEvents = {
-        //   color: response.data.color, //string
-        //   end: response.data.end, //string
-        //   id: response.data.eventId, //string  이벤트의 아이디
-        //   start: response.data.start, //string
-        //   title: response.data.tcoitle, //string
-        // };
-
-        // setEvents(response.data["orders"]);
-        console.log(events);
+        console.log(response.data.orders);
+        const eventsData = response.data.orders.map((event) => ({
+          id: event.eventId,
+          title: event.title,
+          start: event.startDate,
+          end: event.endDate,
+          color: event.color,
+        }));
+        setEvents(eventsData);
       })
-
-      .catch((response) => {
-        console.log("Error!");
+      .catch((error) => {
+        console.log(error);
       });
-    // fetch("/이벤트에 대한 정보 load")
-    //   .then((response) => {
-    //     if (response.ok) {
-    //       return response.json();
-    //     }
-    //     throw new Error("Network response was not ok.");
-    //   })
-    //   .then((data) => {
-    //     console.log(JSON.stringify(data));
-
-    // const getEvents = {
-    //   color: data.color, //string
-    //   end: data.end, //string
-    //   id: data.eventId, //string  이벤트의 아이디
-    //   start: data.start, //string
-    //   title: data.tcoitle, //string
-    //     };
-
-    //     setEvents(getEvents);
-    //   })
-    //   .catch((error) => {
-    //     console.log(`error: ${error}`);
-    //   });
   }, []);
 
   const handleDialogOpen = (arg) => {
-    // console.log(arg);
     setNewEvent({
       id: Math.random().toString(36).substring(2, 11),
       title: "",
