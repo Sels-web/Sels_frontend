@@ -40,12 +40,15 @@ function Calender() {
     axios
       .get("http://localhost:8000/sels/getAllCalendar")
       .then((response) => {
-        console.log(response.data.orders);
         const eventsData = response.data.orders.map((event) => ({
           id: event.eventId,
           title: event.title,
-          start: event.startDate,
-          end: event.endDate,
+          start: moment(event.startDate)
+            .utcOffset(0 * 60)
+            .format("YYYY-MM-DD HH:mm:ss"),
+          end: moment(event.endDate)
+            .utcOffset(0 * 60)
+            .format("YYYY-MM-DD HH:mm:ss"),
           color: event.color,
         }));
         setEvents(eventsData);
@@ -121,6 +124,7 @@ function Calender() {
       end: newEvent.end,
       color: newEvent.color,
     };
+
     axios
       .post("http://localhost:8000/sels/postCalendar", New_event, {
         headers: {
