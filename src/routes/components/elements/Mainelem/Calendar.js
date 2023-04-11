@@ -16,6 +16,7 @@ import {
 import ClearIcon from "@mui/icons-material/Clear";
 import { GithubPicker } from "react-color";
 import moment from "moment";
+import time from "moment-timezone";
 import "../css/Calendar.css";
 import Attendance from "./Attendance";
 import { v4 as uuidv4 } from "uuid";
@@ -48,6 +49,7 @@ function Calender() {
           color: event.color,
         }));
         setEvents(eventsData);
+        console.log(events);
       })
       .catch((error) => {
         console.log(error);
