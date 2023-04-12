@@ -53,6 +53,8 @@ function Attendence({ selectedEvent, events }) {
       Username: newUser.Username,
     };
 
+    console.log(New_user);
+
     axios
       .post(`http://localhost:8000/sels/getOneList`, New_user, {
         headers: {
