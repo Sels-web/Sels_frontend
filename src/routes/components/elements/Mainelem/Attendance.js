@@ -48,33 +48,34 @@ function Attendence({ selectedEvent, events }) {
   const handleFormSubmit = (user) => {
     user.preventDefault();
     console.log(newUser);
-    // const New_event = {
-    //   eventId: newEvent.id,
-    //   title: newEvent.title,
-    //   start: newEvent.start,
-    //   end: newEvent.end,
-    //   color: newEvent.color,
-    // };
-    // axios
-    //   .post("http://localhost:8000/sels/postCalendar", New_event, {
-    //     headers: {
-    //       "Content-Type": `application/json`,
-    //     },
-    //     body: New_event,
-    //   })
-    //   .then((response) => {
-    //     console.log(response);
-    //   })
-    //   .catch((response) => {
-    //     console.log("Error!");
-    //   });
+    const New_user = {
+      eventId: newUser.eventKey,
+      Username: newUser.Username,
+    };
+
     axios
-      .get("http://localhost:8000/sels/postCalendar", {
-        name: newUser.Username,
+      .post(`http://localhost:8000/sels/getOneList`, New_user, {
+        headers: {
+          "Content-Type": `application/json`,
+        },
+        body: New_user,
       })
-      .then((res) => {
-        console.log(res.data.data);
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((response) => {
+        console.log("Error!");
       });
+
+    // axios
+    //   .get(`http://localhost:8000/sels/getOneList/${newUser.Username}`)
+    //   .then((res) => {
+    //     console.log(res.data);
+    //     setNewUser((prevUsers) => ({
+    //       ...prevUsers,
+    //       [name]: value,
+    //     }));
+    //   });
 
     setUsers((prevUsers) => [...prevUsers, newUser]);
     console.log(Users);
