@@ -15,6 +15,8 @@ import { AiOutlineUserAdd } from "react-icons/ai";
 import moment from "moment";
 import "moment/locale/ko";
 
+import axios from "axios";
+
 function Attendence({ selectedEvent, events }) {
   const [Users, setUsers] = useState([]);
   const [newUser, setNewUser] = useState({});
@@ -46,10 +48,66 @@ function Attendence({ selectedEvent, events }) {
   const handleFormSubmit = (user) => {
     user.preventDefault();
     console.log(newUser);
+    // const New_event = {
+    //   eventId: newEvent.id,
+    //   title: newEvent.title,
+    //   start: newEvent.start,
+    //   end: newEvent.end,
+    //   color: newEvent.color,
+    // };
+    // axios
+    //   .post("http://localhost:8000/sels/postCalendar", New_event, {
+    //     headers: {
+    //       "Content-Type": `application/json`,
+    //     },
+    //     body: New_event,
+    //   })
+    //   .then((response) => {
+    //     console.log(response);
+    //   })
+    //   .catch((response) => {
+    //     console.log("Error!");
+    //   });
+    axios
+      .get("http://localhost:8000/sels/postCalendar", {
+        name: newUser.Username,
+      })
+      .then((res) => {
+        console.log(res.data.data);
+      });
+
     setUsers((prevUsers) => [...prevUsers, newUser]);
     console.log(Users);
     console.log(SelectedEvent);
     handleDialogClose();
+  };
+
+  const isFormVaild = (user, SelectedEvent, value) =>
+    user && SelectedEvent && value;
+
+  const handleAttend = async (user, SelectedEvent, value) => {
+    if (isFormVaild(user, SelectedEvent, value)) {
+      const newAttendance = {
+        user_id: user.eventKey, // 연결 된 유저
+        schedule_id: SelectedEvent.id, // 연결된 스케줄
+        state: value, // 상태
+      };
+      console.log(newAttendance);
+      //   try {
+      //     // 스케줄 -> 유저이름으로 구분하여, 업데이트
+      //     await AttendanceRef.child(`${schedule.id}/${user.Username}`).update(
+      //       newAttendance
+      //     );
+      //     // 저거 자체 SearchUser 넣을려했더니 무한로딩 되서 하나 로딩만듬
+      //     if (IsLoadingState) setIsLoadingState(false);
+      //     else setIsLoadingState(true);
+      //   } catch (error) {
+      //     alert(error);
+      //   }
+      // } else {
+      //   alert("스케줄을 다시 선택해주세요.");
+      // }
+    }
   };
 
   const changeEvent = (event) => {
@@ -106,7 +164,9 @@ function Attendence({ selectedEvent, events }) {
                   type="radio"
                   name={user.id}
                   value="출석"
-                  // onChange={(e) => handleAttend(user, schedule, e.target.value)}
+                  onChange={(e) =>
+                    handleAttend(user, SelectedEvent, e.target.value)
+                  }
                 />
                 지각
                 <input

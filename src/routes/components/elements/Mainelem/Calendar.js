@@ -63,8 +63,8 @@ function Calender() {
     setNewEvent({
       id: Math.random().toString(36).substring(2, 11),
       title: "",
-      start: moment(arg.startStr).format("YYYY-MM-DD 00:00:00"),
-      end: moment(arg.endStr).format("YYYY-MM-DD 00:00:00"),
+      start: moment(arg.startStr).format("YYYY-MM-DD 12:00:00"),
+      end: moment(arg.endStr).format("YYYY-MM-DD 12:00:00"),
       color: "#fccb00", //default 노란색
     });
 
