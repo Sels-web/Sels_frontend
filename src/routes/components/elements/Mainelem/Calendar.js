@@ -40,6 +40,7 @@ function Calender() {
     axios
       .get("http://localhost:8000/sels/getAllCalendar")
       .then((response) => {
+        console.log(response.data.orders);
         const eventsData = response.data.orders.map((event) => ({
           id: event.eventId,
           title: event.title,
@@ -50,9 +51,9 @@ function Calender() {
             .utcOffset(0 * 60)
             .format("YYYY-MM-DD HH:mm:ss"),
           color: event.color,
+          enterNames: event.enterNames,
         }));
         setEvents(eventsData);
-        console.log(events);
       })
       .catch((error) => {
         console.log(error);
@@ -66,6 +67,7 @@ function Calender() {
       start: moment(arg.startStr).format("YYYY-MM-DD 12:00:00"),
       end: moment(arg.endStr).format("YYYY-MM-DD 12:00:00"),
       color: "#fccb00", //default 노란색
+      enterNames: {},
     });
 
     setDialogOpen(true);
@@ -94,6 +96,7 @@ function Calender() {
       start: arg.event.start,
       end: arg.event.end,
       color: arg.event.backgroundColor,
+      enterNames: arg.event.enterNames,
     });
     console.log(selectedEvent);
   };
@@ -123,6 +126,7 @@ function Calender() {
       start: newEvent.start,
       end: newEvent.end,
       color: newEvent.color,
+      enterNames: newEvent.enterNames,
     };
 
     axios

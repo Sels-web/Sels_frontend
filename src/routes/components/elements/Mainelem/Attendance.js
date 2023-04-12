@@ -18,6 +18,7 @@ import "moment/locale/ko";
 import axios from "axios";
 
 function Attendence({ selectedEvent, events }) {
+  console.log(events);
   const [Users, setUsers] = useState([]);
   const [newUser, setNewUser] = useState({});
   const [SelectedEvent, setSelectedEvent] = useState(selectedEvent);
