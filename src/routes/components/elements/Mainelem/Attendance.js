@@ -117,7 +117,7 @@ function Attendence({ selectedEvent, events }) {
   const changeEvent = (event) => {
     setSelectedEvent(event);
     console.log(SelectedEvent);
-    // console.log(SelectedEvent);
+    console.log(SelectedEvent);
   };
 
   const renderScheduleList = (Schedules) =>
