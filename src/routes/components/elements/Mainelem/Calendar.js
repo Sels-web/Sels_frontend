@@ -222,7 +222,6 @@ function Calender() {
         onClose={handleAttendClose}
         TransitionComponent={Transition}
         fullScreen={true}
-        // maxWidth="lg"
       >
         {selectedEvent && (
           <Attendance
