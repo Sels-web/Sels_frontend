@@ -70,16 +70,6 @@ function Attendence({ selectedEvent, events }) {
         console.log("Error!");
       });
 
-    // axios
-    //   .get(`http://localhost:8000/sels/getOneList/${newUser.Username}`)
-    //   .then((res) => {
-    //     console.log(res.data);
-    //     setNewUser((prevUsers) => ({
-    //       ...prevUsers,
-    //       [name]: value,
-    //     }));
-    //   });
-
     setUsers((prevUsers) => [...prevUsers, newUser]);
     console.log(Users);
     console.log(SelectedEvent);
