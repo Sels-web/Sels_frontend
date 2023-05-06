@@ -65,7 +65,7 @@ function Calender() {
       id: Math.random().toString(36).substring(2, 11),
       title: "",
       start: moment(arg.startStr).format("YYYY-MM-DD 12:00:00"),
-      end: moment(arg.endStr).format("YYYY-MM-DD 12:00:00"),
+      end: moment(arg.endStr).format("YYYY-MM-DD 00:00:00"),
       color: "#fccb00", //default 노란색
       enterNames: {},
     });
@@ -142,8 +142,17 @@ function Calender() {
       .catch((response) => {
         console.log("Error!");
       });
-    setEvents((prevEvents) => [...prevEvents, newEvent]);
-    console.log(events);
+    // setEvents((prevEvents) => [...prevEvents, newEvent]);
+    // console.log(events);
+    // handleDialogClose();
+    const eventsCopy = [...events];
+    eventsCopy.sort((a, b) => {
+      console.log(a);
+      console.log(b);
+      return new Date(a.start) - new Date(b.start);
+    });
+    setEvents(eventsCopy);
+
     handleDialogClose();
   };
 
