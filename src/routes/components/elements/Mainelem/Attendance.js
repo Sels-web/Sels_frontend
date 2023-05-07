@@ -87,17 +87,17 @@ function Attendence({ selectedEvent, events }) {
         schedule_id: SelectedEvent.id, // 연결된 스케줄
         state: value, // 상태
       };
-      console.log(newAttendance);
       let newState = "";
+      console.log(newAttendance);
       if (newAttendance.state === "출석") {
         console.log(user);
-        newState = "present";
+        newState = "출석";
       } else if (newAttendance.state === "지각") {
-        newState = "late";
         const now = Date.now(); // 현재 시간
         const start = new Date(SelectedEvent.start).getTime(); // 시작 시간
         const diff = (now - start) / (1000 * 60); // 분 단위로 계산
         console.log(`지각한 시간: ${diff}분`);
+        newState = `${diff}분 지각`;
       } else if (newAttendance.state === "결석") {
         newState = "absent";
         // 결석일 때의 처리
@@ -204,10 +204,23 @@ function Attendence({ selectedEvent, events }) {
                 />
               </form>
             </td>
-            <td>{user.state}</td>
+            <td style={{ color: getStatusColor(user.state) }}>{user.state}</td>
           </tr>
         )
     );
+
+  const getStatusColor = (status) => {
+    switch (status) {
+      case "출석":
+        return "green";
+      case "지각":
+        return "orange";
+      case "결석":
+        return "red";
+      default:
+        return "black";
+    }
+  };
 
   return (
     <div
