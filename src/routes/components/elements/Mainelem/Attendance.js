@@ -29,6 +29,7 @@ function Attendence({ selectedEvent, events }) {
       eventKey: SelectedEvent.id,
       Username: "", //이름
       key: "", //인덱스
+      state: "",
     });
     setDialogOpen(true);
   };
@@ -87,20 +88,40 @@ function Attendence({ selectedEvent, events }) {
         state: value, // 상태
       };
       console.log(newAttendance);
-      //   try {
-      //     // 스케줄 -> 유저이름으로 구분하여, 업데이트
-      //     await AttendanceRef.child(`${schedule.id}/${user.Username}`).update(
-      //       newAttendance
-      //     );
-      //     // 저거 자체 SearchUser 넣을려했더니 무한로딩 되서 하나 로딩만듬
-      //     if (IsLoadingState) setIsLoadingState(false);
-      //     else setIsLoadingState(true);
-      //   } catch (error) {
-      //     alert(error);
-      //   }
-      // } else {
-      //   alert("스케줄을 다시 선택해주세요.");
-      // }
+      let newState = "";
+      if (newAttendance.state === "출석") {
+        console.log(user);
+        newState = "present";
+      } else if (newAttendance.state === "지각") {
+        newState = "late";
+        const now = Date.now(); // 현재 시간
+        const start = new Date(SelectedEvent.start).getTime(); // 시작 시간
+        const diff = (now - start) / (1000 * 60); // 분 단위로 계산
+        console.log(`지각한 시간: ${diff}분`);
+      } else if (newAttendance.state === "결석") {
+        newState = "absent";
+        // 결석일 때의 처리
+        // 예시: 해당 이벤트 삭제
+        // setEvents(events.filter((event) => event.id !== SelectedEvent.id));
+      }
+      setUsers((prevUsers) => {
+        // users 배열에서 수정할 user 객체를 찾음
+        const modifiedUser = prevUsers.find(
+          (u) => u.eventKey === user.eventKey
+        );
+        if (!modifiedUser) {
+          return prevUsers;
+        }
+        // user 객체의 state 값을 value로 업데이트
+        const updatedUser = {
+          ...modifiedUser,
+          state: value,
+        };
+        // 수정된 user 객체를 포함하는 새로운 배열을 만들어 반환
+        return prevUsers.map((u) =>
+          u.eventKey === user.eventKey ? updatedUser : u
+        );
+      });
     }
   };
 
@@ -168,17 +189,22 @@ function Attendence({ selectedEvent, events }) {
                   type="radio"
                   name={user.id}
                   value="지각"
-                  // onChange={(e) => handleAttend(user, schedule, e.target.value)}
+                  onChange={(e) =>
+                    handleAttend(user, SelectedEvent, e.target.value)
+                  }
                 />
                 결석
                 <input
                   type="radio"
                   name={user.id}
                   value="결석"
-                  // onChange={(e) => handleAttend(user, schedule, e.target.value)}
+                  onChange={(e) =>
+                    handleAttend(user, SelectedEvent, e.target.value)
+                  }
                 />
               </form>
             </td>
+            <td>{user.state}</td>
           </tr>
         )
     );
@@ -243,7 +269,7 @@ function Attendence({ selectedEvent, events }) {
                 borderRadius: "20px",
                 color: "whitesmoke",
               }}
-              // onClick={handleDialogClose}
+              onClick={handleDialogClose}
             >
               이번 달 일정 보기
             </span>
@@ -338,7 +364,7 @@ function Attendence({ selectedEvent, events }) {
                 textAlign: "center",
               }}
             >
-              {moment(SelectedEvent.start).format("YYYY년 MM월 DD일 HH:mm:ss")}
+              {moment(SelectedEvent.start).format("YYYY년 MM월 DD일 HH시 mm분")}
             </span>
             <h2
               style={{

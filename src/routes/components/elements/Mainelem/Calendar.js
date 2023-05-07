@@ -142,16 +142,17 @@ function Calender() {
       .catch((response) => {
         console.log("Error!");
       });
-    // setEvents((prevEvents) => [...prevEvents, newEvent]);
-    // console.log(events);
-    // handleDialogClose();
-    const eventsCopy = [...events];
-    eventsCopy.sort((a, b) => {
-      console.log(a);
-      console.log(b);
-      return new Date(a.start) - new Date(b.start);
-    });
-    setEvents(eventsCopy);
+    setEvents((prevEvents) => [...prevEvents, newEvent]);
+    console.log(events);
+    handleDialogClose();
+    //이벤트 정렬해야함
+    // const eventsCopy = [...events];
+    // eventsCopy.sort((a, b) => {
+    //   console.log(a);
+    //   console.log();
+    //   return new Date(a.start) - new Date(b.start);
+    // });
+    // setEvents(eventsCopy);
 
     handleDialogClose();
   };
