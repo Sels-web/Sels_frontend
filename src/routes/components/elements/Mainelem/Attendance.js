@@ -53,6 +53,7 @@ function Attendence({ selectedEvent, events }) {
     const New_user = {
       eventId: newUser.eventKey,
       Username: newUser.Username,
+      key: newUser.key,
     };
 
     console.log(New_user);
@@ -85,9 +86,10 @@ function Attendence({ selectedEvent, events }) {
       const newAttendance = {
         user_id: user.eventKey, // 연결 된 유저
         schedule_id: SelectedEvent.id, // 연결된 스케줄
+        stu_num: user.key,
         state: value, // 상태
       };
-      let newState = "";
+      var newState = "";
       console.log(newAttendance);
       if (newAttendance.state === "출석") {
         console.log(user);
@@ -107,8 +109,9 @@ function Attendence({ selectedEvent, events }) {
       setUsers((prevUsers) => {
         // users 배열에서 수정할 user 객체를 찾음
         const modifiedUser = prevUsers.find(
-          (u) => u.eventKey === user.eventKey
+          (u) => u.eventKey === user.eventKey && u.key === user.key
         );
+
         if (!modifiedUser) {
           return prevUsers;
         }
@@ -117,11 +120,17 @@ function Attendence({ selectedEvent, events }) {
           ...modifiedUser,
           state: value,
         };
+
+        console.log("전체유저" + prevUsers);
+        console.log("내가 선택한 유저" + modifiedUser);
+        console.log("state값이 수정된 유저" + updatedUser);
+
         // 수정된 user 객체를 포함하는 새로운 배열을 만들어 반환
         return prevUsers.map((u) =>
-          u.eventKey === user.eventKey ? updatedUser : u
+          u.eventKey === user.eventKey && u.key === user.key ? updatedUser : u
         );
       });
+      console.log(Users);
     }
   };
 
@@ -318,6 +327,15 @@ function Attendence({ selectedEvent, events }) {
                         type="text"
                         fullWidth
                         name="Username"
+                        onChange={handleInputChange}
+                      />
+                      <TextField
+                        autoFocus
+                        margin="dense"
+                        label="학번"
+                        type="text"
+                        fullWidth
+                        name="key"
                         onChange={handleInputChange}
                       />
                     </DialogContent>
