@@ -10,7 +10,7 @@ import {
   TextField,
   Button,
 } from "@mui/material";
-import "../css/attedance.css";
+import "../styles/attedance.css";
 import { AiOutlineUserAdd } from "react-icons/ai";
 import moment from "moment";
 import "moment/locale/ko";
@@ -251,7 +251,7 @@ function Attendence({ selectedEvent, events }) {
           <>
             <div className="SideHeader">
               <img
-                src="/assets/img/Sels_Logo.jpeg"
+                src="/assets/images/Sels_Logo.jpeg"
                 style={{ width: "100px", height: "65px" }}
                 alt=""
               />

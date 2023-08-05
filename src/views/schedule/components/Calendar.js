@@ -8,7 +8,6 @@ import {
   DialogContent,
   DialogActions,
   TextField,
-  // DateTimeField,
   Button,
   Zoom,
   IconButton,
@@ -16,10 +15,8 @@ import {
 import ClearIcon from "@mui/icons-material/Clear";
 import { GithubPicker } from "react-color";
 import moment from "moment";
-import time from "moment-timezone";
-import "../css/Calendar.css";
+import "../styles/Calendar.css";
 import Attendance from "./Attendance";
-import { v4 as uuidv4 } from "uuid";
 
 import axios from "axios";
 
@@ -65,7 +62,7 @@ function Calender() {
       id: Math.random().toString(36).substring(2, 11),
       title: "",
       start: moment(arg.startStr).format("YYYY-MM-DD 12:00:00"),
-      end: moment(arg.endStr).format("YYYY-MM-DD 12:00:00"),
+      end: moment(arg.startStr).format("YYYY-MM-DD 13:00:00"),
       color: "#fccb00", //default 노란색
       enterNames: {},
     });
@@ -159,7 +156,6 @@ function Calender() {
 
   return (
     <div className="react-calendar">
-      <h2>이번 달 SELS 일정</h2>
       <FullCalendar
         plugins={[dayGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
