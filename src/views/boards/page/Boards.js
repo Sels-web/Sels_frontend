@@ -1,6 +1,6 @@
 const Boards = () => {
   return (
-    <main>
+    <main  className={'boards'}>
       <h1>자료실</h1>
     </main>
   )

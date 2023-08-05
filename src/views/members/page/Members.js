@@ -1,6 +1,6 @@
 const Members = () => {
   return (
-    <main>
+    <main className={'members'}>
       <h1>멤버</h1>
     </main>
   )
