@@ -10,7 +10,7 @@ const Header = () => {
         <div className="menu-wrap">
           <ul>
             <li>
-              <NavLink to="/">일정</NavLink>
+              <NavLink to="/schedule">일정</NavLink>
             </li>
             <li>
               <NavLink to="/members">멤버</NavLink>
