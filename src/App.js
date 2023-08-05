@@ -1,28 +1,15 @@
-import { useEffect, useState } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Home from "./routes/Home";
-import Loading from "./Loading";
-
+import Routers from './routes/Routers'
+import Header from './views/common/Header'
+import Footer from './views/common/Footer'
+import React from "react";
 function App() {
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
-  }, []);
-
   return (
-    <div>
-      <Router>
-        <Switch>
-          <Route path="/">
-            <Home />
-          </Route>
-        </Switch>
-      </Router>
+    <div className="App">
+      <Header />
+      <Routers />
+      <Footer />
     </div>
-  );
+  )
 }
 
 export default App;
