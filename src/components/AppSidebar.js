@@ -28,7 +28,7 @@ const AppSidebar = () => {
       }}
     >
       <CSidebarBrand className="d-none d-md-flex" to="/">
-        <img src={Logo} width={100} styles={'display:block;padding: 20px'} alt="Sels"/>
+        <img className={'logo'} src={Logo} width={100} styles={'display:block;padding: 20px'} alt="Sels"/>
       </CSidebarBrand>
       <CSidebarNav>
         <SimpleBar>
