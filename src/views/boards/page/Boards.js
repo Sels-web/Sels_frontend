@@ -1,9 +1,15 @@
+import {CCard, CCardBody} from "@coreui/react";
+
 const Boards = () => {
   return (
-    <main  className={'boards'}>
-      <h1>자료실</h1>
-    </main>
-  )
+    <>
+      <CCard>
+        <CCardBody>
+          <h1>자료실</h1>
+        </CCardBody>
+      </CCard>
+    </>
+  );
 }
 
 export default Boards

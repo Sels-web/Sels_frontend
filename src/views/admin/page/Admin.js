@@ -1,9 +1,15 @@
+import {CCard, CCardBody} from "@coreui/react";
+
 const Admin = () => {
   return (
-    <main className={'admin'}>
-      <h1>명단</h1>
-    </main>
-  )
+    <>
+      <CCard>
+        <CCardBody>
+          <h1>관리자</h1>
+        </CCardBody>
+      </CCard>
+    </>
+  );
 }
 
 export default Admin
