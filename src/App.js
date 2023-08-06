@@ -1,15 +1,28 @@
-import Routers from './routes/Routers'
-import Header from './views/common/Header'
-import Footer from './views/common/Footer'
-import React from "react";
-function App() {
-  return (
-    <div className="App">
-      <Header />
-      <Routers />
-      <Footer />
+import React, { Component, Suspense } from 'react'
+import { HashRouter, Route, Routes } from 'react-router-dom'
+import './scss/style.scss'
+
+const loading = (
+    <div className="pt-3 text-center">
+      <div className="sk-spinner sk-spinner-pulse"></div>
     </div>
-  )
+)
+
+// Containers
+const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout'))
+
+class App extends Component {
+  render() {
+    return (
+        <HashRouter>
+          <Suspense fallback={loading}>
+            <Routes>
+              <Route path="*" name="Home" element={<DefaultLayout />} />
+            </Routes>
+          </Suspense>
+        </HashRouter>
+    )
+  }
 }
 
-export default App;
+export default App

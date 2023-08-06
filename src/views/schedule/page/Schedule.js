@@ -1,12 +1,18 @@
+import React from 'react'
+
+import { CCard, CCardBody } from '@coreui/react'
 import Calendar from "../components/Calendar";
-import '../styles/schedule.sass'
-const Schedule = () => {
+
+const Dashboard = () => {
   return (
-    <main className={'schedule'}>
-      <h1>SELS 일정</h1>
-      <Calendar />
-    </main>
+      <>
+        <CCard>
+          <CCardBody>
+            <Calendar />
+          </CCardBody>
+        </CCard>
+      </>
   )
 }
 
-export default Schedule
+export default Dashboard
