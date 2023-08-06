@@ -1,7 +1,7 @@
 import React from 'react'
 import CIcon from '@coreui/icons-react'
-import { cilDrop, cilPencil, cilPuzzle, cilSpeedometer } from '@coreui/icons'
-import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react'
+import { cilCalendar, cilPeople, cilSave, cilSpeedometer } from '@coreui/icons'
+import { CNavItem, CNavTitle } from '@coreui/react'
 
 const _nav = [
   {
@@ -16,25 +16,25 @@ const _nav = [
   },
   {
     component: CNavTitle,
-    name: 'Theme',
+    name: '셀스',
   },
   {
     component: CNavItem,
     name: '일정',
     to: '/schedule',
-    icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilCalendar} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,
     name: '명단',
     to: '/members',
-    icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilPeople} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,
     name: '자료실',
     to: '/boards',
-    icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilSave} customClassName="nav-icon" />,
   },
 ]
 
