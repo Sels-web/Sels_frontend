@@ -1,4 +1,5 @@
-import {CCard, CCardBody, CTable} from "@coreui/react";
+import {CCard, CCardBody, CCardHeader, CTable} from "@coreui/react";
+import React from "react";
 
 const Members = () => {
   const columns = [
@@ -71,6 +72,9 @@ const Members = () => {
   return (
     <>
       <CCard>
+        <CCardHeader>
+          <h3>셀스 명부</h3>
+        </CCardHeader>
         <CCardBody>
           <CTable hover bordered columns={columns} items={items} tableHeadProps={{ align: 'middle' }}  />
         </CCardBody>
