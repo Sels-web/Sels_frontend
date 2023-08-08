@@ -34,7 +34,7 @@ const Boards = () => {
             <h3>셀스 자료실</h3>
           </CCardHeader>
           <CCardBody>
-            <CTable hover bordered columns={columns} items={items} />
+            <CTable hover bordered columns={columns} items={items} tableHeadProps={{ align: 'middle' }} />
           </CCardBody>
         </CCard>
       </>
