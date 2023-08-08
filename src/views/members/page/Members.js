@@ -72,8 +72,7 @@ const Members = () => {
     <>
       <CCard>
         <CCardBody>
-          <h1 className={'mb-3'}>멤버</h1>
-          <CTable hover bordered columns={columns} items={items} />
+          <CTable hover bordered columns={columns} items={items} tableHeadProps={{ align: 'middle' }}  />
         </CCardBody>
       </CCard>
     </>
