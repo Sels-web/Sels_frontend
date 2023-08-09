@@ -34,7 +34,7 @@ const Boards = () => {
                 <CTableRow>
                   <CTableHeaderCell scope="col"></CTableHeaderCell>
                   <CTableHeaderCell scope="col">제목</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">작성일</CTableHeaderCell>
+                  <CTableHeaderCell scope="col" className={'w-25'}>작성일</CTableHeaderCell>
                 </CTableRow>
               </CTableHead>
               <CTableBody>
@@ -42,7 +42,7 @@ const Boards = () => {
                   return (
                   <CTableRow align={'middle'}>
                     <CTableHeaderCell className={'text-center'} scope="row">{item.id}</CTableHeaderCell>
-                    <CTableDataCell className={'text-center'}>
+                    <CTableDataCell>
                       <Link to={'/boards/' + item.id} className={'link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover'}>{item.title}</Link>
                     </CTableDataCell>
                     <CTableDataCell className={'text-center'}>{item.date}</CTableDataCell>
