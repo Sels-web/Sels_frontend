@@ -11,3 +11,16 @@ a {
 a:hover {
   text-decoration: underline;
 }
+
+.sidebar-fixed.sidebar-narrow, .sidebar-fixed.sidebar-narrow-unfoldable:hover {
+  width : 4rem;
+  .nav-title {
+    height: 0;
+    padding: 0;
+    margin: 0;
+  }
+}
+
+.simplebar-content-wrapper li {
+  overflow: hidden !important;
+}
