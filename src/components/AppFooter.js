@@ -14,7 +14,7 @@ const AppFooter = () => {
         </a>
       </div>
       <div className="ms-auto">
-        <span className="me-1">Powered by ChongMyeong, Jeonggun</span>
+        <span className="me-1">Provided by ChongMyeong, Jeonggun</span>
       </div>
     </CFooter>
   )

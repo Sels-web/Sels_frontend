@@ -17,6 +17,8 @@
 // $gray-800:  #636f83 !default;
 // $gray-900:  #4f5d73 !default;
 // $black:     #000015 !default;
+$page-color: #f7e6a7!default;
+$page-sub-color: #F5C342 !default;
 // scss-docs-end gray-color-variables
 
 // fusv-disable
@@ -1640,14 +1642,14 @@
 // $sidebar-padding-y:                        0 !default;
 // $sidebar-padding-x:                        0 !default;
  $sidebar-color:                            #333 !default;
- $sidebar-bg:                               #f7e6a7 !default;
+ $sidebar-bg:                               $page-color!default;
 // $sidebar-border-width:                     0 !default;
 // $sidebar-border-color:                     transparent !default;
 // $sidebar-transition:                       margin-left .15s, margin-right .15s, box-shadow .075s, transform .15s, width .15s, z-index 0s ease .15s !default;
 
 // $sidebar-brand-height:                     4rem !default;
  $sidebar-brand-color:                      #333 !default;
- $sidebar-brand-bg:                         #F5C342 !default;
+ $sidebar-brand-bg:                         $page-sub-color !default;
 
 // $sidebar-header-height:                    4rem !default;
 // $sidebar-header-padding-y:                 .75rem !default;
@@ -1679,7 +1681,7 @@
 // $sidebar-nav-link-hover-icon-color:        $high-emphasis-inverse !default;
 
  $sidebar-nav-link-active-color:            #333 !default;
- $sidebar-nav-link-active-bg:               #F5C342 !default;
+ $sidebar-nav-link-active-bg:               $page-sub-color !default;
  $sidebar-nav-link-active-icon-color:       #333 !default;
 
 // $sidebar-nav-link-disabled-color:          $disabled-inverse !default;
@@ -1703,11 +1705,11 @@
 // $sidebar-footer-height:                    auto !default;
 // $sidebar-footer-padding-y:                 .75rem !default;
 // $sidebar-footer-padding-x:                 1rem !default;
- $sidebar-footer-bg:                        #F5C342 !default;
+ $sidebar-footer-bg:                        $page-sub-color !default;
 // $sidebar-footer-height-transition:         height .15s, padding .15s !default;
 
 // $sidebar-toggler-height:                   3rem !default;
- $sidebar-toggler-bg:                       #F5C342 !default;
+ $sidebar-toggler-bg:                       $page-sub-color !default;
 // $sidebar-toggler-transition:               transform .15s !default;
 
 // $sidebar-toggler-indicator-width:          4rem !default;
