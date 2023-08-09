@@ -10,9 +10,12 @@ import {
   CTableRow
 } from "@coreui/react";
 import {Link} from "react-router-dom";
-import React from "react";
+import React, {useState} from "react";
+import AdminAddMemberModal from "../components/AdminAddMemberModal";
 
 const Admin = () => {
+  const [visible, setVisible] = useState(false)
+
   const items = [
     {
       id: 1,
@@ -34,7 +37,7 @@ const Admin = () => {
         <CCard>
           <CCardHeader className={'d-flex justify-content-between'}>
             <h2>관리자</h2>
-            <CButton color="warning">회원 추가</CButton>
+            <CButton color="warning" onClick={() => setVisible(!visible)}>회원 추가</CButton>
           </CCardHeader>
           <CCardBody>
             <CTable hover bordered>
@@ -77,6 +80,7 @@ const Admin = () => {
             </CTable>
           </CCardBody>
         </CCard>
+        <AdminAddMemberModal show={visible} showFunc={setVisible}/>
       </>
   );
 }
