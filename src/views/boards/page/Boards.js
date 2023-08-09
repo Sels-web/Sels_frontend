@@ -13,23 +13,6 @@ import React from "react";
 import { Link } from 'react-router-dom';
 
 const Boards = () => {
-  const columns = [
-    {
-      key: 'id',
-      label: '',
-      _props: { scope: 'col' },
-    },
-    {
-      key: 'title',
-      label: '제목',
-      _props: { scope: 'col' },
-    },
-    {
-      key: 'date',
-      label: '작성일',
-      _props: { scope: 'col' },
-    },
-  ]
   const items = [
     {
       id: 1,
@@ -52,6 +35,7 @@ const Boards = () => {
                   <CTableHeaderCell scope="col"></CTableHeaderCell>
                   <CTableHeaderCell scope="col">제목</CTableHeaderCell>
                   <CTableHeaderCell scope="col">작성일</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">기능</CTableHeaderCell>
                 </CTableRow>
               </CTableHead>
               <CTableBody>
@@ -61,6 +45,10 @@ const Boards = () => {
                     <CTableHeaderCell className={'text-center'} scope="row">{item.id}</CTableHeaderCell>
                     <CTableDataCell className={'text-center'}><Link to={''}>{item.title}</Link></CTableDataCell>
                     <CTableDataCell className={'text-center'}>{item.date}</CTableDataCell>
+                    <CTableDataCell className={'text-center'}>
+                      <CButton color={'danger'} className={'me-2'}>삭제</CButton>
+                      <CButton color={'info'}>수정</CButton>
+                    </CTableDataCell>
                   </CTableRow>
                   )})}
               </CTableBody>

@@ -34,7 +34,7 @@ const Admin = () => {
         <CCard>
           <CCardHeader className={'d-flex justify-content-between'}>
             <h2>관리자</h2>
-            <CButton color="success">회원 추가</CButton>
+            <CButton color="warning">회원 추가</CButton>
           </CCardHeader>
           <CCardBody>
             <CTable hover bordered>
@@ -69,7 +69,7 @@ const Admin = () => {
                         <CTableDataCell className={'text-center'}>{item.payout}</CTableDataCell>
                         <CTableDataCell className={'text-center'}>
                             <CButton color="danger" className={'me-2'}>삭제</CButton>
-                            <CButton color="secondary">수정</CButton>
+                            <CButton color="info">수정</CButton>
                         </CTableDataCell>
                       </CTableRow>
                   )})}
