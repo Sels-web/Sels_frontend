@@ -8,7 +8,10 @@ const BoardsDeleteModal = (props) => {
             <CModalTitle>회원 삭제</CModalTitle>
           </CModalHeader>
           <CModalBody>
-            <p>정말 삭제 하시겠습니까?</p>
+            <p className={'m-0'}>
+              삭제 시 복구가 불가능 합니다.<br />
+              정말 삭제 하시겠습니까?
+            </p>
           </CModalBody>
           <CModalFooter>
             <CButton color="primary">예</CButton>

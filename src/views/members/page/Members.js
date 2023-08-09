@@ -56,7 +56,7 @@ const Members = () => {
                 return (
                   <CTableRow align={'middle'}>
                     <CTableHeaderCell className={'text-center'}>{item.id}</CTableHeaderCell>
-                    <CTableDataCell className={'text-center'}><Link to={''}>{item.name}</Link></CTableDataCell>
+                    <CTableDataCell className={'text-center'}>{item.name}</CTableDataCell>
                     <CTableDataCell className={'text-center'}>{item.attend}</CTableDataCell>
                     <CTableDataCell className={'text-center'}>{item.volunteerHours}</CTableDataCell>
                     <CTableDataCell className={'text-center'}>{item.fine}</CTableDataCell>
