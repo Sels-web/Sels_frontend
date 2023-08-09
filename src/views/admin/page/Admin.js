@@ -12,9 +12,13 @@ import {
 import {Link} from "react-router-dom";
 import React, {useState} from "react";
 import AdminAddMemberModal from "../components/AdminAddMemberModal";
+import AdminDeleteMemberModal from "../components/AdminDeleteMemeberModal";
+import AdminModifyMemberModal from "../components/AdminModifyMemeberModal";
 
 const Admin = () => {
-  const [visible, setVisible] = useState(false)
+  const [addVisible, setAddVisible] = useState(false)
+  const [removeVisible, setRemoveVisible] = useState(false)
+  const [modifyVisible, setModifyVisible] = useState(false)
 
   const items = [
     {
@@ -37,7 +41,7 @@ const Admin = () => {
         <CCard>
           <CCardHeader className={'d-flex justify-content-between'}>
             <h2>관리자</h2>
-            <CButton color="warning" onClick={() => setVisible(!visible)}>회원 추가</CButton>
+            <CButton color="warning" onClick={() => setAddVisible(!addVisible)}>회원 추가</CButton>
           </CCardHeader>
           <CCardBody>
             <CTable hover bordered>
@@ -71,8 +75,8 @@ const Admin = () => {
                         <CTableDataCell className={'text-center'}>{item.department}</CTableDataCell>
                         <CTableDataCell className={'text-center'}>{item.payout}</CTableDataCell>
                         <CTableDataCell className={'text-center'}>
-                            <CButton color="danger" className={'me-2'}>삭제</CButton>
-                            <CButton color="info">수정</CButton>
+                            <CButton color="danger" className={'me-2'} onClick={() => setRemoveVisible(!removeVisible)}>삭제</CButton>
+                            <CButton color="info" onClick={() => setModifyVisible(!modifyVisible)}>수정</CButton>
                         </CTableDataCell>
                       </CTableRow>
                   )})}
@@ -80,7 +84,9 @@ const Admin = () => {
             </CTable>
           </CCardBody>
         </CCard>
-        <AdminAddMemberModal show={visible} showFunc={setVisible}/>
+        <AdminAddMemberModal show={addVisible} showFunc={setAddVisible}/>
+        <AdminDeleteMemberModal show={removeVisible} showFunc={setRemoveVisible}/>
+        <AdminModifyMemberModal show={modifyVisible} showFunc={setModifyVisible}/>
       </>
   );
 }

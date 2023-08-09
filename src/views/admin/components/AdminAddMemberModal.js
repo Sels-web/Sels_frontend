@@ -1,4 +1,3 @@
-import {useState} from "react";
 import {CButton, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle} from "@coreui/react";
 
 const AdminAddMemberModal = (props) => {
@@ -12,10 +11,10 @@ const AdminAddMemberModal = (props) => {
           <p>추가 내용 작성</p>
         </CModalBody>
         <CModalFooter>
-          <CButton color="secondary" onClick={() => props.showFunc(false)}>
-            Close
-          </CButton>
           <CButton color="primary">저장</CButton>
+          <CButton color="secondary" onClick={() => props.showFunc(false)}>
+            취소
+          </CButton>
         </CModalFooter>
       </CModal>
     </>
