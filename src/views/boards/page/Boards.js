@@ -9,7 +9,7 @@ import {
   CTableHeaderCell,
   CTableRow
 } from "@coreui/react";
-import React from "react";
+import React, {useState} from "react";
 import { Link } from 'react-router-dom';
 
 const Boards = () => {
@@ -35,7 +35,6 @@ const Boards = () => {
                   <CTableHeaderCell scope="col"></CTableHeaderCell>
                   <CTableHeaderCell scope="col">제목</CTableHeaderCell>
                   <CTableHeaderCell scope="col">작성일</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">기능</CTableHeaderCell>
                 </CTableRow>
               </CTableHead>
               <CTableBody>
@@ -43,11 +42,10 @@ const Boards = () => {
                   return (
                   <CTableRow align={'middle'}>
                     <CTableHeaderCell className={'text-center'} scope="row">{item.id}</CTableHeaderCell>
-                    <CTableDataCell className={'text-center'}><Link to={'/boards/' + item.id}>{item.title}</Link></CTableDataCell>
-                    <CTableDataCell className={'text-center'}>{item.date}</CTableDataCell>
                     <CTableDataCell className={'text-center'}>
-                      <CButton color={'danger'} className={'me-2'}>삭제</CButton>
+                      <Link to={'/boards/' + item.id} className={'link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover'}>{item.title}</Link>
                     </CTableDataCell>
+                    <CTableDataCell className={'text-center'}>{item.date}</CTableDataCell>
                   </CTableRow>
                   )})}
               </CTableBody>
