@@ -43,7 +43,7 @@ const Boards = () => {
                   <CTableRow align={'middle'}>
                     <CTableHeaderCell className={'text-center'} scope="row">{item.id}</CTableHeaderCell>
                     <CTableDataCell>
-                      <Link to={'/boards/' + item.id} className={'link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover'}>{item.title}</Link>
+                      <Link to={'/boards/' + item.id} className={'link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover'}>{item.title}</Link>
                     </CTableDataCell>
                     <CTableDataCell className={'text-center'}>{item.date}</CTableDataCell>
                   </CTableRow>
