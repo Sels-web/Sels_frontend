@@ -43,11 +43,10 @@ const Boards = () => {
                   return (
                   <CTableRow align={'middle'}>
                     <CTableHeaderCell className={'text-center'} scope="row">{item.id}</CTableHeaderCell>
-                    <CTableDataCell className={'text-center'}><Link to={''}>{item.title}</Link></CTableDataCell>
+                    <CTableDataCell className={'text-center'}><Link to={'/boards/' + item.id}>{item.title}</Link></CTableDataCell>
                     <CTableDataCell className={'text-center'}>{item.date}</CTableDataCell>
                     <CTableDataCell className={'text-center'}>
                       <CButton color={'danger'} className={'me-2'}>삭제</CButton>
-                      <CButton color={'info'}>수정</CButton>
                     </CTableDataCell>
                   </CTableRow>
                   )})}

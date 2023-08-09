@@ -40,7 +40,7 @@ const Admin = () => {
       <>
         <CCard>
           <CCardHeader className={'d-flex justify-content-between'}>
-            <h2>관리자</h2>
+            <h3>관리자</h3>
             <CButton color="warning" onClick={() => setAddVisible(!addVisible)}>회원 추가</CButton>
           </CCardHeader>
           <CCardBody>
