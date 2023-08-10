@@ -10,11 +10,24 @@ import {
   CFormTextarea,
   CRow
 } from "@coreui/react";
-import React from "react";
+import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
+import CIcon from "@coreui/icons-react";
+import {cilPlus} from "@coreui/icons";
 
 const BoardsModify = () => {
   const navigate = useNavigate();
+
+  const [files, setFiles] = useState([{
+    name: 'file_0',
+  }])
+
+  const onCreate = e => {
+    const file = {
+      name: 'file_' + files.length
+    }
+    setFiles(files => [...files, file]);
+  };
 
   return (
       <>
@@ -40,8 +53,17 @@ const BoardsModify = () => {
             </CRow>
             <CRow className="mb-3">
               <CFormLabel htmlFor="file" className="col-sm-1 col-form-label">파일</CFormLabel>
-              <CCol sm={11}>
-                <CFormInput type="file" id="file" />
+              <CCol sm={10}>
+                <CRow className={'m-0'}>
+                  {files.map((file, idx) => {
+                    return <CFormInput type="file" id={file.name} className={idx != 0 ? 'mt-2' : ''} />
+                  })}
+                </CRow>
+              </CCol>
+              <CCol sm={1}>
+                <CButton color="secondary" variant="outline" onClick={onCreate}>
+                  <CIcon icon={cilPlus} />
+                </CButton>
               </CCol>
             </CRow>
           </CCardBody>
