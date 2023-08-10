@@ -248,10 +248,14 @@ function Calender() {
               // id="exampleFormControlInput1"
               label="일정 제목"
               placeholder="일정 제목"
+              name="title"
+              onChange={handleInputChange}
               // text="Must be 8-20 characters long."
               // aria-describedby="exampleFormControlInputHelpInline"
             />
-            <TextField
+            <p>시작 시간</p>
+            <p>종료 시간</p>
+            {/* <TextField
               margin="dense"
               label="시작 시간"
               type="datetime-local"
@@ -276,12 +280,12 @@ function Calender() {
               InputLabelProps={{
                 shrink: true,
               }}
-            />
+            /> */}
             <GithubPicker triangle="hide" onChange={handleColorChange} />
           </CForm>
         </CModalBody>
         <CModalFooter>
-          <CButton type="submit" color="primary">
+          <CButton type="submit" color="primary" onClick={handleFormSubmit}>
             추가
           </CButton>
           <CButton color="secondary" onClick={handleDialogClose}>
@@ -289,9 +293,34 @@ function Calender() {
           </CButton>
         </CModalFooter>
       </CModal>
-      <CModal
+      <Dialog
+        open={attendOpen}
+        onClose={handleAttendClose}
+        TransitionComponent={Transition}
+        fullScreen={true}
+      >
+        {selectedEvent && (
+          <Attendance
+            selectedEvent={selectedEvent}
+            events={events}
+          ></Attendance>
+        )}
+        <DialogActions>
+          <IconButton
+            style={{ position: "absolute", top: "0" }}
+            size="large"
+            aria-label="clear"
+            onClick={handleAttendClose}
+            sx={{ color: "black" }}
+          >
+            <ClearIcon />
+          </IconButton>
+        </DialogActions>
+      </Dialog>
+      {/* <CModal
         alignment="center"
         visible={attendOpen}
+        open={attendOpen}
         onClose={handleAttendClose}
         fullscreen={true}
       >
@@ -304,15 +333,15 @@ function Calender() {
             ></Attendance>
           )}
         </CModalBody>
-        {/* <CModalFooter>
+        <CModalFooter>
           <CButton type="submit" color="primary">
             추가
           </CButton>
-          <CButton color="secondary" onClick={handleDialogClose}>
+          <CButton color="secondary" onClick={handleAttendClose}>
             취소
           </CButton>
-        </CModalFooter> */}
-      </CModal>
+        </CModalFooter>
+      </CModal> */}
     </div>
   );
 }
