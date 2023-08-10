@@ -26,7 +26,7 @@ const Boards = () => {
         <CCard>
           <CCardHeader className={'d-flex justify-content-between'}>
             <h3>셀스 자료실</h3>
-            <CButton color="warning" className={'me-2'}>게시물 등록</CButton>
+            <Link to={'/boards/add'}><CButton color="warning">게시물 등록</CButton></Link>
           </CCardHeader>
           <CCardBody>
             <CTable hover bordered>
