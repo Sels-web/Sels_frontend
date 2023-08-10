@@ -1,10 +1,11 @@
 import {CButton, CCard, CCardBody, CCardFooter, CCardHeader} from "@coreui/react";
 import React, {useState} from "react";
-import BoardsDeleteModal from "./BoardsDeleteModal";
+import BoardsDeleteModal from "../components/BoardsDeleteModal";
+import {Link, useParams} from "react-router-dom";
 
 const BoardsDetail = () => {
   const [visible, setVisible] = useState(false);
-
+  const params = useParams();
   const item = {
     title: '제목',
     content: '내용',
@@ -46,7 +47,7 @@ const BoardsDetail = () => {
           </div>
         </CCardBody>
         <CCardFooter className={'d-flex justify-content-end'}>
-          <CButton color={'info'} className={'me-2'}>수정</CButton>
+          <Link to={'/boards/' + params.id + '/edit'}><CButton color={'info'} className={'me-2'}>수정</CButton></Link>
           <CButton color={'danger'} onClick={() => setVisible(!visible)}>삭제</CButton>
         </CCardFooter>
       </CCard>
