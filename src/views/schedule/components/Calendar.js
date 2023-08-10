@@ -251,39 +251,68 @@ function Calender() {
               // text="Must be 8-20 characters long."
               // aria-describedby="exampleFormControlInputHelpInline"
             />
+            <TextField
+              margin="dense"
+              label="시작 시간"
+              type="datetime-local"
+              fullWidth
+              name="start"
+              value={moment(newEvent.start).format("YYYY-MM-DD HH:mm:ss") || ""}
+              // value={newEvent.startStr}
+              onChange={handleInputChange}
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+            <TextField
+              margin="dense"
+              label="종료 시간"
+              type="datetime-local"
+              fullWidth
+              name="end"
+              value={moment(newEvent.end).format("YYYY-MM-DD HH:mm:ss") || ""}
+              // value={newEvent.endStr}
+              onChange={handleInputChange}
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+            <GithubPicker triangle="hide" onChange={handleColorChange} />
           </CForm>
-          <CModalFooter>
-            <CButton color="primary">저장</CButton>
-            <CButton color="secondary" onClick={handleDialogClose}>
-              취소
-            </CButton>
-          </CModalFooter>
         </CModalBody>
+        <CModalFooter>
+          <CButton type="submit" color="primary">
+            추가
+          </CButton>
+          <CButton color="secondary" onClick={handleDialogClose}>
+            취소
+          </CButton>
+        </CModalFooter>
       </CModal>
-      <Dialog
-        open={attendOpen}
+      <CModal
+        alignment="center"
+        visible={attendOpen}
         onClose={handleAttendClose}
-        TransitionComponent={Transition}
-        fullScreen={true}
+        fullscreen={true}
       >
-        {selectedEvent && (
-          <Attendance
-            selectedEvent={selectedEvent}
-            events={events}
-          ></Attendance>
-        )}
-        <DialogActions>
-          <IconButton
-            style={{ position: "absolute", top: "0" }}
-            size="large"
-            aria-label="clear"
-            onClick={handleAttendClose}
-            sx={{ color: "black" }}
-          >
-            <ClearIcon />
-          </IconButton>
-        </DialogActions>
-      </Dialog>
+        <CModalHeader onClose={handleAttendClose}></CModalHeader>
+        <CModalBody>
+          {selectedEvent && (
+            <Attendance
+              selectedEvent={selectedEvent}
+              events={events}
+            ></Attendance>
+          )}
+        </CModalBody>
+        {/* <CModalFooter>
+          <CButton type="submit" color="primary">
+            추가
+          </CButton>
+          <CButton color="secondary" onClick={handleDialogClose}>
+            취소
+          </CButton>
+        </CModalFooter> */}
+      </CModal>
     </div>
   );
 }
