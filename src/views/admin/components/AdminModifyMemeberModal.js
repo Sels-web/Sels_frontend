@@ -25,15 +25,15 @@ const AdminModifyMemberModal = (props) => {
               </CInputGroup>
               <CInputGroup className="mb-3">
                 <CInputGroupText id="attend">참석 횟수</CInputGroupText>
-                <CFormInput placeholder="참석 횟수" aria-label="참석 횟수" aria-describedby="attend"/>
+                <CFormInput type="number" placeholder="참석 횟수" aria-label="참석 횟수" aria-describedby="attend"/>
               </CInputGroup>
               <CInputGroup className="mb-3">
                 <CInputGroupText id="volunteerHours">봉사 시간</CInputGroupText>
-                <CFormInput placeholder="봉사시간" aria-label="봉사시간" aria-describedby="volunteerHours"/>
+                <CFormInput type="number" placeholder="봉사시간" aria-label="봉사시간" aria-describedby="volunteerHours"/>
               </CInputGroup>
               <CInputGroup className="mb-3">
                 <CInputGroupText id="fine">벌금</CInputGroupText>
-                <CFormInput placeholder="벌금" aria-label="벌금" aria-describedby="fine"/>
+                <CFormInput type="number" placeholder="벌금" aria-label="벌금" aria-describedby="fine"/>
               </CInputGroup>
               <CInputGroup className="mb-3">
                 <CInputGroupText id="gender">성별</CInputGroupText>
@@ -56,7 +56,7 @@ const AdminModifyMemberModal = (props) => {
               </CInputGroup>
               <CInputGroup>
                 <CInputGroupText id="payout">지불비</CInputGroupText>
-                <CFormInput placeholder="지불비" aria-label="지불비" aria-describedby="payout"/>
+                <CFormInput type="number" placeholder="지불비" aria-label="지불비" aria-describedby="payout"/>
               </CInputGroup>
             </CForm>
           </CModalBody>
