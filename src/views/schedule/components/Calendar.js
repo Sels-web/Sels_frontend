@@ -17,6 +17,16 @@ import { GithubPicker } from "react-color";
 import moment from "moment";
 import "../styles/Calendar.css";
 import Attendance from "./Attendance";
+import {
+  CButton,
+  CModal,
+  CModalBody,
+  CModalFooter,
+  CModalHeader,
+  CModalTitle,
+  CForm,
+  CFormInput,
+} from "@coreui/react";
 
 import axios from "axios";
 
@@ -169,7 +179,7 @@ function Calender() {
           hour12: false,
         }}
       />
-      <Dialog
+      {/* <Dialog
         open={dialogOpen}
         onClose={handleDialogClose}
         TransitionComponent={Transition}
@@ -222,7 +232,34 @@ function Calender() {
             </Button>
           </DialogActions>
         </form>
-      </Dialog>
+      </Dialog> */}
+      <CModal
+        alignment="center"
+        visible={dialogOpen}
+        onClose={handleDialogClose}
+      >
+        <CModalHeader onClose={handleDialogClose}>
+          <CModalTitle>일정 추가</CModalTitle>
+        </CModalHeader>
+        <CModalBody>
+          <CForm onSubmit={handleFormSubmit}>
+            <CFormInput
+              type="text"
+              // id="exampleFormControlInput1"
+              label="일정 제목"
+              placeholder="일정 제목"
+              // text="Must be 8-20 characters long."
+              // aria-describedby="exampleFormControlInputHelpInline"
+            />
+          </CForm>
+          <CModalFooter>
+            <CButton color="primary">저장</CButton>
+            <CButton color="secondary" onClick={handleDialogClose}>
+              취소
+            </CButton>
+          </CModalFooter>
+        </CModalBody>
+      </CModal>
       <Dialog
         open={attendOpen}
         onClose={handleAttendClose}
