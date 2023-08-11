@@ -14,6 +14,16 @@ import "../styles/attedance.css";
 import { AiOutlineUserAdd } from "react-icons/ai";
 import moment from "moment";
 import "moment/locale/ko";
+import {
+  CButton,
+  CModal,
+  CModalBody,
+  CModalFooter,
+  CModalHeader,
+  CModalTitle,
+  CForm,
+  CFormInput,
+} from "@coreui/react";
 
 import axios from "axios";
 
@@ -22,21 +32,21 @@ function Attendence({ selectedEvent, events }) {
   const [Users, setUsers] = useState([]);
   const [newUser, setNewUser] = useState({});
   const [SelectedEvent, setSelectedEvent] = useState(selectedEvent);
-  const [dialogOpen, setDialogOpen] = useState(false);
+  const [userDialogOpen, setUserDialogOpen] = useState(false);
 
-  const handleDialogOpen = () => {
+  const handleUserDialogOpen = () => {
     setNewUser({
-      eventKey: SelectedEvent.id,
-      Username: "", //이름
-      key: "", //인덱스
+      eventKey: selectedEvent.id,
+      Username: "", // 이름
+      key: "", // 학번
       state: "",
     });
-    setDialogOpen(true);
+    setUserDialogOpen(true);
   };
 
-  const handleDialogClose = () => {
+  const handleUserDialogClose = () => {
     setNewUser({});
-    setDialogOpen(false);
+    setUserDialogOpen(false);
   };
 
   const handleInputChange = (user) => {
@@ -75,7 +85,7 @@ function Attendence({ selectedEvent, events }) {
     setUsers((prevUsers) => [...prevUsers, newUser]);
     console.log(Users);
     console.log(SelectedEvent);
-    handleDialogClose();
+    handleUserDialogClose();
   };
 
   const isFormVaild = (user, SelectedEvent, value) =>
@@ -291,7 +301,7 @@ function Attendence({ selectedEvent, events }) {
                 borderRadius: "20px",
                 color: "whitesmoke",
               }}
-              onClick={handleDialogClose}
+              onClick={handleUserDialogClose}
             >
               이번 달 일정 보기
             </span>
@@ -314,9 +324,44 @@ function Attendence({ selectedEvent, events }) {
                     fontWeight: "bold",
                     paddingTop: "10px",
                   }}
-                  onClick={handleDialogOpen}
+                  onClick={handleUserDialogOpen}
                 />
-                <Dialog open={dialogOpen} onClose={handleDialogClose}>
+                <CModal
+                  alignment="center"
+                  visible={userDialogOpen}
+                  onClose={handleUserDialogClose}
+                >
+                  <CModalHeader onClose={handleUserDialogClose}>
+                    <CModalTitle>참석 인원 추가</CModalTitle>
+                  </CModalHeader>
+                  <CModalBody>
+                    <CForm onSubmit={handleFormSubmit}>
+                      <CFormInput
+                        type="text"
+                        label="이름"
+                        placeholder="Username"
+                        name="Username"
+                        onChange={handleInputChange}
+                      />
+                      <CFormInput
+                        type="text"
+                        label="학번"
+                        placeholder="Username"
+                        name="key"
+                        onChange={handleInputChange}
+                      />
+                    </CForm>
+                  </CModalBody>
+                  <CModalFooter>
+                    <CButton type="submit" color="primary">
+                      추가
+                    </CButton>
+                    <CButton color="secondary" onClick={handleUserDialogClose}>
+                      취소
+                    </CButton>
+                  </CModalFooter>
+                </CModal>
+                {/* <Dialog open={dialogOpen} onClose={handleDialogClose}>
                   <DialogTitle>참석 인원 추가</DialogTitle>
                   <form onSubmit={handleFormSubmit}>
                     <DialogContent>
@@ -344,7 +389,7 @@ function Attendence({ selectedEvent, events }) {
                       <Button type="submit">추가</Button>
                     </DialogActions>
                   </form>
-                </Dialog>
+                </Dialog> */}
               </div>
             </div>
             <ListGroup

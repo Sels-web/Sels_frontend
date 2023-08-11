@@ -39,7 +39,7 @@ const today = new Date();
 function Calender() {
   const [events, setEvents] = useState([]);
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [attendOpen, setAttendOpen] = useState(false);
+  const [attendanceModalOpen, setAttendanceModalOpen] = useState(false);
   const [newEvent, setNewEvent] = useState({});
   const [selectedEvent, setSelectedEvent] = useState(null);
 
@@ -95,8 +95,7 @@ function Calender() {
   };
 
   const handleEventClick = (arg) => {
-    handleAttendOpen();
-    console.log(arg.event);
+    handleAttendanceModalOpen();
     setSelectedEvent({
       id: arg.event.id,
       title: arg.event.title,
@@ -105,15 +104,14 @@ function Calender() {
       color: arg.event.backgroundColor,
       enterNames: arg.event.enterNames,
     });
-    console.log(selectedEvent);
   };
 
-  const handleAttendOpen = () => {
-    setAttendOpen(true);
+  const handleAttendanceModalOpen = () => {
+    setAttendanceModalOpen(true);
   };
 
-  const handleAttendClose = () => {
-    setAttendOpen(false);
+  const handleAttendanceModalClose = () => {
+    setAttendanceModalOpen(false);
   };
 
   const handleInputChange = (event) => {
@@ -293,38 +291,13 @@ function Calender() {
           </CButton>
         </CModalFooter>
       </CModal>
-      <Dialog
-        open={attendOpen}
-        onClose={handleAttendClose}
-        TransitionComponent={Transition}
-        fullScreen={true}
-      >
-        {selectedEvent && (
-          <Attendance
-            selectedEvent={selectedEvent}
-            events={events}
-          ></Attendance>
-        )}
-        <DialogActions>
-          <IconButton
-            style={{ position: "absolute", top: "0" }}
-            size="large"
-            aria-label="clear"
-            onClick={handleAttendClose}
-            sx={{ color: "black" }}
-          >
-            <ClearIcon />
-          </IconButton>
-        </DialogActions>
-      </Dialog>
-      {/* <CModal
+      <CModal
         alignment="center"
-        visible={attendOpen}
-        open={attendOpen}
-        onClose={handleAttendClose}
+        visible={attendanceModalOpen}
+        onClose={handleAttendanceModalClose}
         fullscreen={true}
       >
-        <CModalHeader onClose={handleAttendClose}></CModalHeader>
+        <CModalHeader onClose={handleAttendanceModalClose}></CModalHeader>
         <CModalBody>
           {selectedEvent && (
             <Attendance
@@ -337,11 +310,11 @@ function Calender() {
           <CButton type="submit" color="primary">
             추가
           </CButton>
-          <CButton color="secondary" onClick={handleAttendClose}>
+          <CButton color="secondary" onClick={handleAttendanceModalClose}>
             취소
           </CButton>
         </CModalFooter>
-      </CModal> */}
+      </CModal>
     </div>
   );
 }
