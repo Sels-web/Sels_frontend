@@ -1,21 +1,14 @@
 import React, { useState, useEffect } from "react";
+
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  TextField,
-  Button,
-  Zoom,
-  IconButton,
-} from "@mui/material";
-import ClearIcon from "@mui/icons-material/Clear";
+
 import { GithubPicker } from "react-color";
+
 import moment from "moment";
 import "../styles/Calendar.css";
+
 import Attendance from "./Attendance";
 import {
   CButton,
@@ -29,10 +22,6 @@ import {
 } from "@coreui/react";
 
 import axios from "axios";
-
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Zoom timeout={2000} ref={ref} {...props} />;
-});
 
 const today = new Date();
 
@@ -291,7 +280,7 @@ function Calender() {
           </CButton>
         </CModalFooter>
       </CModal>
-      <CModal
+      {/* <CModal
         alignment="center"
         visible={attendanceModalOpen}
         onClose={handleAttendanceModalClose}
@@ -314,7 +303,7 @@ function Calender() {
             취소
           </CButton>
         </CModalFooter>
-      </CModal>
+      </CModal> */}
     </div>
   );
 }

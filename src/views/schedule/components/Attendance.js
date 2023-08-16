@@ -27,16 +27,16 @@ import {
 
 import axios from "axios";
 
-function Attendence({ selectedEvent, events }) {
-  console.log(events);
+function Attendence({ props }) {
+  console.log(props);
   const [Users, setUsers] = useState([]);
   const [newUser, setNewUser] = useState({});
-  const [SelectedEvent, setSelectedEvent] = useState(selectedEvent);
+  const [SelectedEvent, setSelectedEvent] = useState(props.selectedEvent);
   const [userDialogOpen, setUserDialogOpen] = useState(false);
 
   const handleUserDialogOpen = () => {
     setNewUser({
-      eventKey: selectedEvent.id,
+      eventKey: props.selectedEvent.id,
       Username: "", // 이름
       key: "", // 학번
       state: "",
@@ -400,7 +400,7 @@ function Attendence({ selectedEvent, events }) {
                 borderRadius: "10px",
               }}
             >
-              {renderScheduleList(events)}
+              {renderScheduleList(props.events)}
             </ListGroup>
           </div>
           {/* <div className="SideFooter">
