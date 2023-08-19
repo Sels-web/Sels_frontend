@@ -22,6 +22,8 @@ import {
   CCardHeader,
 } from "@coreui/react";
 
+import ScheduleAddModal from "../components/ScheduleAddModal";
+
 import axios from "axios";
 
 const Dashboard = () => {
@@ -56,6 +58,8 @@ const Dashboard = () => {
   }, []);
 
   const handleDialogOpen = (arg) => {
+    console.log("hello");
+    setDialogVisible(true);
     setNewEvent({
       id: Math.random().toString(36).substring(2, 11),
       title: "",
@@ -64,8 +68,6 @@ const Dashboard = () => {
       color: "#fccb00", //default 노란색
       enterNames: {},
     });
-
-    setDialogVisible(true);
   };
 
   const handleDialogClose = () => {
@@ -83,7 +85,6 @@ const Dashboard = () => {
   };
 
   const handleEventClick = (arg) => {
-    // handleAttendanceModalOpen();
     setSelectedEvent({
       id: arg.event.id,
       title: arg.event.title,
@@ -92,8 +93,6 @@ const Dashboard = () => {
       color: arg.event.backgroundColor,
       enterNames: arg.event.enterNames,
     });
-
-    console.log(selectedEvent);
 
     setSchedulelVisible(!scheduleVisible);
   };
@@ -105,7 +104,6 @@ const Dashboard = () => {
       [name]: value,
     }));
   };
-
   const handleFormSubmit = (event) => {
     event.preventDefault();
     const New_event = {
@@ -192,6 +190,12 @@ const Dashboard = () => {
           </CModal>
         </CCardBody>
       </CCard>
+      <ScheduleAddModal
+        show={scheduleVisible}
+        showFunc={setSchedulelVisible}
+        events={events}
+        selectedEvent={selectedEvent}
+      />
     </>
   );
 };
