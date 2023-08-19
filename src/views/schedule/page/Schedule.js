@@ -58,7 +58,6 @@ const Dashboard = () => {
   }, []);
 
   const handleDialogOpen = (arg) => {
-    console.log("hello");
     setDialogVisible(true);
     setNewEvent({
       id: Math.random().toString(36).substring(2, 11),
@@ -104,6 +103,7 @@ const Dashboard = () => {
       [name]: value,
     }));
   };
+
   const handleFormSubmit = (event) => {
     event.preventDefault();
     const New_event = {

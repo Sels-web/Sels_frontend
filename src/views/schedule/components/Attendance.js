@@ -361,35 +361,6 @@ function Attendence({ props }) {
                     </CButton>
                   </CModalFooter>
                 </CModal>
-                {/* <Dialog open={dialogOpen} onClose={handleDialogClose}>
-                  <DialogTitle>참석 인원 추가</DialogTitle>
-                  <form onSubmit={handleFormSubmit}>
-                    <DialogContent>
-                      <TextField
-                        autoFocus
-                        margin="dense"
-                        label="이름"
-                        type="text"
-                        fullWidth
-                        name="Username"
-                        onChange={handleInputChange}
-                      />
-                      <TextField
-                        autoFocus
-                        margin="dense"
-                        label="학번"
-                        type="text"
-                        fullWidth
-                        name="key"
-                        onChange={handleInputChange}
-                      />
-                    </DialogContent>
-                    <DialogActions>
-                      <Button onClick={handleDialogClose}>취소</Button>
-                      <Button type="submit">추가</Button>
-                    </DialogActions>
-                  </form>
-                </Dialog> */}
               </div>
             </div>
             <ListGroup
@@ -403,11 +374,6 @@ function Attendence({ props }) {
               {renderScheduleList(props.events)}
             </ListGroup>
           </div>
-          {/* <div className="SideFooter">
-            <span style={{ fontSize: "13px", color: "white" }}>
-              Copyrightⓒ 2021 All rights reserved.
-            </span>
-          </div> */}
         </div>
       </div>
       {/* 메인 리스트 */}
