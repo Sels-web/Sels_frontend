@@ -1,6 +1,6 @@
 // Here you can add other styles
 .logo {
-  padding: 5px
+  padding: 5px;
 }
 
 a {
@@ -12,8 +12,9 @@ a:hover {
   text-decoration: underline;
 }
 
-.sidebar-fixed.sidebar-narrow, .sidebar-fixed.sidebar-narrow-unfoldable:hover {
-  width : 4rem;
+.sidebar-fixed.sidebar-narrow,
+.sidebar-fixed.sidebar-narrow-unfoldable:hover {
+  width: 4rem;
   .nav-title {
     height: 0;
     padding: 0;
@@ -23,4 +24,21 @@ a:hover {
 
 .simplebar-content-wrapper li {
   overflow: hidden !important;
+}
+
+.fc-day-sun a {
+  color: #f7670b;
+}
+
+.fc-day-sat a {
+  color: #50bcdf;
+}
+
+.fc-header-toolbar {
+  color: black;
+}
+
+.fc-today-button {
+  background-color: yellow;
+  color: black;
 }

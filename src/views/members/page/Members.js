@@ -31,8 +31,9 @@ const Members = () => {
   return (
     <>
       <CCard>
-        <CCardHeader>
+        <CCardHeader className={'d-flex justify-content-between'}>
           <h3>셀스 명단</h3>
+          <CButton color="warning">정산하기</CButton>
         </CCardHeader>
         <CCardBody>
           <CTable hover bordered>
@@ -48,7 +49,6 @@ const Members = () => {
                 <CTableHeaderCell scope="col">학번</CTableHeaderCell>
                 <CTableHeaderCell scope="col">학과</CTableHeaderCell>
                 <CTableHeaderCell scope="col">지불비</CTableHeaderCell>
-                <CTableHeaderCell scope="col">기능</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableBody>
@@ -65,10 +65,7 @@ const Members = () => {
                     <CTableDataCell className={'text-center'}>{item.studentId}</CTableDataCell>
                     <CTableDataCell className={'text-center'}>{item.department}</CTableDataCell>
                     <CTableDataCell className={'text-center'}>{item.payout}</CTableDataCell>
-                    <CTableDataCell className={'text-center'}>
-
-                    </CTableDataCell>
-                    </CTableRow>
+                  </CTableRow>
                 )})}
             </CTableBody>
           </CTable>
