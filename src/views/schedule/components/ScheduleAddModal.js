@@ -7,63 +7,62 @@ import {
   CModalFooter,
   CModalHeader,
   CModalTitle,
-  CForm,
-  CFormInput,
 } from "@coreui/react";
 
-import { GithubPicker } from "react-color";
-import axios from "axios";
+import ScheduleAddMemberModal from "./ScheduleAddMember";
 
 const ScheduleAddModal = (props) => {
-  const [newEvent, setNewEvent] = useState({});
+  const [dialogVisible, setDialogVisible] = useState(false);
+  const [Users, setUsers] = useState([]);
+  const [newUser, setNewUser] = useState({});
 
-  const handleColorChange = (color) => {
-    console.log(color.hex);
-    // setSelectedColor(color.hex);
-    setNewEvent((prevEvent) => ({
-      ...prevEvent,
-      color: color.hex,
-    }));
+  const handleDialogClose = () => {
+    // setNewUser({});
+    setDialogVisible(false);
   };
 
-  const handleInputChange = (event) => {
-    // console.log(event.target);
-    const { name, value } = event.target;
-    setNewEvent((prevEvent) => ({
-      ...prevEvent,
+  //   const handleFormSubmit = (user) => {
+  //     user.preventDefault();
+  //     console.log(newUser);
+  //     const New_user = {
+  //       eventId: newUser.eventKey,
+  //       Username: newUser.Username,
+  //       key: newUser.key,
+  //     };
+
+  //     console.log(New_user);
+
+  //     axios
+  //       .post(`http://localhost:8000/sels/getOneList`, New_user, {
+  //         headers: {
+  //           "Content-Type": `application/json`,
+  //         },
+  //         body: New_user,
+  //       })
+  //       .then((response) => {
+  //         console.log(response);
+  //       })
+  //       .catch((response) => {
+  //         console.log("Error!");
+  //       });
+
+  //     setUsers((prevUsers) => [...prevUsers, newUser]);
+  //     console.log(Users);
+  //     console.log(props.SelectedEvent);
+  //     handleDialogClose();
+  //   };
+
+  const handleInputChange = (user) => {
+    const { name, value } = user.target;
+    setNewUser((prevUsers) => ({
+      ...prevUsers,
       [name]: value,
     }));
   };
 
-  const handleFormSubmit = (event) => {
-    event.preventDefault();
-    const New_event = {
-      eventId: newEvent.id,
-      title: newEvent.title,
-      start: newEvent.start,
-      end: newEvent.end,
-      color: newEvent.color,
-      enterNames: newEvent.enterNames,
-    };
-
-    axios
-      .post("http://localhost:8000/sels/postCalendar", New_event, {
-        headers: {
-          "Content-Type": `application/json`,
-        },
-        body: New_event,
-      })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((response) => {
-        console.log("Error!");
-      });
-    props.eventsFunc((prevEvents) => [...prevEvents, newEvent]);
-    console.log(props.events);
-
-    props.showFunc(false);
-  };
+  useEffect(() => {
+    console.log("Selected Event in ScheduleAddModal:", props.selectedEvent);
+  }, [props.selectedEvent]);
 
   return (
     <>
@@ -71,62 +70,35 @@ const ScheduleAddModal = (props) => {
         alignment="center"
         visible={props.show}
         onClose={() => props.showFunc(false)}
+        fullscreen
+        backdrop="static"
       >
         <CModalHeader onClose={() => props.showFunc(false)}>
-          <CModalTitle>일정 추가</CModalTitle>
+          <CModalTitle>회원 수정</CModalTitle>
         </CModalHeader>
         <CModalBody>
-          <CForm onSubmit={handleFormSubmit}>
-            <CFormInput
-              type="text"
-              // id="exampleFormControlInput1"
-              label="일정 제목"
-              placeholder="일정 제목"
-              name="title"
-              onChange={handleInputChange}
-              // text="Must be 8-20 characters long."
-              // aria-describedby="exampleFormControlInputHelpInline"
-            />
-            <p>시작 시간</p>
-            <p>종료 시간</p>
-            {/* <TextField
-              margin="dense"
-              label="시작 시간"
-              type="datetime-local"
-              fullWidth
-              name="start"
-              value={moment(newEvent.start).format("YYYY-MM-DD HH:mm:ss") || ""}
-              // value={newEvent.startStr}
-              onChange={handleInputChange}
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-            <TextField
-              margin="dense"
-              label="종료 시간"
-              type="datetime-local"
-              fullWidth
-              name="end"
-              value={moment(newEvent.end).format("YYYY-MM-DD HH:mm:ss") || ""}
-              // value={newEvent.endStr}
-              onChange={handleInputChange}
-              InputLabelProps={{
-                shrink: true,
-              }}
-            /> */}
-            <GithubPicker triangle="hide" onChange={handleColorChange} />
-          </CForm>
+          <p>추가 내용 작성</p>
+          {props.selectedEvent && (
+            <p>선택된 이벤트: {props.selectedEvent.title}</p>
+          )}
+          <CButton
+            color="warning"
+            onClick={() => setDialogVisible(!dialogVisible)}
+          >
+            회원 추가
+          </CButton>
         </CModalBody>
         <CModalFooter>
-          <CButton type="submit" color="primary" onClick={handleFormSubmit}>
-            추가
-          </CButton>
+          <CButton color="primary">저장</CButton>
           <CButton color="secondary" onClick={() => props.showFunc(false)}>
             취소
           </CButton>
         </CModalFooter>
       </CModal>
+      <ScheduleAddMemberModal
+        show={dialogVisible}
+        showFunc={setDialogVisible}
+      />
     </>
   );
 };

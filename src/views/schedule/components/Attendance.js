@@ -27,16 +27,16 @@ import {
 
 import axios from "axios";
 
-function Attendence({ selectedEvent, events }) {
-  console.log(events);
+function Attendence({ props }) {
+  console.log(props);
   const [Users, setUsers] = useState([]);
   const [newUser, setNewUser] = useState({});
-  const [SelectedEvent, setSelectedEvent] = useState(selectedEvent);
+  const [SelectedEvent, setSelectedEvent] = useState(props.selectedEvent);
   const [userDialogOpen, setUserDialogOpen] = useState(false);
 
   const handleUserDialogOpen = () => {
     setNewUser({
-      eventKey: selectedEvent.id,
+      eventKey: props.selectedEvent.id,
       Username: "", // 이름
       key: "", // 학번
       state: "",
@@ -361,35 +361,6 @@ function Attendence({ selectedEvent, events }) {
                     </CButton>
                   </CModalFooter>
                 </CModal>
-                {/* <Dialog open={dialogOpen} onClose={handleDialogClose}>
-                  <DialogTitle>참석 인원 추가</DialogTitle>
-                  <form onSubmit={handleFormSubmit}>
-                    <DialogContent>
-                      <TextField
-                        autoFocus
-                        margin="dense"
-                        label="이름"
-                        type="text"
-                        fullWidth
-                        name="Username"
-                        onChange={handleInputChange}
-                      />
-                      <TextField
-                        autoFocus
-                        margin="dense"
-                        label="학번"
-                        type="text"
-                        fullWidth
-                        name="key"
-                        onChange={handleInputChange}
-                      />
-                    </DialogContent>
-                    <DialogActions>
-                      <Button onClick={handleDialogClose}>취소</Button>
-                      <Button type="submit">추가</Button>
-                    </DialogActions>
-                  </form>
-                </Dialog> */}
               </div>
             </div>
             <ListGroup
@@ -400,14 +371,9 @@ function Attendence({ selectedEvent, events }) {
                 borderRadius: "10px",
               }}
             >
-              {renderScheduleList(events)}
+              {renderScheduleList(props.events)}
             </ListGroup>
           </div>
-          {/* <div className="SideFooter">
-            <span style={{ fontSize: "13px", color: "white" }}>
-              Copyrightⓒ 2021 All rights reserved.
-            </span>
-          </div> */}
         </div>
       </div>
       {/* 메인 리스트 */}
