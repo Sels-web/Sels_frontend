@@ -33,7 +33,7 @@ const Members = () => {
       <CCard>
         <CCardHeader className={'d-flex justify-content-between'}>
           <h3>셀스 명단</h3>
-          <CButton color="warning" className={'me-2'}>지각비 납부</CButton>
+          <CButton color="warning">정산하기</CButton>
         </CCardHeader>
         <CCardBody>
           <CTable hover bordered>
