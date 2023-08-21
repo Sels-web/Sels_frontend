@@ -18,12 +18,13 @@ const AdminAddMemberModal = (props) => {
     attendance: 0,
     volunteerHours: 0,
     fine: 0,
-    gender: '남',
     position: '',
     studentId: '',
     department: '',
     payout: 0,
   })
+
+  const [gender, setGender] = useState('');
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -33,21 +34,27 @@ const AdminAddMemberModal = (props) => {
     }));
   };
 
+  const handleRadioChange = (e) => {
+    setGender(e.target.value)
+  }
+
   const postMember = () => {
     let postMember = {
       name: member.name,
-      attendance: Number(member.attendance),
-      accumulated_time: Number(member.volunteerHours),
-      latencyCost: Number(member.fine),
-      sex: member.gender,
+      attendance: member.attendance,
+      accumulated_time: member.volunteerHours,
+      latencyCost: member.fine,
+      sex: gender,
       is_admin: member.position,
       school_id: member.studentId,
       department: member.department,
-      accumulated_cost: Number(member.payout),
+      accumulated_cost: member.payout
     }
     console.log(postMember);
     AddMember(postMember).then(r => {
-      console.log(r);
+      alert('회원이 추가되었습니다.');
+    }).catch(r => {
+      alert('오류가 발생하였습니다.')
     })
   }
 
@@ -78,8 +85,14 @@ const AdminAddMemberModal = (props) => {
             <CInputGroup className="mb-3">
               <CInputGroupText>성별</CInputGroupText>
               <div className={'d-flex align-items-center ps-3 rounded-end border'} style={{flex: '1 1 auto', borderColor: '#dbdfe6'}}>
-                <CFormCheck inline type="radio" name="gender" id="man" value="man" label="남자" onChange={handleInputChange}/>
-                <CFormCheck inline type="radio" name="gender" id="woman" value="woman" label="여자" onChange={handleInputChange}/>
+                <div class="form-check me-2">
+                  <input type="radio" name="gender" id="man" value="man" className={'form-check-input'} onChange={handleRadioChange}/>
+                  <label className={"form-check-label"} htmlFor="man">남자</label>
+                </div>
+                <div class="form-check">
+                  <input type="radio" name="gender" id="woman" value="woman" className={'form-check-input'} onChange={handleRadioChange}/>
+                  <label className={"form-check-label"} htmlFor="woman">여자</label>
+                </div>
               </div>
             </CInputGroup>
             <CInputGroup className="mb-3">
