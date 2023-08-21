@@ -9,12 +9,22 @@ import {
   CTableHeaderCell,
   CTableRow
 } from "@coreui/react";
-import React from "react";
+import React, {useEffect} from "react";
 import {Link} from "react-router-dom";
+import {getMember} from "../../../api/member";
 
 const Members = () => {
-  const items = [
-    {
+
+  useEffect(() => {
+    const initMember = async () => {
+      let memberList = await getMember()
+      console.log(memberList)
+
+    }
+    initMember()
+  }, [])
+
+  const items = [{
       id: 1,
       name: '박재현',
       attend: '8회',
@@ -26,8 +36,7 @@ const Members = () => {
       department: '소프트웨어학과',
       payout: '5000원',
       _cellProps: { id: { scope: 'row' } },
-    },
-  ]
+    },]
   return (
     <>
       <CCard>
