@@ -2,7 +2,7 @@ import {
   CButton,
   CCard,
   CCardBody,
-  CCardHeader,
+  CCardHeader, CForm, CFormInput, CInputGroup,
   CTable,
   CTableBody, CTableDataCell,
   CTableHead,
@@ -10,32 +10,43 @@ import {
   CTableRow
 } from "@coreui/react";
 import {Link} from "react-router-dom";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import AdminAddMemberModal from "../components/AdminAddMemberModal";
 import AdminDeleteMemberModal from "../components/AdminDeleteMemeberModal";
 import AdminModifyMemberModal from "../components/AdminModifyMemeberModal";
+import {getMember, getSearchMember} from "../../../api/member";
 
 const Admin = () => {
   const [addVisible, setAddVisible] = useState(false)
   const [removeVisible, setRemoveVisible] = useState(false)
   const [modifyVisible, setModifyVisible] = useState(false)
 
-  const items = [
-    {
-      id: 1,
-      name: '박재현',
-      attend: '8회',
-      accumulated_time: '19시간',
-      latencyCost: '5000원',
-      gender: '남',
-      is_admin: '부원',
-      school_id: '18011672',
-      department: '소프트웨어학과',
-      accumulated_cost: '5000원',
-      function: '',
-      _cellProps: { id: { scope: 'row' } },
-    },
-  ]
+  const [members, setMembers] = useState([])
+  const [searchParams, setSearchParams] = useState('');
+
+  const [selectedMember, setSelectedMember] = useState({});
+
+  const initMember = async () => {
+    let memberList = await getMember()
+    setMembers(memberList.data)
+  }
+
+  useEffect(() => {
+    initMember()
+  }, [])
+
+  const searchFunc = () => {
+    const searchMember = async () => {
+      let memberList = await getSearchMember(searchParams)
+      setMembers(memberList.data)
+    }
+    searchMember()
+  }
+
+  const inputChange = (e) => {
+    setSearchParams(e.target.value)
+  }
+
   return (
       <>
         <CCard>
@@ -44,6 +55,14 @@ const Admin = () => {
             <CButton color="warning" onClick={() => setAddVisible(!addVisible)}>회원 추가</CButton>
           </CCardHeader>
           <CCardBody>
+            <CForm onSubmit={searchFunc}>
+              <div className={'d-flex justify-content-end mb-3'}>
+                <CInputGroup className="w-25">
+                  <CFormInput placeholder="이름검색" onChange={inputChange}/>
+                  <CButton type="submit" color="warning" variant="outline">검색</CButton>
+                </CInputGroup>
+              </div>
+            </CForm>
             <CTable hover bordered>
               <CTableHead align={'center'}>
                 <CTableRow>
@@ -61,32 +80,50 @@ const Admin = () => {
                 </CTableRow>
               </CTableHead>
               <CTableBody>
-                {items.map(item => {
+                {members.map((member, idx) => {
                   return (
-                      <CTableRow align={'middle'}>
-                        <CTableHeaderCell className={'text-center'}>{item.id}</CTableHeaderCell>
-                        <CTableDataCell className={'text-center'}><Link to={''}>{item.name}</Link></CTableDataCell>
-                        <CTableDataCell className={'text-center'}>{item.attend}</CTableDataCell>
-                        <CTableDataCell className={'text-center'}>{item.accumulated_time}</CTableDataCell>
-                        <CTableDataCell className={'text-center'}>{item.latencyCost}</CTableDataCell>
-                        <CTableDataCell className={'text-center'}>{item.gender}</CTableDataCell>
-                        <CTableDataCell className={'text-center'}>{item.is_admin}</CTableDataCell>
-                        <CTableDataCell className={'text-center'}>{item.school_id}</CTableDataCell>
-                        <CTableDataCell className={'text-center'}>{item.department}</CTableDataCell>
-                        <CTableDataCell className={'text-center'}>{item.accumulated_cost}</CTableDataCell>
+                    members.length != 0 ? (
+                      <CTableRow align={'middle'} key={member.id}>
+                        <CTableHeaderCell className={'text-center'}>{idx + 1}</CTableHeaderCell>
+                        <CTableDataCell className={'text-center'}>{member.name}</CTableDataCell>
+                        <CTableDataCell className={'text-center'}>{member.attendance}</CTableDataCell>
+                        <CTableDataCell className={'text-center'}>{member.accumulated_time}</CTableDataCell>
+                        <CTableDataCell className={'text-center'}>{member.latencyCost}</CTableDataCell>
+                        <CTableDataCell className={'text-center'}>{member.sex}</CTableDataCell>
+                        <CTableDataCell className={'text-center'}>{member.is_admin}</CTableDataCell>
+                        <CTableDataCell className={'text-center'}>{member.school_id}</CTableDataCell>
+                        <CTableDataCell className={'text-center'}>{member.department}</CTableDataCell>
+                        <CTableDataCell className={'text-center'}>{member.accumulated_cost}</CTableDataCell>
                         <CTableDataCell className={'text-center'}>
-                            <CButton color="danger" className={'me-2'} onClick={() => setRemoveVisible(!removeVisible)}>삭제</CButton>
-                            <CButton color="info" onClick={() => setModifyVisible(!modifyVisible)}>수정</CButton>
+                          <CButton color="danger" className={'me-2'} onClick={() => {
+                            setRemoveVisible(!removeVisible);
+                            setSelectedMember({
+                              schoolId: member.school_id,
+                              name: member.name
+                            })
+                          }}>삭제</CButton>
+                          <CButton color="info" onClick={() => {
+                            setModifyVisible(!modifyVisible);
+                            setSelectedMember({
+                              schoolId: member.school_id,
+                              name: member.name
+                            })
+                          }}>수정</CButton>
                         </CTableDataCell>
                       </CTableRow>
+                    ) : (
+                      <CTableRow align={'middle'}>
+                        <CTableDataCell className={'text-center'} colSpan={7}>검색결과가 없습니다!</CTableDataCell>
+                      </CTableRow>
+                    )
                   )})}
               </CTableBody>
             </CTable>
           </CCardBody>
         </CCard>
         <AdminAddMemberModal show={addVisible} showFunc={setAddVisible}/>
-        <AdminDeleteMemberModal show={removeVisible} showFunc={setRemoveVisible}/>
-        <AdminModifyMemberModal show={modifyVisible} showFunc={setModifyVisible}/>
+        <AdminDeleteMemberModal show={removeVisible} showFunc={setRemoveVisible} selectedMember={selectedMember} initMember={initMember}/>
+        <AdminModifyMemberModal show={modifyVisible} showFunc={setModifyVisible} selectedMember={selectedMember} initMember={initMember}/>
       </>
   );
 }

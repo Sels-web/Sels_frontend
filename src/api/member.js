@@ -14,3 +14,10 @@ export const getSearchMember = (name) => {
     url: `/namelist/search/${name}`,
   })
 }
+
+export const deleteMember = (schoolId, name) => {
+  return Send({
+    method: 'delete',
+    url: `/namelist/delete-one/${schoolId}/${name}`,
+  })
+}

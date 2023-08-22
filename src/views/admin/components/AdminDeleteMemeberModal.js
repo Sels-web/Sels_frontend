@@ -1,6 +1,17 @@
 import {CButton, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle} from "@coreui/react";
+import {deleteMember, getSearchMember} from "../../../api/member";
 
 const AdminDeleteMemberModal = (props) => {
+  const deleteMemberFunc = () => {
+    deleteMember(props.selectedMember.schoolId, props.selectedMember.name).then(r => {
+      alert('삭제 되었습니다.');
+      props.initMember();
+      props.showFunc(false);
+    }).catch(r => {
+      alert('오류가 발생하였습니다.')
+    })
+  }
+
   return (
       <>
         <CModal alignment="center" visible={props.show} onClose={() => props.showFunc(false)}>
@@ -14,7 +25,7 @@ const AdminDeleteMemberModal = (props) => {
             </p>
           </CModalBody>
           <CModalFooter>
-            <CButton color="primary">예</CButton>
+            <CButton color="primary" onClick={deleteMemberFunc}>예</CButton>
             <CButton color="secondary" onClick={() => props.showFunc(false)}>
               아니요
             </CButton>
