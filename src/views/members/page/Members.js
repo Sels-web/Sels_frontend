@@ -10,18 +10,18 @@ import {
   CTableRow
 } from "@coreui/react";
 import React, {useEffect, useState} from "react";
-import {getMember, getSearchMember} from "../../../api/member";
+import {getMembers, getSearchMember} from "../../../api/member";
 
 const Members = () => {
   const [members, setMembers] = useState([])
   const [searchParams, setSearchParams] = useState('');
 
   useEffect(() => {
-    const initMember = async () => {
-      let memberList = await getMember()
+    const initMembers = async () => {
+      let memberList = await getMembers()
       setMembers(memberList.data)
     }
-    initMember()
+    initMembers()
   }, [])
 
   const searchFunc = () => {

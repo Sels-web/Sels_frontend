@@ -9,12 +9,11 @@ import {
   CTableHeaderCell,
   CTableRow
 } from "@coreui/react";
-import {Link} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import AdminAddMemberModal from "../components/AdminAddMemberModal";
 import AdminDeleteMemberModal from "../components/AdminDeleteMemeberModal";
 import AdminModifyMemberModal from "../components/AdminModifyMemeberModal";
-import {getMember, getSearchMember} from "../../../api/member";
+import {getMembers, getSearchMember} from "../../../api/member";
 
 const Admin = () => {
   const [addVisible, setAddVisible] = useState(false)
@@ -26,13 +25,13 @@ const Admin = () => {
 
   const [selectedMember, setSelectedMember] = useState({});
 
-  const initMember = async () => {
-    let memberList = await getMember()
+  const initMembers = async () => {
+    let memberList = await getMembers()
     setMembers(memberList.data)
   }
 
   useEffect(() => {
-    initMember()
+    initMembers()
   }, [])
 
   const searchFunc = () => {
@@ -122,8 +121,8 @@ const Admin = () => {
           </CCardBody>
         </CCard>
         <AdminAddMemberModal show={addVisible} showFunc={setAddVisible}/>
-        <AdminDeleteMemberModal show={removeVisible} showFunc={setRemoveVisible} selectedMember={selectedMember} initMember={initMember}/>
-        <AdminModifyMemberModal show={modifyVisible} showFunc={setModifyVisible} selectedMember={selectedMember} initMember={initMember}/>
+        <AdminDeleteMemberModal show={removeVisible} showFunc={setRemoveVisible} selectedMember={selectedMember} initMember={initMembers}/>
+        <AdminModifyMemberModal show={modifyVisible} showFunc={setModifyVisible} selectedMember={selectedMember} initMember={initMembers}/>
       </>
   );
 }

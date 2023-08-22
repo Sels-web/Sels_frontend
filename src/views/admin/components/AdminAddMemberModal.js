@@ -10,7 +10,7 @@ import {
   CModalTitle
 } from "@coreui/react";
 import {useState} from "react";
-import {AddMember} from "../../../api/admin";
+import {AddMember} from "../../../api/member";
 
 const AdminAddMemberModal = (props) => {
   const [member, setMember] = useState({
@@ -19,12 +19,11 @@ const AdminAddMemberModal = (props) => {
     accumulated_time: 0,
     latencyCost: 0,
     is_admin: '',
+    sex: '',
     school_id: '',
     department: '',
     accumulated_cost: 0,
   })
-
-  const [sex, setSex] = useState('');
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -34,23 +33,8 @@ const AdminAddMemberModal = (props) => {
     }));
   };
 
-  const handleRadioChange = (e) => {
-    setSex(e.target.value)
-  }
-
   const postMember = () => {
-    let postMember = {
-      name: member.name,
-      attendance: member.attendance,
-      accumulated_time: member.accumulated_time,
-      latencyCost: member.latencyCost,
-      sex: sex,
-      is_admin: member.is_admin,
-      school_id: member.school_id,
-      department: member.department,
-      accumulated_cost: member.accumulated_cost
-    }
-    AddMember(postMember).then(r => {
+    AddMember(member).then(r => {
       alert('회원이 추가되었습니다.');
       props.showFunc(false);
       setMember({});
@@ -86,12 +70,12 @@ const AdminAddMemberModal = (props) => {
             <CInputGroup className="mb-3">
               <CInputGroupText>성별</CInputGroupText>
               <div className={'d-flex align-items-center ps-3 rounded-end border'} style={{flex: '1 1 auto', borderColor: '#dbdfe6'}}>
-                <div class="form-check me-2">
-                  <input type="radio" name="gender" id="man" value="남자" className={'form-check-input'} onChange={handleRadioChange}/>
+                <div classclassName="form-check me-2">
+                  <input type="radio" name="sex" id="man" value="남자" className={'form-check-input'} onChange={handleInputChange}/>
                   <label className={"form-check-label"} htmlFor="man">남자</label>
                 </div>
-                <div class="form-check">
-                  <input type="radio" name="gender" id="woman" value="여자" className={'form-check-input'} onChange={handleRadioChange}/>
+                <div classclassName="form-check">
+                  <input type="radio" name="sex" id="woman" value="여자" className={'form-check-input'} onChange={handleInputChange}/>
                   <label className={"form-check-label"} htmlFor="woman">여자</label>
                 </div>
               </div>
