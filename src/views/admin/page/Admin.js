@@ -25,13 +25,13 @@ const Admin = () => {
       id: 1,
       name: '박재현',
       attend: '8회',
-      volunteerHours: '19시간',
-      fine: '5000원',
+      accumulated_time: '19시간',
+      latencyCost: '5000원',
       gender: '남',
-      position: '부원',
-      studentId: '18011672',
+      is_admin: '부원',
+      school_id: '18011672',
       department: '소프트웨어학과',
-      payout: '5000원',
+      accumulated_cost: '5000원',
       function: '',
       _cellProps: { id: { scope: 'row' } },
     },
@@ -67,13 +67,13 @@ const Admin = () => {
                         <CTableHeaderCell className={'text-center'}>{item.id}</CTableHeaderCell>
                         <CTableDataCell className={'text-center'}><Link to={''}>{item.name}</Link></CTableDataCell>
                         <CTableDataCell className={'text-center'}>{item.attend}</CTableDataCell>
-                        <CTableDataCell className={'text-center'}>{item.volunteerHours}</CTableDataCell>
-                        <CTableDataCell className={'text-center'}>{item.fine}</CTableDataCell>
+                        <CTableDataCell className={'text-center'}>{item.accumulated_time}</CTableDataCell>
+                        <CTableDataCell className={'text-center'}>{item.latencyCost}</CTableDataCell>
                         <CTableDataCell className={'text-center'}>{item.gender}</CTableDataCell>
-                        <CTableDataCell className={'text-center'}>{item.position}</CTableDataCell>
-                        <CTableDataCell className={'text-center'}>{item.studentId}</CTableDataCell>
+                        <CTableDataCell className={'text-center'}>{item.is_admin}</CTableDataCell>
+                        <CTableDataCell className={'text-center'}>{item.school_id}</CTableDataCell>
                         <CTableDataCell className={'text-center'}>{item.department}</CTableDataCell>
-                        <CTableDataCell className={'text-center'}>{item.payout}</CTableDataCell>
+                        <CTableDataCell className={'text-center'}>{item.accumulated_cost}</CTableDataCell>
                         <CTableDataCell className={'text-center'}>
                             <CButton color="danger" className={'me-2'} onClick={() => setRemoveVisible(!removeVisible)}>삭제</CButton>
                             <CButton color="info" onClick={() => setModifyVisible(!modifyVisible)}>수정</CButton>

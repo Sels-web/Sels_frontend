@@ -2,41 +2,40 @@ import {
   CButton,
   CCard,
   CCardBody,
-  CCardHeader,
+  CCardHeader, CCol, CForm, CFormInput, CInputGroup, CRow,
   CTable,
   CTableBody, CTableDataCell,
   CTableHead,
   CTableHeaderCell,
   CTableRow
 } from "@coreui/react";
-import React, {useEffect} from "react";
-import {Link} from "react-router-dom";
-import {getMember} from "../../../api/member";
+import React, {useEffect, useState} from "react";
+import {getMember, getSearchMember} from "../../../api/member";
 
 const Members = () => {
+  const [members, setMembers] = useState([])
+  const [searchParams, setSearchParams] = useState('');
 
   useEffect(() => {
     const initMember = async () => {
       let memberList = await getMember()
-      console.log(memberList)
-
+      setMembers(memberList.data)
     }
     initMember()
   }, [])
 
-  const items = [{
-      id: 1,
-      name: '박재현',
-      attend: '8회',
-      volunteerHours: '19시간',
-      fine: '5000원',
-      gender: '남',
-      position: '부원',
-      studentId: '18011672',
-      department: '소프트웨어학과',
-      payout: '5000원',
-      _cellProps: { id: { scope: 'row' } },
-    },]
+  const searchFunc = () => {
+    const searchMember = async () => {
+      let memberList = await getSearchMember(searchParams)
+      setMembers(memberList.data)
+    }
+    searchMember()
+  }
+
+  const inputChange = (e) => {
+    setSearchParams(e.target.value)
+  }
+
   return (
     <>
       <CCard>
@@ -45,6 +44,14 @@ const Members = () => {
           <CButton color="warning">정산하기</CButton>
         </CCardHeader>
         <CCardBody>
+          <CForm onSubmit={searchFunc}>
+            <div className={'d-flex justify-content-end mb-3'}>
+                <CInputGroup className="w-25">
+                  <CFormInput placeholder="이름검색" onChange={inputChange}/>
+                  <CButton type="submit" color="warning" variant="outline">검색</CButton>
+                </CInputGroup>
+            </div>
+          </CForm>
           <CTable hover bordered>
             <CTableHead align={'center'}>
               <CTableRow>
@@ -61,21 +68,27 @@ const Members = () => {
               </CTableRow>
             </CTableHead>
             <CTableBody>
-              {items.map(item => {
+              {members.map((member, idx) => {
                 return (
-                  <CTableRow align={'middle'}>
-                    <CTableHeaderCell className={'text-center'}>{item.id}</CTableHeaderCell>
-                    <CTableDataCell className={'text-center'}>{item.name}</CTableDataCell>
-                    <CTableDataCell className={'text-center'}>{item.attend}</CTableDataCell>
-                    <CTableDataCell className={'text-center'}>{item.volunteerHours}</CTableDataCell>
-                    <CTableDataCell className={'text-center'}>{item.fine}</CTableDataCell>
-                    <CTableDataCell className={'text-center'}>{item.gender}</CTableDataCell>
-                    <CTableDataCell className={'text-center'}>{item.position}</CTableDataCell>
-                    <CTableDataCell className={'text-center'}>{item.studentId}</CTableDataCell>
-                    <CTableDataCell className={'text-center'}>{item.department}</CTableDataCell>
-                    <CTableDataCell className={'text-center'}>{item.payout}</CTableDataCell>
-                  </CTableRow>
-                )})}
+                  members.length != 0 ? (
+                    <CTableRow align={'middle'} key={member.id}>
+                      <CTableHeaderCell className={'text-center'}>{idx + 1}</CTableHeaderCell>
+                      <CTableDataCell className={'text-center'}>{member.name}</CTableDataCell>
+                      <CTableDataCell className={'text-center'}>{member.attendance}</CTableDataCell>
+                      <CTableDataCell className={'text-center'}>{member.accumulated_time}</CTableDataCell>
+                      <CTableDataCell className={'text-center'}>{member.latencyCost}</CTableDataCell>
+                      <CTableDataCell className={'text-center'}>{member.sex}</CTableDataCell>
+                      <CTableDataCell className={'text-center'}>{member.is_admin}</CTableDataCell>
+                      <CTableDataCell className={'text-center'}>{member.school_id}</CTableDataCell>
+                      <CTableDataCell className={'text-center'}>{member.department}</CTableDataCell>
+                      <CTableDataCell className={'text-center'}>{member.accumulated_cost}</CTableDataCell>
+                    </CTableRow>
+                  ) : (
+                    <CTableRow align={'middle'}>
+                      <CTableDataCell className={'text-center'} colSpan={7}>검색결과가 없습니다!</CTableDataCell>
+                    </CTableRow>
+                  )
+              )})}
             </CTableBody>
           </CTable>
         </CCardBody>

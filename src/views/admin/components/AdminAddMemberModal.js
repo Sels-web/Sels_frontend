@@ -1,6 +1,6 @@
 import {
   CButton,
-  CForm, CFormCheck,
+  CForm,
   CFormInput,
   CInputGroup, CInputGroupText,
   CModal,
@@ -16,15 +16,15 @@ const AdminAddMemberModal = (props) => {
   const [member, setMember] = useState({
     name: '',
     attendance: 0,
-    volunteerHours: 0,
-    fine: 0,
-    position: '',
-    studentId: '',
+    accumulated_time: 0,
+    latencyCost: 0,
+    is_admin: '',
+    school_id: '',
     department: '',
-    payout: 0,
+    accumulated_cost: 0,
   })
 
-  const [gender, setGender] = useState('');
+  const [sex, setSex] = useState('');
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -35,24 +35,25 @@ const AdminAddMemberModal = (props) => {
   };
 
   const handleRadioChange = (e) => {
-    setGender(e.target.value)
+    setSex(e.target.value)
   }
 
   const postMember = () => {
     let postMember = {
       name: member.name,
       attendance: member.attendance,
-      accumulated_time: member.volunteerHours,
-      latencyCost: member.fine,
-      sex: gender,
-      is_admin: member.position,
-      school_id: member.studentId,
+      accumulated_time: member.accumulated_time,
+      latencyCost: member.latencyCost,
+      sex: sex,
+      is_admin: member.is_admin,
+      school_id: member.school_id,
       department: member.department,
-      accumulated_cost: member.payout
+      accumulated_cost: member.accumulated_cost
     }
-    console.log(postMember);
     AddMember(postMember).then(r => {
       alert('회원이 추가되었습니다.');
+      props.showFunc(false);
+      setMember({});
     }).catch(r => {
       alert('오류가 발생하였습니다.')
     })
@@ -76,32 +77,32 @@ const AdminAddMemberModal = (props) => {
             </CInputGroup>
             <CInputGroup className="mb-3">
               <CInputGroupText>봉사 시간</CInputGroupText>
-              <CFormInput name="volunteerHours" type="number" placeholder="봉사시간" onChange={handleInputChange}/>
+              <CFormInput name="accumulated_time" type="number" placeholder="봉사시간" onChange={handleInputChange}/>
             </CInputGroup>
             <CInputGroup className="mb-3">
               <CInputGroupText>벌금</CInputGroupText>
-              <CFormInput name="fine" type="number" placeholder="벌금" onChange={handleInputChange}/>
+              <CFormInput name="latencyCost" type="number" placeholder="벌금" onChange={handleInputChange}/>
             </CInputGroup>
             <CInputGroup className="mb-3">
               <CInputGroupText>성별</CInputGroupText>
               <div className={'d-flex align-items-center ps-3 rounded-end border'} style={{flex: '1 1 auto', borderColor: '#dbdfe6'}}>
                 <div class="form-check me-2">
-                  <input type="radio" name="gender" id="man" value="man" className={'form-check-input'} onChange={handleRadioChange}/>
+                  <input type="radio" name="gender" id="man" value="남자" className={'form-check-input'} onChange={handleRadioChange}/>
                   <label className={"form-check-label"} htmlFor="man">남자</label>
                 </div>
                 <div class="form-check">
-                  <input type="radio" name="gender" id="woman" value="woman" className={'form-check-input'} onChange={handleRadioChange}/>
+                  <input type="radio" name="gender" id="woman" value="여자" className={'form-check-input'} onChange={handleRadioChange}/>
                   <label className={"form-check-label"} htmlFor="woman">여자</label>
                 </div>
               </div>
             </CInputGroup>
             <CInputGroup className="mb-3">
               <CInputGroupText>직책</CInputGroupText>
-              <CFormInput name="position" placeholder="직책" onChange={handleInputChange}/>
+              <CFormInput name="is_admin" placeholder="직책" onChange={handleInputChange}/>
             </CInputGroup>
             <CInputGroup className="mb-3">
               <CInputGroupText>학번</CInputGroupText>
-              <CFormInput name="studentId" placeholder="학번" onChange={handleInputChange}/>
+              <CFormInput name="school_id" placeholder="학번" onChange={handleInputChange}/>
             </CInputGroup>
             <CInputGroup className="mb-3">
               <CInputGroupText>학과</CInputGroupText>
@@ -109,7 +110,7 @@ const AdminAddMemberModal = (props) => {
             </CInputGroup>
             <CInputGroup>
               <CInputGroupText>지불비</CInputGroupText>
-              <CFormInput name="payout" type="number" placeholder="지불비" onChange={handleInputChange}/>
+              <CFormInput name="accumulated_cost" type="number" placeholder="지불비" onChange={handleInputChange}/>
             </CInputGroup>
           </CForm>
         </CModalBody>

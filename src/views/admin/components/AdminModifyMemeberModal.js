@@ -28,12 +28,12 @@ const AdminModifyMemberModal = (props) => {
                 <CFormInput type="number" placeholder="참석 횟수" aria-label="참석 횟수" aria-describedby="attend"/>
               </CInputGroup>
               <CInputGroup className="mb-3">
-                <CInputGroupText id="volunteerHours">봉사 시간</CInputGroupText>
-                <CFormInput type="number" placeholder="봉사시간" aria-label="봉사시간" aria-describedby="volunteerHours"/>
+                <CInputGroupText id="accumulated_time">봉사 시간</CInputGroupText>
+                <CFormInput type="number" placeholder="봉사시간" aria-label="봉사시간" aria-describedby="accumulated_time"/>
               </CInputGroup>
               <CInputGroup className="mb-3">
-                <CInputGroupText id="fine">벌금</CInputGroupText>
-                <CFormInput type="number" placeholder="벌금" aria-label="벌금" aria-describedby="fine"/>
+                <CInputGroupText id="latencyCost">벌금</CInputGroupText>
+                <CFormInput type="number" placeholder="벌금" aria-label="벌금" aria-describedby="latencyCost"/>
               </CInputGroup>
               <CInputGroup className="mb-3">
                 <CInputGroupText id="gender">성별</CInputGroupText>
@@ -43,20 +43,20 @@ const AdminModifyMemberModal = (props) => {
                 </div>
               </CInputGroup>
               <CInputGroup className="mb-3">
-                <CInputGroupText id="position">직책</CInputGroupText>
-                <CFormInput placeholder="직책" aria-label="직책" aria-describedby="position"/>
+                <CInputGroupText id="is_admin">직책</CInputGroupText>
+                <CFormInput placeholder="직책" aria-label="직책" aria-describedby="is_admin"/>
               </CInputGroup>
               <CInputGroup className="mb-3">
-                <CInputGroupText id="studentId">학번</CInputGroupText>
-                <CFormInput placeholder="학번" aria-label="학번" aria-describedby="studentId"/>
+                <CInputGroupText id="school_id">학번</CInputGroupText>
+                <CFormInput placeholder="학번" aria-label="학번" aria-describedby="school_id"/>
               </CInputGroup>
               <CInputGroup className="mb-3">
                 <CInputGroupText id="department">학과</CInputGroupText>
                 <CFormInput placeholder="학과" aria-label="학과" aria-describedby="department"/>
               </CInputGroup>
               <CInputGroup>
-                <CInputGroupText id="payout">지불비</CInputGroupText>
-                <CFormInput type="number" placeholder="지불비" aria-label="지불비" aria-describedby="payout"/>
+                <CInputGroupText id="accumulated_cost">지불비</CInputGroupText>
+                <CFormInput type="number" placeholder="지불비" aria-label="지불비" aria-describedby="accumulated_cost"/>
               </CInputGroup>
             </CForm>
           </CModalBody>
