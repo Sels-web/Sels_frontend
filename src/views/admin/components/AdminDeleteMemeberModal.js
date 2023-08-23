@@ -6,7 +6,12 @@ const AdminDeleteMemberModal = (props) => {
   const selectedMember = useSelector(state => state.selectedMemberStore)
 
   const deleteMemberFunc = () => {
-    deleteMember(selectedMember.school_id, selectedMember.name).then(r => {
+    let params = {
+      range: 'one',
+      name: selectedMember.name,
+      school_id: selectedMember.school_id
+    }
+    deleteMember(params).then(r => {
       alert('삭제 되었습니다.');
       props.initMembers();
       props.showFunc(false);

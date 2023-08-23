@@ -37,6 +37,7 @@ const AdminAddMemberModal = (props) => {
     AddMember(member).then(r => {
       alert('회원이 추가되었습니다.');
       props.showFunc(false);
+      props.initMembers()
       setMember({});
     }).catch(r => {
       alert('오류가 발생하였습니다.')
@@ -99,10 +100,7 @@ const AdminAddMemberModal = (props) => {
           </CForm>
         </CModalBody>
         <CModalFooter>
-          <CButton color="success" onClick={() => {
-            postMember()
-            props.initMembers()
-          }}>저장</CButton>
+          <CButton color="success" onClick={() => postMember()}>저장</CButton>
           <CButton color="secondary" onClick={() => {
             props.showFunc(false);
             setMember({});

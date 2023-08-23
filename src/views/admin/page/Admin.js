@@ -13,7 +13,7 @@ import React, {useEffect, useState} from "react";
 import AdminAddMemberModal from "../components/AdminAddMemberModal";
 import AdminDeleteMemberModal from "../components/AdminDeleteMemeberModal";
 import AdminModifyMemberModal from "../components/AdminModifyMemeberModal";
-import {getMembers, getSearchMember} from "../../../api/member";
+import {getMembers} from "../../../api/member";
 import {useDispatch, useSelector} from "react-redux";
 import {getMembersAction} from "../../../store/memberStore";
 import {getSelectedMemberAction} from "../../../store/selectedMemberStore";
@@ -22,14 +22,17 @@ const Admin = () => {
   const [addVisible, setAddVisible] = useState(false)
   const [removeVisible, setRemoveVisible] = useState(false)
   const [modifyVisible, setModifyVisible] = useState(false)
-
-  const [searchParams, setSearchParams] = useState('');
-
+  const [searchParams, setSearchParams] = useState({
+    name: '',
+    school_id: '',
+    latencyCost: 0,
+    order: 'name',
+  });
   const members = useSelector(state => state.membersStore)
   const dispatch = useDispatch()
 
   const initMembers = async () => {
-    let memberList = await getMembers()
+    let memberList = await getMembers(searchParams)
     dispatch(getMembersAction(memberList.data))
   }
 
@@ -37,16 +40,12 @@ const Admin = () => {
     initMembers()
   }, [])
 
-  const searchFunc = () => {
-    const searchMember = async () => {
-      let memberList = await getSearchMember(searchParams)
-      dispatch(getMembersAction(memberList.data))
-    }
-    searchMember()
-  }
-
-  const inputChange = (e) => {
-    setSearchParams(e.target.value)
+  const inputChange = (event) => {
+    const { name, value } = event.target;
+    setSearchParams((prevEvent) => ({
+      ...prevEvent,
+      [name]: value,
+    }));
   }
 
   return (
@@ -57,10 +56,10 @@ const Admin = () => {
             <CButton color="warning" onClick={() => setAddVisible(!addVisible)}>회원 추가</CButton>
           </CCardHeader>
           <CCardBody>
-            <CForm onSubmit={searchFunc}>
+            <CForm onSubmit={initMembers}>
               <div className={'d-flex justify-content-end mb-3'}>
                 <CInputGroup className="w-25">
-                  <CFormInput placeholder="이름검색" onChange={inputChange}/>
+                  <CFormInput name='name' placeholder="이름검색" onChange={inputChange}/>
                   <CButton type="submit" color="warning" variant="outline">검색</CButton>
                 </CInputGroup>
               </div>

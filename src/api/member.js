@@ -1,24 +1,11 @@
 // @ts-ignore
 import Send from './Send.js'
 
-export const getMembers = () => {
+export const getMembers = (params) => {
   return Send({
     method: 'get',
-    url: `/namelist/all/0`,
-  })
-}
-
-export const getSearchMember = (name) => {
-  return Send({
-    method: 'get',
-    url: `/namelist/search/${name}`,
-  })
-}
-
-export const getMember = (schoolId) => {
-  return Send({
-    method: 'get',
-    url: `/namelist/detail/${schoolId}`,
+    params: params,
+    url: `/namelist/search`,
   })
 }
 
@@ -33,14 +20,15 @@ export const AddMember = (data) => {
 export const patchMember = (data) => {
   return Send({
     method: 'patch',
-    url: '/namelist',
+    url: '/namelist/update',
     data: data
   })
 }
 
-export const deleteMember = (schoolId, name) => {
+export const deleteMember = (params) => {
   return Send({
     method: 'delete',
-    url: `/namelist/delete-one/${schoolId}/${name}`,
+    params: params,
+    url: `/namelist/delete`,
   })
 }

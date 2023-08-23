@@ -10,33 +10,35 @@ import {
   CTableRow
 } from "@coreui/react";
 import React, {useEffect, useState} from "react";
-import {getMembers, getSearchMember} from "../../../api/member";
+import {getMembers} from "../../../api/member";
 import {getMembersAction} from "../../../store/memberStore"
 import {useDispatch, useSelector} from "react-redux";
 
 const Members = () => {
-  const [searchParams, setSearchParams] = useState('');
+  const [searchParams, setSearchParams] = useState({
+    name: '',
+    school_id: '',
+    latencyCost: 0,
+    order: 'name',
+  });
   const members = useSelector(state => state.membersStore)
   const dispatch = useDispatch()
 
+  const initMembers = async () => {
+    let memberList = await getMembers(searchParams)
+    dispatch(getMembersAction(memberList.data))
+  }
+
   useEffect(() => {
-    const initMembers = async () => {
-      let memberList = await getMembers()
-      dispatch(getMembersAction(memberList.data))
-    }
     initMembers()
   }, [])
 
-  const searchFunc = () => {
-    const searchMember = async () => {
-      let memberList = await getSearchMember(searchParams)
-      dispatch(getMembersAction(memberList.data))
-    }
-    searchMember()
-  }
-
-  const inputChange = (e) => {
-    setSearchParams(e.target.value)
+  const inputChange = (event) => {
+    const { name, value } = event.target;
+    setSearchParams((prevEvent) => ({
+      ...prevEvent,
+      [name]: value,
+    }));
   }
 
   return (
@@ -47,10 +49,10 @@ const Members = () => {
           <CButton color="warning">정산하기</CButton>
         </CCardHeader>
         <CCardBody>
-          <CForm onSubmit={searchFunc}>
+          <CForm onSubmit={initMembers}>
             <div className={'d-flex justify-content-end mb-3'}>
                 <CInputGroup className="w-25">
-                  <CFormInput placeholder="이름검색" onChange={inputChange}/>
+                  <CFormInput name="name" placeholder="이름검색" onChange={inputChange}/>
                   <CButton type="submit" color="warning" variant="outline">검색</CButton>
                 </CInputGroup>
             </div>
