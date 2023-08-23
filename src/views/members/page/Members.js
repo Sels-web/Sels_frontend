@@ -2,7 +2,7 @@ import {
   CButton,
   CCard,
   CCardBody,
-  CCardHeader, CCol, CForm, CFormInput, CInputGroup, CRow,
+  CCardHeader, CForm, CFormInput, CInputGroup,
   CTable,
   CTableBody, CTableDataCell,
   CTableHead,
@@ -11,15 +11,18 @@ import {
 } from "@coreui/react";
 import React, {useEffect, useState} from "react";
 import {getMembers, getSearchMember} from "../../../api/member";
+import {getMemberAction} from "../../../store/memberStore"
+import {useDispatch, useSelector} from "react-redux";
 
 const Members = () => {
-  const [members, setMembers] = useState([])
   const [searchParams, setSearchParams] = useState('');
+  const dispatch = useDispatch()
+  const members = useSelector(state => state.memberStore)
 
   useEffect(() => {
     const initMembers = async () => {
       let memberList = await getMembers()
-      setMembers(memberList.data)
+      dispatch(getMemberAction(memberList.data))
     }
     initMembers()
   }, [])
@@ -27,7 +30,7 @@ const Members = () => {
   const searchFunc = () => {
     const searchMember = async () => {
       let memberList = await getSearchMember(searchParams)
-      setMembers(memberList.data)
+      dispatch(getMemberAction(memberList.data))
     }
     searchMember()
   }
@@ -70,8 +73,8 @@ const Members = () => {
             <CTableBody>
               {members.map((member, idx) => {
                 return (
-                  members.length != 0 ? (
-                    <CTableRow align={'middle'} key={member.id}>
+                    members.length != 0 ? (
+                    <CTableRow align={'middle'} key={idx}>
                       <CTableHeaderCell className={'text-center'}>{idx + 1}</CTableHeaderCell>
                       <CTableDataCell className={'text-center'}>{member.name}</CTableDataCell>
                       <CTableDataCell className={'text-center'}>{member.attendance}</CTableDataCell>

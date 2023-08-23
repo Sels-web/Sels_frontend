@@ -1,17 +1,8 @@
-import { createStore } from 'redux'
+import reducer from './store/rootReducer'
+import {configureStore} from "@reduxjs/toolkit";
 
-const initialState = {
-  sidebarShow: true,
-}
+const store = configureStore({
+  reducer,
+})
 
-const changeState = (state = initialState, { type, ...rest }) => {
-  switch (type) {
-    case 'set':
-      return { ...state, ...rest }
-    default:
-      return state
-  }
-}
-
-const store = createStore(changeState)
 export default store
