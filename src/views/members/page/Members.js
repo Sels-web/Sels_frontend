@@ -11,18 +11,18 @@ import {
 } from "@coreui/react";
 import React, {useEffect, useState} from "react";
 import {getMembers, getSearchMember} from "../../../api/member";
-import {getMemberAction} from "../../../store/memberStore"
+import {getMembersAction} from "../../../store/memberStore"
 import {useDispatch, useSelector} from "react-redux";
 
 const Members = () => {
   const [searchParams, setSearchParams] = useState('');
+  const members = useSelector(state => state.membersStore)
   const dispatch = useDispatch()
-  const members = useSelector(state => state.memberStore)
 
   useEffect(() => {
     const initMembers = async () => {
       let memberList = await getMembers()
-      dispatch(getMemberAction(memberList.data))
+      dispatch(getMembersAction(memberList.data))
     }
     initMembers()
   }, [])
@@ -30,7 +30,7 @@ const Members = () => {
   const searchFunc = () => {
     const searchMember = async () => {
       let memberList = await getSearchMember(searchParams)
-      dispatch(getMemberAction(memberList.data))
+      dispatch(getMembersAction(memberList.data))
     }
     searchMember()
   }

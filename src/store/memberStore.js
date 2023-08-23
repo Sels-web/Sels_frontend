@@ -16,10 +16,10 @@ const memberList = createSlice({
   name: 'memberList',
   initialState: initialState,
   reducers: {
-    getMemberAction: (state, action) => {
+    getMembersAction: (state, action) => {
       return action.payload
     },
   },
 })
-export const { getMemberAction } = memberList.actions
+export const { getMembersAction } = memberList.actions
 export default memberList.reducer

@@ -1,11 +1,14 @@
 import {CButton, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle} from "@coreui/react";
 import {deleteMember, getSearchMember} from "../../../api/member";
+import {useSelector} from "react-redux";
 
 const AdminDeleteMemberModal = (props) => {
+  const selectedMember = useSelector(state => state.selectedMemberStore)
+
   const deleteMemberFunc = () => {
-    deleteMember(props.selectedMember.schoolId, props.selectedMember.name).then(r => {
+    deleteMember(selectedMember.school_id, selectedMember.name).then(r => {
       alert('삭제 되었습니다.');
-      props.initMember();
+      props.initMembers();
       props.showFunc(false);
     }).catch(r => {
       alert('오류가 발생하였습니다.')

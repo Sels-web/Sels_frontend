@@ -14,20 +14,23 @@ import AdminAddMemberModal from "../components/AdminAddMemberModal";
 import AdminDeleteMemberModal from "../components/AdminDeleteMemeberModal";
 import AdminModifyMemberModal from "../components/AdminModifyMemeberModal";
 import {getMembers, getSearchMember} from "../../../api/member";
+import {useDispatch, useSelector} from "react-redux";
+import {getMembersAction} from "../../../store/memberStore";
+import {getSelectedMemberAction} from "../../../store/selectedMemberStore";
 
 const Admin = () => {
   const [addVisible, setAddVisible] = useState(false)
   const [removeVisible, setRemoveVisible] = useState(false)
   const [modifyVisible, setModifyVisible] = useState(false)
 
-  const [members, setMembers] = useState([])
   const [searchParams, setSearchParams] = useState('');
 
-  const [selectedMember, setSelectedMember] = useState({});
+  const members = useSelector(state => state.membersStore)
+  const dispatch = useDispatch()
 
   const initMembers = async () => {
     let memberList = await getMembers()
-    setMembers(memberList.data)
+    dispatch(getMembersAction(memberList.data))
   }
 
   useEffect(() => {
@@ -37,7 +40,7 @@ const Admin = () => {
   const searchFunc = () => {
     const searchMember = async () => {
       let memberList = await getSearchMember(searchParams)
-      setMembers(memberList.data)
+      dispatch(getMembersAction(memberList.data))
     }
     searchMember()
   }
@@ -82,7 +85,7 @@ const Admin = () => {
                 {members.map((member, idx) => {
                   return (
                     members.length != 0 ? (
-                      <CTableRow align={'middle'} key={member.id}>
+                      <CTableRow align={'middle'} key={idx}>
                         <CTableHeaderCell className={'text-center'}>{idx + 1}</CTableHeaderCell>
                         <CTableDataCell className={'text-center'}>{member.name}</CTableDataCell>
                         <CTableDataCell className={'text-center'}>{member.attendance}</CTableDataCell>
@@ -96,17 +99,11 @@ const Admin = () => {
                         <CTableDataCell className={'text-center'}>
                           <CButton color="danger" className={'me-2'} onClick={() => {
                             setRemoveVisible(!removeVisible);
-                            setSelectedMember({
-                              schoolId: member.school_id,
-                              name: member.name
-                            })
+                            dispatch(getSelectedMemberAction(member))
                           }}>삭제</CButton>
                           <CButton color="info" onClick={() => {
                             setModifyVisible(!modifyVisible);
-                            setSelectedMember({
-                              schoolId: member.school_id,
-                              name: member.name
-                            })
+                            dispatch(getSelectedMemberAction(member))
                           }}>수정</CButton>
                         </CTableDataCell>
                       </CTableRow>
@@ -120,9 +117,9 @@ const Admin = () => {
             </CTable>
           </CCardBody>
         </CCard>
-        <AdminAddMemberModal show={addVisible} showFunc={setAddVisible}/>
-        <AdminDeleteMemberModal show={removeVisible} showFunc={setRemoveVisible} selectedMember={selectedMember} initMember={initMembers}/>
-        <AdminModifyMemberModal show={modifyVisible} showFunc={setModifyVisible} selectedMember={selectedMember} initMember={initMembers}/>
+        <AdminAddMemberModal show={addVisible} showFunc={setAddVisible} initMembers={initMembers}/>
+        <AdminDeleteMemberModal show={removeVisible} showFunc={setRemoveVisible} initMembers={initMembers}/>
+        <AdminModifyMemberModal show={modifyVisible} showFunc={setModifyVisible} initMembers={initMembers}/>
       </>
   );
 }

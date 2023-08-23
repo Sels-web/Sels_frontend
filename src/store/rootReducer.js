@@ -1,10 +1,12 @@
 import { combineReducers } from 'redux'
 import sidebarStore from './sidebarStore'
-import memberStore from './memberStore'
+import membersStore from './memberStore'
+import selectedMemberStore from './selectedMemberStore'
 
 const reducers = combineReducers({
   sidebarStore,
-  memberStore,
+  membersStore,
+  selectedMemberStore,
 })
 
 export default reducers

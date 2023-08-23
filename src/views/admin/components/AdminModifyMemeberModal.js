@@ -9,47 +9,24 @@ import {
   CModalHeader,
   CModalTitle
 } from "@coreui/react";
-import {patchMember, getMember} from "../../../api/member";
-import {useEffect, useState} from "react";
+import {patchMember} from "../../../api/member";
+import {useDispatch, useSelector} from "react-redux";
+import {modifySelectedMemberAction} from "../../../store/selectedMemberStore";
 
 const AdminModifyMemberModal = (props) => {
-  const [member, setMember] = useState({
-    name: '',
-    attendance: 0,
-    accumulated_time: 0,
-    latencyCost: 0,
-    is_admin: '',
-    sex: '',
-    school_id: '',
-    department: '',
-    accumulated_cost: 0,
-  })
-
-  const initMember = async () => {
-    let memberVar = await getMember(props.selectedMember.schoolId)
-    setMember(memberVar.data[0])
-  }
-
-  useEffect(() => {
-    if(props.show) {
-        initMember()
-    }
-  },[props.show])
+  const dispatch = useDispatch()
+  const selectedMember = useSelector(state => state.selectedMemberStore)
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setMember((prevEvent) => ({
-      ...prevEvent,
-      [name]: value,
-    }));
+    dispatch(modifySelectedMemberAction({name, value}))
   };
 
   const patchMemberFunc = () => {
-    console.log(member)
-    patchMember(member).then(r => {
+    patchMember(selectedMember).then(r => {
       alert('수정 되었습니다.');
-      props.initMember();
       props.showFunc(false);
+      props.initMembers();
     }).catch(r => {
       alert('오류가 발생하였습니다.')
     })
@@ -65,19 +42,19 @@ const AdminModifyMemberModal = (props) => {
             <CForm>
               <CInputGroup className="mb-3">
                 <CInputGroupText>이름</CInputGroupText>
-                <CFormInput placeholder="이름" defaultValue={member.name} onChange={handleInputChange}/>
+                <CFormInput name="name" placeholder="이름" defaultValue={selectedMember.name} onChange={handleInputChange}/>
               </CInputGroup>
               <CInputGroup className="mb-3">
                 <CInputGroupText>참석 횟수</CInputGroupText>
-                <CFormInput type="number" placeholder="참석 횟수" defaultValue={member.attendance} onChange={handleInputChange}/>
+                <CFormInput name="attendance" type="number" placeholder="참석 횟수" defaultValue={selectedMember.attendance} onChange={handleInputChange}/>
               </CInputGroup>
               <CInputGroup className="mb-3">
                 <CInputGroupText>봉사 시간</CInputGroupText>
-                <CFormInput type="number" placeholder="봉사시간" defaultValue={member.accumulated_time} onChange={handleInputChange}/>
+                <CFormInput name="accumulated_time" type="number" placeholder="봉사시간" defaultValue={selectedMember.accumulated_time} onChange={handleInputChange}/>
               </CInputGroup>
               <CInputGroup className="mb-3">
                 <CInputGroupText>벌금</CInputGroupText>
-                <CFormInput type="number" placeholder="벌금" defaultValue={member.latencyCost} onChange={handleInputChange}/>
+                <CFormInput name="latencyCost" type="number" placeholder="벌금" defaultValue={selectedMember.latencyCost} onChange={handleInputChange}/>
               </CInputGroup>
               <CInputGroup className="mb-3">
                 <CInputGroupText>성별</CInputGroupText>
@@ -88,7 +65,7 @@ const AdminModifyMemberModal = (props) => {
                            id="man"
                            value="남자"
                            className={'form-check-input'}
-                           checked={member.sex === '남자'}
+                           checked={selectedMember.sex === '남자'}
                            onChange={handleInputChange}/>
                     <label className={"form-check-label"} htmlFor="man">남자</label>
                   </div>
@@ -98,7 +75,7 @@ const AdminModifyMemberModal = (props) => {
                            id="woman"
                            value="여자"
                            className={'form-check-input'}
-                           checked={member.sex === '여자'}
+                           checked={selectedMember.sex === '여자'}
                            onChange={handleInputChange}/>
                     <label className={"form-check-label"} htmlFor="woman">여자</label>
                   </div>
@@ -106,19 +83,19 @@ const AdminModifyMemberModal = (props) => {
               </CInputGroup>
               <CInputGroup className="mb-3">
                 <CInputGroupText>직책</CInputGroupText>
-                <CFormInput placeholder="직책" defaultValue={member.is_admin} onChange={handleInputChange}/>
+                <CFormInput name="is_admin" placeholder="직책" defaultValue={selectedMember.is_admin} onChange={handleInputChange}/>
               </CInputGroup>
               <CInputGroup className="mb-3">
                 <CInputGroupText>학번</CInputGroupText>
-                <CFormInput placeholder="학번" defaultValue={member.school_id} onChange={handleInputChange}/>
+                <CFormInput name="school_id" placeholder="학번" defaultValue={selectedMember.school_id} onChange={handleInputChange}/>
               </CInputGroup>
               <CInputGroup className="mb-3">
                 <CInputGroupText id="department">학과</CInputGroupText>
-                <CFormInput placeholder="학과" defaultValue={member.department} onChange={handleInputChange}/>
+                <CFormInput name="department" placeholder="학과" defaultValue={selectedMember.department} onChange={handleInputChange}/>
               </CInputGroup>
               <CInputGroup>
                 <CInputGroupText>지불비</CInputGroupText>
-                <CFormInput type="number" placeholder="지불비" defaultValue={member.accumulated_cost} onChange={handleInputChange}/>
+                <CFormInput name="accumulated_cost" type="number" placeholder="지불비" defaultValue={selectedMember.accumulated_cost} onChange={handleInputChange}/>
               </CInputGroup>
             </CForm>
           </CModalBody>

@@ -70,11 +70,11 @@ const AdminAddMemberModal = (props) => {
             <CInputGroup className="mb-3">
               <CInputGroupText>성별</CInputGroupText>
               <div className={'d-flex align-items-center ps-3 rounded-end border'} style={{flex: '1 1 auto', borderColor: '#dbdfe6'}}>
-                <div classclassName="form-check me-2">
+                <div className="form-check me-2">
                   <input type="radio" name="sex" id="man" value="남자" className={'form-check-input'} onChange={handleInputChange}/>
                   <label className={"form-check-label"} htmlFor="man">남자</label>
                 </div>
-                <div classclassName="form-check">
+                <div className="form-check">
                   <input type="radio" name="sex" id="woman" value="여자" className={'form-check-input'} onChange={handleInputChange}/>
                   <label className={"form-check-label"} htmlFor="woman">여자</label>
                 </div>
@@ -99,7 +99,10 @@ const AdminAddMemberModal = (props) => {
           </CForm>
         </CModalBody>
         <CModalFooter>
-          <CButton color="success" onClick={() => postMember()}>저장</CButton>
+          <CButton color="success" onClick={() => {
+            postMember()
+            props.initMembers()
+          }}>저장</CButton>
           <CButton color="secondary" onClick={() => {
             props.showFunc(false);
             setMember({});
