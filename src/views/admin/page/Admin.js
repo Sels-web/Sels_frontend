@@ -56,10 +56,14 @@ const Admin = () => {
             <CButton color="warning" onClick={() => setAddVisible(!addVisible)}>회원 추가</CButton>
           </CCardHeader>
           <CCardBody>
-            <CForm onSubmit={initMembers}>
+            <CForm onSubmit={(e) => {
+              e.preventDefault()
+              initMembers()
+            }}>
               <div className={'d-flex justify-content-end mb-3'}>
                 <CInputGroup className="w-25">
                   <CFormInput name='name' placeholder="이름검색" onChange={inputChange}/>
+                  <CFormInput type="number" name='latencyCost' placeholder="벌금" onChange={inputChange}/>
                   <CButton type="submit" color="warning" variant="outline">검색</CButton>
                 </CInputGroup>
               </div>
