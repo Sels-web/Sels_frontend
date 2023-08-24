@@ -1,104 +1,80 @@
-import React, { useState, useEffect } from "react";
-
+import React, {useEffect} from "react";
 import {
-  CButton,
+  CButton, CForm, CFormInput,
+  CInputGroup,
+  CInputGroupText,
   CModal,
   CModalBody,
   CModalFooter,
   CModalHeader,
-  CModalTitle,
+  CModalTitle
 } from "@coreui/react";
-
-import ScheduleAddMemberModal from "./ScheduleAddMember";
+import {GithubPicker} from "react-color";
+import {modifySelectedScheduleAction} from "../../../store/selectedScheduleStore";
+import {useDispatch, useSelector} from "react-redux";
+import {modifySchedule} from "../../../api/schedule";
+import {useParams} from "react-router-dom";
 
 const ScheduleModifyModal = (props) => {
-  const [dialogVisible, setDialogVisible] = useState(false);
-  const [Users, setUsers] = useState([]);
-  const [newUser, setNewUser] = useState({});
-
-  const handleDialogClose = () => {
-    // setNewUser({});
-    setDialogVisible(false);
-  };
-
-  //   const handleFormSubmit = (user) => {
-  //     user.preventDefault();
-  //     console.log(newUser);
-  //     const New_user = {
-  //       eventId: newUser.eventKey,
-  //       Username: newUser.Username,
-  //       key: newUser.key,
-  //     };
-
-  //     console.log(New_user);
-
-  //     axios
-  //       .post(`http://localhost:8000/sels/getOneList`, New_user, {
-  //         headers: {
-  //           "Content-Type": `application/json`,
-  //         },
-  //         body: New_user,
-  //       })
-  //       .then((response) => {
-  //         console.log(response);
-  //       })
-  //       .catch((response) => {
-  //         console.log("Error!");
-  //       });
-
-  //     setUsers((prevUsers) => [...prevUsers, newUser]);
-  //     console.log(Users);
-  //     console.log(props.SelectedEvent);
-  //     handleDialogClose();
-  //   };
-
-  const handleInputChange = (user) => {
-    const { name, value } = user.target;
-    setNewUser((prevUsers) => ({
-      ...prevUsers,
-      [name]: value,
-    }));
-  };
+  const {id} = useParams()
+  const dispatch = useDispatch()
+  const selectedSchedule = useSelector(state => state.selectedScheduleStore)
 
   useEffect(() => {
-    console.log("Selected Event in ScheduleAddModal:", props.selectedEvent);
-  }, [props.selectedEvent]);
+
+
+  },[])
+
+  const handleFormSubmit = () => {
+    modifySchedule(selectedSchedule).then(r => {
+      alert('수정 되었습니다.');
+      props.showFunc(false);
+    }).catch(r => {
+      alert('오류가 발생하였습니다.')
+    })
+  }
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    dispatch(modifySelectedScheduleAction({name, value}))
+  };
+
+  const handleColorChange = (color) => {
+    const name = 'color';
+    const value = color.hex;
+    dispatch(modifySelectedScheduleAction({name, value}))
+  };
 
   return (
     <>
-      <CModal
-        alignment="center"
-        visible={props.show}
-        onClose={() => props.showFunc(false)}
-        fullscreen
-        backdrop="static"
-      >
+      <CModal alignment="center" visible={props.show} onClose={() => props.showFunc(false)}>
         <CModalHeader onClose={() => props.showFunc(false)}>
-          <CModalTitle>회원 수정</CModalTitle>
+          <CModalTitle>일정 수정</CModalTitle>
         </CModalHeader>
         <CModalBody>
-          <p>추가 내용 작성</p>
-          {props.selectedEvent && (
-            <p>선택된 이벤트: {props.selectedEvent.title}</p>
-          )}
-          <CButton
-            color="warning"
-            onClick={() => setDialogVisible(!dialogVisible)}
-          >
-            회원 추가
-          </CButton>
+          <CForm onSubmit={handleFormSubmit}>
+            <CInputGroup className={'mt-3'}>
+              <CInputGroupText>일정 제목</CInputGroupText>
+              <CFormInput type="text" placeholder="일정 제목" name="title" defaultValue={selectedSchedule.title} onChange={handleInputChange}/>
+            </CInputGroup>
+            <CInputGroup className={'mt-3'}>
+              <CInputGroupText>시작 시간</CInputGroupText>
+              <CFormInput type="datetime-local" name="startDate" onChange={handleInputChange} defaultValue={selectedSchedule.startDate} />
+            </CInputGroup>
+            <CInputGroup className={'mt-3'}>
+              <CInputGroupText>종료 시간</CInputGroupText>
+              <CFormInput type="datetime-local" name="endDate" onChange={handleInputChange} defaultValue={selectedSchedule.endDate}/>
+            </CInputGroup>
+            <GithubPicker className={'mt-3'} triangle="hide" onChange={handleColorChange} />
+          </CForm>
         </CModalBody>
         <CModalFooter>
-          <CButton color="primary">저장</CButton>
+          <CButton color="primary" onClick={handleFormSubmit}>수정</CButton>
           <CButton color="secondary" onClick={() => props.showFunc(false)}>
             취소
           </CButton>
         </CModalFooter>
       </CModal>
-      <ScheduleAddMemberModal
-        show={dialogVisible}
-        showFunc={setDialogVisible}
-      />
     </>
   );
 };

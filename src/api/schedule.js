@@ -22,3 +22,11 @@ export const deleteSchedule = (eventId) => {
     url: `/calendar/${eventId}`
   })
 }
+
+export const modifySchedule = (data) => {
+  return Send({
+    method: 'patch',
+    url: '/calendar',
+    data: data
+  })
+}

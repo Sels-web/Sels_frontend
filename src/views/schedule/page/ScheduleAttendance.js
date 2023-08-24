@@ -16,30 +16,30 @@ import {getAttendance} from "../../../api/attendance";
 import {useDispatch, useSelector} from "react-redux";
 import {getAttendanceAction} from "../../../store/attendanceStore";
 import ScheduleDeleteModal from "../components/ScheduleDeleteModal";
+import ScheduleModifyModal from "../components/ScheduleModifyModal";
+import {getSelectedScheduleAction, modifySelectedScheduleAction} from "../../../store/selectedScheduleStore";
 
 const ScheduleAttendance = () => {
   const {id} = useParams()
   const dispatch = useDispatch();
   const attendances = useSelector(state => state.attendanceStore)
+  const schedule = useSelector(state => state.selectedScheduleStore)
 
   const [showAddModal, setShowAddModal] = useState(false)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
-
-  const [schedule, setSchedule] = useState({
-    title: '',
-    color: '',
-    startDate: '',
-    endDate: '',
-  })
+  const [showModifyModal, setShowModifyModal] = useState(false)
 
   useEffect(() => {
+    let name ='eventId';
+    let value = id;
     let params = {
       range: 'one',
       event_id: id,
       month: '',
     }
     getSchedules(params).then(r => {
-      setSchedule(r.data[0])
+      dispatch(getSelectedScheduleAction(r.data[0]))
+      dispatch(modifySelectedScheduleAction({name, value}))
     }).catch(r => {
       console.log(r);
       alert('오류가 발생하였습니다.');
@@ -90,12 +90,13 @@ const ScheduleAttendance = () => {
           </CTable>
         </CCardBody>
         <CCardFooter className={'d-flex justify-content-end'}>
-          <CButton color="secondary" className={'me-2'}>수정</CButton>
+          <CButton color="secondary" className={'me-2'} onClick={() => setShowModifyModal(true)}>수정</CButton>
           <CButton color="danger" onClick={() => setShowDeleteModal(true)}>삭제</CButton>
         </CCardFooter>
       </CCard>
       <ScheduleAddMemberModal show={showAddModal} showFunc={setShowAddModal}/>
       <ScheduleDeleteModal show={showDeleteModal} showFunc={setShowDeleteModal}/>
+      <ScheduleModifyModal show={showModifyModal} showFunc={setShowModifyModal}/>
     </>
   )
 }
