@@ -15,3 +15,10 @@ export const addSchedule = (data) => {
     data: data
   })
 }
+
+export const deleteSchedule = (eventId) => {
+  return Send({
+    method: 'delete',
+    url: `/calendar/${eventId}`
+  })
+}
