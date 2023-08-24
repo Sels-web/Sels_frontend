@@ -25,7 +25,7 @@ const Schedule = () => {
   const events = useSelector(state => state.scheduleStore)
   const navigate = useNavigate();
 
-  useEffect(() => {
+  const initSchedule = () => {
     let params = {
       range: 'all',
       event_id: '',
@@ -49,6 +49,10 @@ const Schedule = () => {
       console.log(r);
       alert('오류가 발생하였습니다.');
     })
+  }
+
+  useEffect(() => {
+    initSchedule()
   }, []);
 
   const handleDialogOpen = (arg) => {
@@ -79,7 +83,7 @@ const Schedule = () => {
         </CCardBody>
       </CCard>
       <ScheduleAddModal show={dialogVisible} showFunc={setDialogVisible}
-                        selectObject={selectedObject}/>
+                        selectObject={selectedObject} initSchedule={initSchedule}/>
     </>
   );
 };

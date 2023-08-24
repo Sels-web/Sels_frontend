@@ -62,11 +62,12 @@ const ScheduleAddModal = (props) => {
     };
 
     addSchedule(New_event).then(r => {
-      console.log(r);
+      alert('일정이 추가되었습니다.')
+      props.initSchedule()
+      handleDialogClose();
     }).catch((response) => {
       console.log("Error!");
     });
-    handleDialogClose();
   };
 
   return (
