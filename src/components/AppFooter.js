@@ -4,7 +4,7 @@ import Instagram from '../assets/images/instagram.svg'
 
 const AppFooter = () => {
   return (
-    <CFooter>
+    <CFooter className={'mt-4'}>
       <div>
         <span className="ms-1">&copy; 2023 Sejong Sels.</span>
       </div>
