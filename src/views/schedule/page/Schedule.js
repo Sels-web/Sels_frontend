@@ -64,7 +64,6 @@ const Schedule = () => {
         </CCardHeader>
         <CCardBody>
           <FullCalendar
-            className="react-calendar"
             plugins={[dayGridPlugin, interactionPlugin]}
             initialView="dayGridMonth"
             selectable={true}

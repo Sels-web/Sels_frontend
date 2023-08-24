@@ -33,15 +33,14 @@ const BoardsDetail = () => {
         <CCardBody>
           <div>{item.content}</div>
           <div className={'mt-5 p-3 border rounded'}>
-            {item.files.map(file => {
+            {item.files.map((file,idx) => {
               return (
-                <>
-                  <a className={'mt-1 d-block link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover'}
-                     href={file.link}
-                     download>
-                    {file.name}
-                  </a>
-                </>
+                <a className={'mt-1 d-block link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover'}
+                   href={file.link}
+                   key={idx}
+                   download>
+                  {file.name}
+                </a>
               )
             })}
           </div>

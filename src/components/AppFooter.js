@@ -9,7 +9,7 @@ const AppFooter = () => {
         <span className="ms-1">&copy; 2023 Sejong Sels.</span>
       </div>
       <div className="ms-2">
-        <a href="https://www.instagram.com/sejong_sels/" target="_blank">
+        <a href="https://www.instagram.com/sejong_sels/" target="_blank" rel="noreferrer">
           <img width={30} src={Instagram} alt="instagram"/>
         </a>
       </div>

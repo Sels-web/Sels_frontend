@@ -9,7 +9,7 @@ import {
   CTableHeaderCell,
   CTableRow
 } from "@coreui/react";
-import React, {useState} from "react";
+import React from "react";
 import { Link } from 'react-router-dom';
 
 const Boards = () => {
@@ -38,9 +38,9 @@ const Boards = () => {
                 </CTableRow>
               </CTableHead>
               <CTableBody>
-                {items.map(item => {
+                {items.map((item,idx) => {
                   return (
-                  <CTableRow align={'middle'}>
+                  <CTableRow align={'middle'} key={idx}>
                     <CTableHeaderCell className={'text-center'} scope="row">{item.id}</CTableHeaderCell>
                     <CTableDataCell>
                       <Link to={'/boards/' + item.id} className={'link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover'}>{item.title}</Link>

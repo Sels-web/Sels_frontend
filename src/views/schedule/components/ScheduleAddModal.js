@@ -20,14 +20,14 @@ const ScheduleAddModal = (props) => {
   useEffect( ()=> {
     const startDate = `${props.selectObject.startStr}T${new Date().getHours()}:00`
     const endDate = `${props.selectObject.startStr}T${(new Date().getHours() + 1)}:00`
-
     setNewEvent({
       id: Math.random().toString(36).substring(2, 11),
       title: "",
-      start: moment(startDate).format("YYYY-MM-DDTHH:MM"),
-      end: moment(endDate).format("YYYY-MM-DDTHH:MM"),
+      start: moment(startDate).format("YYYY-MM-DDTHH:00"),
+      end: moment(endDate).format("YYYY-MM-DDTHH:00"),
       color: "#fccb00", //default 노란색
     })
+
   },[props.selectObject])
 
   const handleInputChange = (event) => {
@@ -44,7 +44,6 @@ const ScheduleAddModal = (props) => {
   };
 
   const handleColorChange = (color) => {
-    console.log(color.hex);
     // setSelectedColor(color.hex);
     setNewEvent((prevEvent) => ({
       ...prevEvent,
