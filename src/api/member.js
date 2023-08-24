@@ -1,4 +1,3 @@
-// @ts-ignore
 import Send from './Send.js'
 
 export const getMembers = (params) => {
