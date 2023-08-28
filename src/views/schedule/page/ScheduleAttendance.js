@@ -79,7 +79,12 @@ const ScheduleAttendance = () => {
                       <CTableHeaderCell className={'text-center'}>{idx + 1}</CTableHeaderCell>
                       <CTableDataCell className={'text-center'}>{attendance.name}</CTableDataCell>
                       <CTableDataCell className={'text-center'}>{attendance.school_id}</CTableDataCell>
-                      <CTableDataCell className={'text-center'}>{attendance.state}</CTableDataCell>
+                      <CTableDataCell className={'text-center'}>{
+                        attendance.state === 0 ? '처리중' :
+                        attendance.state === 1 ? '출석' :
+                        attendance.state === 2 ? '지각' :
+                        attendance.state === 3 ? '결석' : ''
+                      }</CTableDataCell>
                       <CTableDataCell className={'text-center'}>
                         <CButton color={'success'}>출석</CButton>
                       </CTableDataCell>

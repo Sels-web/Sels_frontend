@@ -35,14 +35,9 @@ const Schedule = () => {
       const eventsData = r.data.map((event) => ({
         id: event.eventId,
         title: event.title,
-        start: moment(event.startDate)
-            .utcOffset(0 * 60)
-            .format("YYYY-MM-DD HH:mm:ss"),
-        end: moment(event.endDate)
-            .utcOffset(0 * 60)
-            .format("YYYY-MM-DD HH:mm:ss"),
+        start: event.startDate,
+        end: event.endDate,
         color: event.color,
-        enterNames: event.enterNames,
       }));
       dispatch(getScheduleAction(eventsData))
     }).catch(r => {
