@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 
 import {
   CButton,
@@ -26,6 +26,18 @@ const ScheduleAddMemberModal = (props) => {
     school_id: '',
     department: '',
   }]);
+
+  useEffect(()=> {
+    let params = {
+      name: '',
+      school_id: '',
+      latencyCost: 0,
+      order: 'name',
+    }
+    getMembers(params).then(r=> {
+      setSearchMembers(r.data)
+    })
+  },[])
 
   const handleFormSubmit = (event) => {
     event.preventDefault()
