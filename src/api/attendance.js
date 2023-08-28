@@ -3,7 +3,7 @@ import Send from "./Send";
 export const addAttendance = (data) => {
   return Send({
     method: 'post',
-    url: `/calendar-namelist/names`,
+    url: `/calendar-namelist/register`,
     data: data
   })
 }
