@@ -29,7 +29,7 @@ const ScheduleAttendance = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [showModifyModal, setShowModifyModal] = useState(false)
 
-  useEffect(() => {
+  const initSchedule = () => {
     let name ='eventId';
     let value = id;
     let params = {
@@ -47,6 +47,10 @@ const ScheduleAttendance = () => {
     getAttendance(id).then(r => {
       dispatch(getAttendanceAction(r.data))
     })
+  }
+
+  useEffect(() => {
+    initSchedule()
   }, []);
 
   return (
@@ -94,7 +98,7 @@ const ScheduleAttendance = () => {
           <CButton color="danger" onClick={() => setShowDeleteModal(true)}>삭제</CButton>
         </CCardFooter>
       </CCard>
-      <ScheduleAddMemberModal show={showAddModal} showFunc={setShowAddModal}/>
+      <ScheduleAddMemberModal show={showAddModal} showFunc={setShowAddModal} initSchedule={initSchedule}/>
       <ScheduleDeleteModal show={showDeleteModal} showFunc={setShowDeleteModal}/>
       <ScheduleModifyModal show={showModifyModal} showFunc={setShowModifyModal}/>
     </>

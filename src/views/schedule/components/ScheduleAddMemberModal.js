@@ -31,6 +31,7 @@ const ScheduleAddMemberModal = (props) => {
     event.preventDefault()
     addAttendance(newUser).then(r => {
       alert('참석자가 등록되었습니다.')
+      props.initSchedule()
     })
     props.showFunc(false);
   };
