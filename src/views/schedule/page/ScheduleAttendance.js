@@ -12,7 +12,7 @@ import React, {useEffect, useState} from "react";
 import {getSchedules} from "../../../api/schedule";
 import {useParams} from "react-router-dom";
 import ScheduleAddMemberModal from '../components/ScheduleAddMemberModal';
-import {getAttendance} from "../../../api/attendance";
+import {attend, getAttendance} from "../../../api/attendance";
 import {useDispatch, useSelector} from "react-redux";
 import {getAttendanceAction} from "../../../store/attendanceStore";
 import ScheduleDeleteModal from "../components/ScheduleDeleteModal";
@@ -53,6 +53,20 @@ const ScheduleAttendance = () => {
     initSchedule()
   }, []);
 
+  const checkAttend = (e) => {
+    let attendData = {
+      event_id: id,
+      current_time: new Date(),
+      school_id: e.school_id
+    }
+    attend().then(r => {
+      alert('출석 처리 되었습니다.');
+      initSchedule();
+    }).catch(r => {
+      alert('오류가 발생하였습니다.');
+    })
+  }
+
   return (
     <>
       <CCard>
@@ -86,7 +100,7 @@ const ScheduleAttendance = () => {
                         attendance.state === 3 ? '결석' : ''
                       }</CTableDataCell>
                       <CTableDataCell className={'text-center'}>
-                        <CButton color={'success'}>출석</CButton>
+                        <CButton color={'success'} onClick={() => checkAttend(attendance.school_id)}>출석</CButton>
                       </CTableDataCell>
                     </CTableRow>
                   ) : (

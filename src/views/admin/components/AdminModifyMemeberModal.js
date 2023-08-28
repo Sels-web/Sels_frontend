@@ -1,7 +1,7 @@
 import {
   CButton,
   CForm, CFormCheck,
-  CFormInput,
+  CFormInput, CFormSelect,
   CInputGroup, CInputGroupText,
   CModal,
   CModalBody,
@@ -12,6 +12,7 @@ import {
 import {patchMember} from "../../../api/member";
 import {useDispatch, useSelector} from "react-redux";
 import {modifySelectedMemberAction} from "../../../store/selectedMemberStore";
+import React from "react";
 
 const AdminModifyMemberModal = (props) => {
   const dispatch = useDispatch()
@@ -83,7 +84,13 @@ const AdminModifyMemberModal = (props) => {
               </CInputGroup>
               <CInputGroup className="mb-3">
                 <CInputGroupText>직책</CInputGroupText>
-                <CFormInput name="is_admin" placeholder="직책" defaultValue={selectedMember.is_admin} onChange={handleInputChange}/>
+                <CFormSelect name="is_admin" defaultValue={selectedMember.is_admin} onChange={handleInputChange}>
+                  <option>직책을 선택해 주세요.</option>
+                  <option value={"부원"}>부원</option>
+                  <option value={"임원"}>임원</option>
+                  <option value={"부회장"}>부회장</option>
+                  <option value={"회장"}>회장</option>
+                </CFormSelect>
               </CInputGroup>
               <CInputGroup className="mb-3">
                 <CInputGroupText>학번</CInputGroupText>
