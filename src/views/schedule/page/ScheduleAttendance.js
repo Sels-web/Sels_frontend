@@ -20,6 +20,8 @@ import ScheduleModifyModal from "../components/ScheduleModifyModal";
 import {getSelectedScheduleAction, modifySelectedScheduleAction} from "../../../store/selectedScheduleStore";
 import ScheduleDeleteMemberModal from "../components/ScheduleDeleteMemberModal";
 import {getSelectedAttendanceAction} from "../../../store/selectedAttendanceStore";
+import ScheduleModifyMemberModal from "../components/ScheduleModifyMemberModal";
+import moment from "moment/moment";
 
 const ScheduleAttendance = () => {
   const {id} = useParams()
@@ -30,6 +32,7 @@ const ScheduleAttendance = () => {
   const [showAddModal, setShowAddModal] = useState(false)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [showDeleteMemberModal, setShowDeleteMemberModal] = useState(false)
+  const [showModifyMemberModal, setShowModifyMemberModal] = useState(false)
   const [showModifyModal, setShowModifyModal] = useState(false)
 
   const initSchedule = () => {
@@ -55,14 +58,20 @@ const ScheduleAttendance = () => {
   useEffect(() => {
     initSchedule()
   }, []);
-
   const checkAttend = (e) => {
+    const TIME_ZONE = 9 * 60 * 60 * 1000; // 9시간
+    const d = new Date();
+
+    const date = new Date(d.getTime() + TIME_ZONE).toISOString().split('T')[0];
+    const time = d.toTimeString().split(' ')[0];
+    const today = date + 'T' + time
+
     let attendData = {
       event_id: id,
-      current_time: new Date(),
-      school_id: e.school_id
+      current_time: today,
+      school_id: e
     }
-    attend().then(r => {
+    attend(attendData).then(r => {
       alert('출석 처리 되었습니다.');
       initSchedule();
     }).catch(r => {
@@ -97,10 +106,11 @@ const ScheduleAttendance = () => {
                       <CTableDataCell className={'text-center'}>{attendance.name}</CTableDataCell>
                       <CTableDataCell className={'text-center'}>{attendance.school_id}</CTableDataCell>
                       <CTableDataCell className={'text-center'}>{
-                        attendance.state === 0 ? '처리중' :
-                        attendance.state === 1 ? '출석' :
-                        attendance.state === 2 ? '지각' :
-                        attendance.state === 3 ? '결석' : ''
+                        attendance.state === 0 ? '' :
+                        attendance.state === 1 ? <p className={'text-success m-0 p-0'}>출석</p> :
+                        attendance.state === 2 ? <p className={'text-warning m-0 p-0'}>10분 이내 지각</p> :
+                        attendance.state === 3 ? <p className={'text-warning m-0 p-0'}>10분 초과 지각</p> :
+                        attendance.state === 4 ? <p className={'text-danger m-0 p-0'}>결석</p> : ''
                       }</CTableDataCell>
                       <CTableDataCell className={'text-center'}>
                         <CButton color={'success'} className={'me-2'} onClick={() => checkAttend(attendance.school_id)}>출석</CButton>
@@ -108,7 +118,10 @@ const ScheduleAttendance = () => {
                           setShowDeleteMemberModal(true)
                           dispatch(getSelectedAttendanceAction(attendance))
                         }}>삭제</CButton>
-                        <CButton color={'warning'}>수정</CButton>
+                        <CButton color={'warning'} onClick={() => {
+                          setShowModifyMemberModal(true)
+                          dispatch(getSelectedAttendanceAction(attendance))
+                        }}>수정</CButton>
                       </CTableDataCell>
                     </CTableRow>
                   ) : (
@@ -127,6 +140,7 @@ const ScheduleAttendance = () => {
       </CCard>
       <ScheduleAddMemberModal show={showAddModal} showFunc={setShowAddModal} initSchedule={initSchedule}/>
       <ScheduleDeleteMemberModal show={showDeleteMemberModal} showFunc={setShowDeleteMemberModal} initSchedule={initSchedule}/>
+      <ScheduleModifyMemberModal show={showModifyMemberModal} showFunc={setShowModifyMemberModal} initSchedule={initSchedule}/>
       <ScheduleDeleteModal show={showDeleteModal} showFunc={setShowDeleteModal}/>
       <ScheduleModifyModal show={showModifyModal} showFunc={setShowModifyModal}/>
     </>

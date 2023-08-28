@@ -6,7 +6,7 @@ const initialState = [{
   attendanceTime:'',
   name: '',
   school_id: '',
-  state: '',
+  state: 0,
   state_point: '',
 }]
 
@@ -17,7 +17,10 @@ const selectedAttendance = createSlice({
     getSelectedAttendanceAction: (state, action) => {
       return action.payload
     },
+    modifySelectedAttendanceAction: (state, action) => {
+      state[action.payload.name] = action.payload.value
+    }
   },
 })
-export const { getSelectedAttendanceAction } = selectedAttendance.actions
+export const { getSelectedAttendanceAction, modifySelectedAttendanceAction } = selectedAttendance.actions
 export default selectedAttendance.reducer

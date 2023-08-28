@@ -15,6 +15,14 @@ export const getAttendance = (eventId) => {
   })
 }
 
+export const modifyAttendance = (data) =>{
+  return Send({
+    method: 'patch',
+    url: `/calendar-namelist`,
+    data: data,
+  })
+}
+
 export const deleteAttendance = (params) => {
   return Send({
     method: 'delete',
