@@ -12,12 +12,14 @@ import React, {useEffect, useState} from "react";
 import {getSchedules} from "../../../api/schedule";
 import {useParams} from "react-router-dom";
 import ScheduleAddMemberModal from '../components/ScheduleAddMemberModal';
-import {attend, getAttendance} from "../../../api/attendance";
+import {attend, deleteAttendance, getAttendance} from "../../../api/attendance";
 import {useDispatch, useSelector} from "react-redux";
 import {getAttendanceAction} from "../../../store/attendanceStore";
 import ScheduleDeleteModal from "../components/ScheduleDeleteModal";
 import ScheduleModifyModal from "../components/ScheduleModifyModal";
 import {getSelectedScheduleAction, modifySelectedScheduleAction} from "../../../store/selectedScheduleStore";
+import ScheduleDeleteMemberModal from "../components/ScheduleDeleteMemberModal";
+import {getSelectedAttendanceAction} from "../../../store/selectedAttendanceStore";
 
 const ScheduleAttendance = () => {
   const {id} = useParams()
@@ -27,6 +29,7 @@ const ScheduleAttendance = () => {
 
   const [showAddModal, setShowAddModal] = useState(false)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const [showDeleteMemberModal, setShowDeleteMemberModal] = useState(false)
   const [showModifyModal, setShowModifyModal] = useState(false)
 
   const initSchedule = () => {
@@ -100,7 +103,12 @@ const ScheduleAttendance = () => {
                         attendance.state === 3 ? '결석' : ''
                       }</CTableDataCell>
                       <CTableDataCell className={'text-center'}>
-                        <CButton color={'success'} onClick={() => checkAttend(attendance.school_id)}>출석</CButton>
+                        <CButton color={'success'} className={'me-2'} onClick={() => checkAttend(attendance.school_id)}>출석</CButton>
+                        <CButton color={'danger'} className={'me-2'} onClick={() => {
+                          setShowDeleteMemberModal(true)
+                          dispatch(getSelectedAttendanceAction(attendance))
+                        }}>삭제</CButton>
+                        <CButton color={'warning'}>수정</CButton>
                       </CTableDataCell>
                     </CTableRow>
                   ) : (
@@ -118,6 +126,7 @@ const ScheduleAttendance = () => {
         </CCardFooter>
       </CCard>
       <ScheduleAddMemberModal show={showAddModal} showFunc={setShowAddModal} initSchedule={initSchedule}/>
+      <ScheduleDeleteMemberModal show={showDeleteMemberModal} showFunc={setShowDeleteMemberModal} initSchedule={initSchedule}/>
       <ScheduleDeleteModal show={showDeleteModal} showFunc={setShowDeleteModal}/>
       <ScheduleModifyModal show={showModifyModal} showFunc={setShowModifyModal}/>
     </>

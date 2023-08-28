@@ -15,6 +15,14 @@ export const getAttendance = (eventId) => {
   })
 }
 
+export const deleteAttendance = (params) => {
+  return Send({
+    method: 'delete',
+    url: '/calendar-namelist/',
+    params: params,
+  })
+}
+
 export const attend = (data) => {
   return Send({
     method: 'post',

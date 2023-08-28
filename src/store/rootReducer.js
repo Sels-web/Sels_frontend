@@ -5,6 +5,7 @@ import selectedMemberStore from './selectedMemberStore'
 import scheduleStore from './scheduleStore'
 import selectedScheduleStore from './selectedScheduleStore'
 import attendanceStore from './attendanceStore'
+import selectedAttendanceStore from './selectedAttendanceStore'
 
 const reducers = combineReducers({
   sidebarStore,
@@ -13,6 +14,7 @@ const reducers = combineReducers({
   scheduleStore,
   selectedScheduleStore,
   attendanceStore,
+  selectedAttendanceStore,
 })
 
 export default reducers
