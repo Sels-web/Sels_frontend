@@ -31,7 +31,7 @@ const ScheduleAddMemberModal = (props) => {
     let params = {
       name: '',
       school_id: '',
-      latencyCost: 0,
+      latencyCost: '',
       order: 'name',
     }
     getMembers(params).then(r=> {

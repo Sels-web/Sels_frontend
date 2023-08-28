@@ -25,7 +25,7 @@ const Admin = () => {
   const [searchParams, setSearchParams] = useState({
     name: '',
     school_id: '',
-    latencyCost: 0,
+    latencyCost: '',
     order: 'name',
   });
   const members = useSelector(state => state.membersStore)
