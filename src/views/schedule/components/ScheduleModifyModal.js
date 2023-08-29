@@ -35,7 +35,6 @@ const ScheduleModifyModal = (props) => {
   const handleDialogClose = () => {
     props.showFunc(false);
     setValidated(false)
-    dispatch(getSelectedScheduleAction({}))
   };
 
   const handleFormSubmit = (event) => {
@@ -46,7 +45,6 @@ const ScheduleModifyModal = (props) => {
       setValidated(true)
     } else {
       modifySchedule(selectedSchedule).then(r => {
-        props.initSchedule()
         alert('수정 되었습니다.');
         handleDialogClose();
       }).catch(r => {

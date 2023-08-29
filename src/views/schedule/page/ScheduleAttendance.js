@@ -27,7 +27,15 @@ const ScheduleAttendance = () => {
   const dispatch = useDispatch();
 
   const attendances = useSelector(state => state.attendanceStore)
-  const schedule = useSelector(state => state.selectedScheduleStore)
+  const [schedule, setSchedule] = useState({
+    title: '',
+    startDate: '',
+    endDate: '',
+  })
+  const [formattedDate, setFormattedDate] = useState({
+    start: '',
+    end: ''
+  })
 
   const [showAddModal, setShowAddModal] = useState(false)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
@@ -46,6 +54,27 @@ const ScheduleAttendance = () => {
     getSchedules(params).then(r => {
       dispatch(getSelectedScheduleAction(r.data[0]))
       dispatch(modifySelectedScheduleAction({name, value}))
+      setSchedule(r.data[0])
+
+      let startDate = new Date(r.data[0].startDate)
+      const startMonth = String(startDate.getMonth() + 1).padStart(2, "0");
+      const startDay = String(startDate.getDate()).padStart(2, "0");
+      const startHours = String(startDate.getHours()).padStart(2, "0");
+      const startMin = String(startDate.getMinutes()).padStart(2, "0");
+      let endDate = new Date(r.data[0].endDate)
+      const endMonth = String(endDate.getMonth() + 1).padStart(2, "0");
+      const endDay = String(endDate.getDate()).padStart(2, "0");
+      const endHours = String(endDate.getHours()).padStart(2, "0");
+      const endMin = String(endDate.getMinutes()).padStart(2, "0");
+
+      let formattedStart = startMonth + '.' + startDay + ' ' + startHours + ':' + startMin
+      let formattedEnd = endMonth + '.' + endDay + ' ' + endHours + ':' + endMin
+
+      setSchedule((prevEvent) => ({
+        ...prevEvent,
+        startDate: formattedStart,
+        endDate: formattedEnd
+      }))
     }).catch(r => {
       alert('오류가 발생하였습니다.');
     })
@@ -56,7 +85,7 @@ const ScheduleAttendance = () => {
 
   useEffect(() => {
     initSchedule()
-  }, []);
+  }, [showModifyModal]);
 
   const checkAttend = (e) => {
     const TIME_ZONE = 9 * 60 * 60 * 1000; // 9시간
@@ -83,7 +112,10 @@ const ScheduleAttendance = () => {
     <>
       <CCard>
         <CCardHeader className={'d-flex justify-content-between'}>
-          <h3>{schedule.title} 참석자 명단</h3>
+          <div className={'d-flex align-items-end'}>
+            <h3 className={'p-0 m-0'}>{schedule.title} 참석자 명단</h3>
+            <p className={'p-0 mb-0 ms-2'}>{schedule.startDate} ~ {schedule.endDate}</p>
+          </div>
           <CButton color="warning" onClick={() => setShowAddModal(true)}>참석자 추가</CButton>
         </CCardHeader>
         <CCardBody>
