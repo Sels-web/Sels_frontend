@@ -80,6 +80,7 @@ const Admin = () => {
                   <CTableHeaderCell scope="col">직책</CTableHeaderCell>
                   <CTableHeaderCell scope="col">학번</CTableHeaderCell>
                   <CTableHeaderCell scope="col">학과</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">경고 횟수</CTableHeaderCell>
                   <CTableHeaderCell scope="col">누적 벌금</CTableHeaderCell>
                   <CTableHeaderCell scope="col">기능</CTableHeaderCell>
                 </CTableRow>
@@ -98,6 +99,7 @@ const Admin = () => {
                         <CTableDataCell className={'text-center'}>{member.is_admin}</CTableDataCell>
                         <CTableDataCell className={'text-center'}>{member.school_id}</CTableDataCell>
                         <CTableDataCell className={'text-center'}>{member.department}</CTableDataCell>
+                        <CTableDataCell className={'text-center'}>{member.penalty_cnt}</CTableDataCell>
                         <CTableDataCell className={'text-center'}>{member.accumulated_cost}원</CTableDataCell>
                         <CTableDataCell className={'text-center'}>
                           <CButton color="danger" className={'me-2'} onClick={() => {

@@ -2,14 +2,15 @@ import {createSlice} from "@reduxjs/toolkit";
 
 const initialState = [{
   name: '',
-  attendance: '',
-  accumulated_time: '',
-  latencyCost: '',
+  attendance: 0,
+  accumulated_time:0,
+  latencyCost: 0,
   sex: '',
   is_admin: '',
   school_id: '',
   department: '',
-  accumulated_cost: '',
+  penalty_cnt: 0,
+  accumulated_cost: 0,
 }]
 
 const memberList = createSlice({
