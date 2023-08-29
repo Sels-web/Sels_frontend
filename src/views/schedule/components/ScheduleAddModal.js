@@ -18,13 +18,13 @@ const ScheduleAddModal = (props) => {
   const [newEvent, setNewEvent] = useState({});
 
   useEffect( ()=> {
-    const startDate = `${props.selectObject.startStr}T${new Date().getHours()}:00`
-    const endDate = `${props.selectObject.startStr}T${(new Date().getHours() + 1)}:00`
+    const startDate = `${props.selectObject.startStr}T${new Date().getHours()}:00:00`
+    const endDate = `${props.selectObject.startStr}T${(new Date().getHours() + 1)}:00:00`
     setNewEvent({
       id: Math.random().toString(36).substring(2, 11),
       title: "",
-      start: moment(startDate).format("YYYY-MM-DDTHH:00"),
-      end: moment(endDate).format("YYYY-MM-DDTHH:00"),
+      start: moment(startDate).format("YYYY-MM-DDTHH:00:00"),
+      end: moment(endDate).format("YYYY-MM-DDTHH:00:00"),
       color: "#fccb00", //default 노란색
     })
 
