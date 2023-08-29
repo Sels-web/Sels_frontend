@@ -11,10 +11,10 @@ import {
 } from "@coreui/react";
 import React, {useEffect, useState} from "react";
 import {GithubPicker} from "react-color";
-import moment from "moment";
 import {addSchedule} from "../../../api/schedule";
 
 const ScheduleAddModal = (props) => {
+  const [validated, setValidated] = useState(false)
   const [newEvent, setNewEvent] = useState({});
 
   useEffect( ()=> {
@@ -41,6 +41,7 @@ const ScheduleAddModal = (props) => {
   const handleDialogClose = () => {
     setNewEvent({});
     props.showFunc(false);
+    setValidated(false)
   };
 
   const handleColorChange = (color) => {
@@ -52,22 +53,28 @@ const ScheduleAddModal = (props) => {
   };
 
   const handleFormSubmit = (event) => {
-    event.preventDefault();
-    const New_event = {
-      eventId: newEvent.id,
-      title: newEvent.title,
-      startDate: newEvent.start,
-      endDate: newEvent.end,
-      color: newEvent.color,
-    };
+    const form = event.currentTarget
+    event.preventDefault()
+    event.stopPropagation()
+    if (form.checkValidity() === false) {
+      setValidated(true)
+    } else {
+      const New_event = {
+        eventId: newEvent.id,
+        title: newEvent.title,
+        startDate: newEvent.start,
+        endDate: newEvent.end,
+        color: newEvent.color,
+      };
 
-    addSchedule(New_event).then(r => {
-      alert('일정이 추가되었습니다.')
-      props.initSchedule()
-      handleDialogClose();
-    }).catch((response) => {
-      console.log("Error!");
-    });
+      addSchedule(New_event).then(r => {
+        alert('일정이 추가되었습니다.')
+        props.initSchedule()
+        handleDialogClose();
+      }).catch((r) => {
+        console.log("Error!");
+      });
+    }
   };
 
   return (
@@ -77,34 +84,54 @@ const ScheduleAddModal = (props) => {
           visible={props.show}
           onClose={handleDialogClose}
       >
-        <CModalHeader>
-          <CModalTitle>일정 추가</CModalTitle>
-        </CModalHeader>
-        <CModalBody>
-          <CForm onSubmit={handleFormSubmit}>
+        <CForm validated={validated} noValidate onSubmit={handleFormSubmit}>
+          <CModalHeader>
+            <CModalTitle>일정 추가</CModalTitle>
+          </CModalHeader>
+          <CModalBody>
             <CInputGroup className={'mt-3'}>
               <CInputGroupText>일정 제목</CInputGroupText>
-              <CFormInput type="text" placeholder="일정 제목" name="title" onChange={handleInputChange}/>
+              <CFormInput type="text"
+                          placeholder="일정 제목"
+                          name="title"
+                          required
+                          feedbackInvalid="일정 제목을 적어주세요."
+                          tooltipFeedback
+                          onChange={handleInputChange}/>
             </CInputGroup>
             <CInputGroup className={'mt-3'}>
               <CInputGroupText>시작 시간</CInputGroupText>
-              <CFormInput type="datetime-local" name="start" onChange={handleInputChange} defaultValue={newEvent.start} />
+              <CFormInput
+                  type="datetime-local"
+                  name="start"
+                  required
+                  feedbackInvalid="시작 시간을 적어주세요."
+                  tooltipFeedback
+                  onChange={handleInputChange}
+                  defaultValue={newEvent.start} />
             </CInputGroup>
             <CInputGroup className={'mt-3'}>
               <CInputGroupText>종료 시간</CInputGroupText>
-              <CFormInput type="datetime-local" name="end" onChange={handleInputChange} defaultValue={newEvent.end}/>
+              <CFormInput
+                  type="datetime-local"
+                  name="end"
+                  required
+                  feedbackInvalid="종료 시간을 적어주세요."
+                  tooltipFeedback
+                  onChange={handleInputChange}
+                  defaultValue={newEvent.end}/>
             </CInputGroup>
             <GithubPicker className={'mt-3'} triangle="hide" onChange={handleColorChange} />
-          </CForm>
-        </CModalBody>
-        <CModalFooter>
-          <CButton type="submit" color="primary" onClick={handleFormSubmit}>
-            추가
-          </CButton>
-          <CButton color="secondary" onClick={handleDialogClose}>
-            취소
-          </CButton>
-        </CModalFooter>
+          </CModalBody>
+          <CModalFooter>
+            <CButton type="submit" color="primary">
+              추가
+            </CButton>
+            <CButton color="secondary" onClick={handleDialogClose}>
+              취소
+            </CButton>
+          </CModalFooter>
+        </CForm>
       </CModal>
     </>
   )
