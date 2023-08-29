@@ -16,6 +16,8 @@ import {getMembers} from "../../../api/member";
 
 const ScheduleAddMemberModal = (props) => {
   const {id} = useParams()
+  const [validated, setValidated] = useState(false)
+
   const [newUser, setNewUser] = useState({
     calendar_id: id,
     name: '',
@@ -40,12 +42,21 @@ const ScheduleAddMemberModal = (props) => {
   },[])
 
   const handleFormSubmit = (event) => {
+    const form = event.currentTarget
     event.preventDefault()
-    addAttendance(newUser).then(r => {
-      alert('참석자가 등록되었습니다.')
-      props.initSchedule()
-    })
-    props.showFunc(false);
+    event.stopPropagation()
+    if (form.checkValidity() === false) {
+      setValidated(true)
+    } else {
+      addAttendance(newUser).then(r => {
+        alert('참석자가 등록되었습니다.')
+        props.initSchedule()
+        props.showFunc(false)
+        setValidated(false)
+      }).catch(r => {
+        alert('오류가 발생하였습니다.')
+      })
+    }
   };
 
   const handleInputChange = (event) => {
@@ -77,10 +88,13 @@ const ScheduleAddMemberModal = (props) => {
       <CModal
         alignment="center"
         visible={props.show}
-        onClose={() => props.showFunc(false)}
+        onClose={() => {
+          props.showFunc(false)
+          setValidated(false)
+        }}
       >
-        <CForm onSubmit={handleFormSubmit}>
-          <CModalHeader onClose={() => props.showFunc(false)}>
+        <CForm validated={validated} noValidate onSubmit={handleFormSubmit}>
+          <CModalHeader>
             <CModalTitle>참석 인원 추가</CModalTitle>
           </CModalHeader>
           <CModalBody>
@@ -88,8 +102,12 @@ const ScheduleAddMemberModal = (props) => {
               <CInputGroupText>이름</CInputGroupText>
               <CFormInput name="name" placeholder="이름" onChange={handleInputChange}/>
             </CInputGroup>
-            <CFormSelect onChange={selectChange}>
-              <option>참석자를 선택해 주세요.</option>
+            <CFormSelect
+                required
+                feedbackInvalid="참석자를 선택주세요."
+                tooltipFeedback
+                onChange={selectChange}>
+              <option value="">참석자를 선택해 주세요.</option>
               {searchMembers.map((searchMember,idx) => {
                 return(
                   <option value={searchMember.school_id} key={idx}>{searchMember.name} {searchMember.school_id} {searchMember.department}</option>
@@ -98,14 +116,11 @@ const ScheduleAddMemberModal = (props) => {
             </CFormSelect>
           </CModalBody>
           <CModalFooter>
-            <CButton
-              type="submit"
-              color="primary"
-              onClick={() => props.showFunc(false)}
-            >
-              추가
-            </CButton>
-            <CButton color="secondary" onClick={() => props.showFunc(false)}>
+            <CButton type="submit" color="primary">추가</CButton>
+            <CButton color="secondary" onClick={() => {
+              props.showFunc(false)
+              setValidated(false)
+            }}>
               취소
             </CButton>
           </CModalFooter>

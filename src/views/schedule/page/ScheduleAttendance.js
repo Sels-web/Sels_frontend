@@ -61,6 +61,7 @@ const ScheduleAttendance = () => {
       const startDay = String(startDate.getDate()).padStart(2, "0");
       const startHours = String(startDate.getHours()).padStart(2, "0");
       const startMin = String(startDate.getMinutes()).padStart(2, "0");
+
       let endDate = new Date(r.data[0].endDate)
       const endMonth = String(endDate.getMonth() + 1).padStart(2, "0");
       const endDay = String(endDate.getDate()).padStart(2, "0");
