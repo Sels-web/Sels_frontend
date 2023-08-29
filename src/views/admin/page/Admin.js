@@ -88,7 +88,7 @@ const Admin = () => {
               <CTableBody>
                 {members.map((member, idx) => {
                   return (
-                    members.length != 0 ? (
+                    members.length !== 0 ? (
                       <CTableRow align={'middle'} key={idx}>
                         <CTableHeaderCell className={'text-center'}>{idx + 1}</CTableHeaderCell>
                         <CTableDataCell className={'text-center'}>{member.name}</CTableDataCell>

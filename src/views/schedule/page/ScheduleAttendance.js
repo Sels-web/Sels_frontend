@@ -12,7 +12,7 @@ import React, {useEffect, useState} from "react";
 import {getSchedules} from "../../../api/schedule";
 import {useParams} from "react-router-dom";
 import ScheduleAddMemberModal from '../components/ScheduleAddMemberModal';
-import {attend, deleteAttendance, getAttendance} from "../../../api/attendance";
+import {attend, getAttendance} from "../../../api/attendance";
 import {useDispatch, useSelector} from "react-redux";
 import {getAttendanceAction} from "../../../store/attendanceStore";
 import ScheduleDeleteModal from "../components/ScheduleDeleteModal";
@@ -100,7 +100,7 @@ const ScheduleAttendance = () => {
             <CTableBody>
               {attendances.map((attendance, idx) => {
                 return (
-                  attendance.length != 0 ? (
+                  attendance.length !== 0 ? (
                     <CTableRow align={'middle'} key={idx}>
                       <CTableHeaderCell className={'text-center'}>{idx + 1}</CTableHeaderCell>
                       <CTableDataCell className={'text-center'}>{attendance.name}</CTableDataCell>

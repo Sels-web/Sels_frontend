@@ -1,6 +1,6 @@
 import {
   CButton,
-  CForm, CFormCheck,
+  CForm,
   CFormInput, CFormSelect,
   CInputGroup, CInputGroupText,
   CModal,
