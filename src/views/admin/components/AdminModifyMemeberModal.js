@@ -11,7 +11,7 @@ import {
 } from "@coreui/react";
 import {patchMember} from "../../../api/member";
 import {useDispatch, useSelector} from "react-redux";
-import {modifySelectedMemberAction} from "../../../store/selectedMemberStore";
+import {getSelectedMemberAction, modifySelectedMemberAction} from "../../../store/selectedMemberStore";
 import React, {useState} from "react";
 
 const AdminModifyMemberModal = (props) => {
@@ -32,10 +32,11 @@ const AdminModifyMemberModal = (props) => {
       setValidated(true)
     } else {
       patchMember(selectedMember).then(r => {
-        alert('수정 되었습니다.');
-        props.showFunc(false);
-        props.initMembers();
+        alert('수정 되었습니다.')
+        props.showFunc(false)
+        props.initMembers()
         setValidated(false)
+        dispatch(getSelectedMemberAction({}))
       }).catch(r => {
         if(r.response.status === 400) alert('이미 존재하는 학번입니다.')
         else alert('오류가 발생하였습니다.')
@@ -45,9 +46,16 @@ const AdminModifyMemberModal = (props) => {
 
   return (
       <>
-        <CModal alignment="center" visible={props.show} onClose={() => props.showFunc(false)}>
+        <CModal alignment="center"
+                visible={props.show}
+                onClose={() => {
+                  props.showFunc(false)
+                  setValidated(false)
+                  dispatch(getSelectedMemberAction({}))
+                }
+        }>
           <CForm validated={validated} noValidate onSubmit={patchMemberFunc}>
-            <CModalHeader onClose={() => props.showFunc(false)}>
+            <CModalHeader>
               <CModalTitle>회원 수정</CModalTitle>
             </CModalHeader>
             <CModalBody>
@@ -175,6 +183,7 @@ const AdminModifyMemberModal = (props) => {
               <CButton color="secondary" onClick={() => {
                 props.showFunc(false)
                 setValidated(false)
+                dispatch(getSelectedMemberAction({}))
               }}>
                 취소
               </CButton>

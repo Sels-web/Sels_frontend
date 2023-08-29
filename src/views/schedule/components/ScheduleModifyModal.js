@@ -20,11 +20,6 @@ const ScheduleModifyModal = (props) => {
   const dispatch = useDispatch()
   const selectedSchedule = useSelector(state => state.selectedScheduleStore)
 
-  useEffect(() => {
-
-
-  },[])
-
   const handleFormSubmit = () => {
     modifySchedule(selectedSchedule).then(r => {
       alert('수정 되었습니다.');

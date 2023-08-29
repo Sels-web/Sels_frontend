@@ -57,9 +57,16 @@ const AdminAddMemberModal = (props) => {
 
   return (
     <>
-      <CModal alignment="center" visible={props.show} onClose={() => props.showFunc(false)}>
-        <CForm validated={validated} noValidate  onSubmit={postMember}>
-          <CModalHeader onClose={() => props.showFunc(false)}>
+      <CModal alignment="center"
+              visible={props.show}
+              onClose={() => {
+                props.showFunc(false)
+                setValidated(false)
+                setMember({});
+              }
+      }>
+        <CForm validated={validated} noValidate onSubmit={postMember}>
+          <CModalHeader>
             <CModalTitle>회원 추가</CModalTitle>
           </CModalHeader>
           <CModalBody>
@@ -173,8 +180,8 @@ const AdminAddMemberModal = (props) => {
             <CButton type="submit" color="success">저장</CButton>
             <CButton color="secondary" onClick={() => {
               props.showFunc(false);
-              setMember({});
               setValidated(false)
+              setMember({});
             }}>
               취소
             </CButton>
