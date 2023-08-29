@@ -67,13 +67,13 @@ const Members = () => {
                 <CTableHeaderCell scope="col"></CTableHeaderCell>
                 <CTableHeaderCell scope="col">이름</CTableHeaderCell>
                 <CTableHeaderCell scope="col">참석 횟수</CTableHeaderCell>
-                <CTableHeaderCell scope="col">봉사 시간</CTableHeaderCell>
+                <CTableHeaderCell scope="col">누적 봉사 시간</CTableHeaderCell>
                 <CTableHeaderCell scope="col">벌금</CTableHeaderCell>
                 <CTableHeaderCell scope="col">성별</CTableHeaderCell>
                 <CTableHeaderCell scope="col">직책</CTableHeaderCell>
                 <CTableHeaderCell scope="col">학번</CTableHeaderCell>
                 <CTableHeaderCell scope="col">학과</CTableHeaderCell>
-                <CTableHeaderCell scope="col">지불비</CTableHeaderCell>
+                <CTableHeaderCell scope="col">누적 벌금</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableBody>
@@ -83,14 +83,14 @@ const Members = () => {
                     <CTableRow align={'middle'} key={idx}>
                       <CTableHeaderCell className={'text-center'}>{idx + 1}</CTableHeaderCell>
                       <CTableDataCell className={'text-center'}>{member.name}</CTableDataCell>
-                      <CTableDataCell className={'text-center'}>{member.attendance}</CTableDataCell>
-                      <CTableDataCell className={'text-center'}>{member.accumulated_time}</CTableDataCell>
-                      <CTableDataCell className={'text-center'}>{member.latencyCost}</CTableDataCell>
+                      <CTableDataCell className={'text-center'}>{member.attendance}회</CTableDataCell>
+                      <CTableDataCell className={'text-center'}>{member.accumulated_time}시간</CTableDataCell>
+                      <CTableDataCell className={'text-center'}>{member.latencyCost}원</CTableDataCell>
                       <CTableDataCell className={'text-center'}>{member.sex}</CTableDataCell>
                       <CTableDataCell className={'text-center'}>{member.is_admin}</CTableDataCell>
                       <CTableDataCell className={'text-center'}>{member.school_id}</CTableDataCell>
                       <CTableDataCell className={'text-center'}>{member.department}</CTableDataCell>
-                      <CTableDataCell className={'text-center'}>{member.accumulated_cost}</CTableDataCell>
+                      <CTableDataCell className={'text-center'}>{member.accumulated_cost}원</CTableDataCell>
                     </CTableRow>
                   ) : (
                     <CTableRow align={'middle'}>
