@@ -21,11 +21,11 @@ import {getSelectedScheduleAction, modifySelectedScheduleAction} from "../../../
 import ScheduleDeleteMemberModal from "../components/ScheduleDeleteMemberModal";
 import {getSelectedAttendanceAction} from "../../../store/selectedAttendanceStore";
 import ScheduleModifyMemberModal from "../components/ScheduleModifyMemberModal";
-import moment from "moment/moment";
 
 const ScheduleAttendance = () => {
   const {id} = useParams()
   const dispatch = useDispatch();
+
   const attendances = useSelector(state => state.attendanceStore)
   const schedule = useSelector(state => state.selectedScheduleStore)
 
@@ -47,7 +47,6 @@ const ScheduleAttendance = () => {
       dispatch(getSelectedScheduleAction(r.data[0]))
       dispatch(modifySelectedScheduleAction({name, value}))
     }).catch(r => {
-      console.log(r);
       alert('오류가 발생하였습니다.');
     })
     getAttendance(id).then(r => {
@@ -58,6 +57,7 @@ const ScheduleAttendance = () => {
   useEffect(() => {
     initSchedule()
   }, []);
+
   const checkAttend = (e) => {
     const TIME_ZONE = 9 * 60 * 60 * 1000; // 9시간
     const d = new Date();

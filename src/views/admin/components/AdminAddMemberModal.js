@@ -13,6 +13,7 @@ import React, {useState} from "react";
 import {AddMember} from "../../../api/member";
 
 const AdminAddMemberModal = (props) => {
+  const [validated, setValidated] = useState(false)
   const [member, setMember] = useState({
     name: '',
     attendance: 0,
@@ -33,40 +34,80 @@ const AdminAddMemberModal = (props) => {
     }));
   };
 
-  const postMember = () => {
-    AddMember(member).then(r => {
-      alert('회원이 추가되었습니다.');
-      props.showFunc(false);
-      props.initMembers()
-      setMember({});
-    }).catch(r => {
-      alert('오류가 발생하였습니다.')
-    })
+  const postMember = (event) => {
+    const form = event.currentTarget
+    event.preventDefault()
+    event.stopPropagation()
+    if (form.checkValidity() === false) {
+      setValidated(true)
+    } else {
+      AddMember(member).then(r => {
+        alert('회원이 추가되었습니다.');
+        props.showFunc(false);
+        props.initMembers()
+        setMember({});
+        setValidated(false)
+      }).catch(r => {
+        if(r.response.status === 400) alert('이미 존재하는 학번입니다.')
+        else alert('오류가 발생하였습니다.')
+      })
+    }
+
   }
 
   return (
     <>
       <CModal alignment="center" visible={props.show} onClose={() => props.showFunc(false)}>
-        <CModalHeader onClose={() => props.showFunc(false)}>
-          <CModalTitle>회원 추가</CModalTitle>
-        </CModalHeader>
-        <CModalBody>
-          <CForm>
+        <CForm validated={validated} noValidate  onSubmit={postMember}>
+          <CModalHeader onClose={() => props.showFunc(false)}>
+            <CModalTitle>회원 추가</CModalTitle>
+          </CModalHeader>
+          <CModalBody>
             <CInputGroup className="mb-3">
               <CInputGroupText>이름</CInputGroupText>
-              <CFormInput name="name" placeholder="이름" onChange={handleInputChange}/>
+              <CFormInput
+                  name="name"
+                  placeholder="이름"
+                  required
+                  feedbackInvalid="이름을 적어주세요."
+                  tooltipFeedback
+                  onChange={handleInputChange}/>
             </CInputGroup>
             <CInputGroup className="mb-3">
               <CInputGroupText>참석 횟수</CInputGroupText>
-              <CFormInput name="attendance" type="number" placeholder="참석 횟수" defaultValue={0} onChange={handleInputChange}/>
+              <CFormInput 
+                  name="attendance" 
+                  type="number" 
+                  placeholder="참석 횟수" 
+                  defaultValue={0}
+                  required
+                  feedbackInvalid="참석 횟수를 적어주세요."
+                  tooltipFeedback
+                  onChange={handleInputChange}/>
             </CInputGroup>
             <CInputGroup className="mb-3">
               <CInputGroupText>봉사 시간</CInputGroupText>
-              <CFormInput name="accumulated_time" type="number" placeholder="봉사시간" defaultValue={0} onChange={handleInputChange}/>
+              <CFormInput 
+                  name="accumulated_time" 
+                  type="number" 
+                  placeholder="봉사 시간"
+                  defaultValue={0}
+                  required
+                  feedbackInvalid="봉사 시간을 적어주세요."
+                  tooltipFeedback
+                  onChange={handleInputChange}/>
             </CInputGroup>
             <CInputGroup className="mb-3">
               <CInputGroupText>벌금</CInputGroupText>
-              <CFormInput name="latencyCost" type="number" placeholder="벌금" defaultValue={0} onChange={handleInputChange}/>
+              <CFormInput 
+                  name="latencyCost" 
+                  type="number" 
+                  placeholder="벌금" 
+                  defaultValue={0}
+                  required
+                  feedbackInvalid="벌금을 적어주세요."
+                  tooltipFeedback
+                  onChange={handleInputChange}/>
             </CInputGroup>
             <CInputGroup className="mb-3">
               <CInputGroupText>성별</CInputGroupText>
@@ -83,8 +124,12 @@ const AdminAddMemberModal = (props) => {
             </CInputGroup>
             <CInputGroup className="mb-3">
               <CInputGroupText>직책</CInputGroupText>
-              <CFormSelect name="is_admin" onChange={handleInputChange}>
-                <option>직책을 선택해 주세요.</option>
+              <CFormSelect name="is_admin"
+                           required
+                           feedbackInvalid="직책을 선택해 주세요."
+                           tooltipFeedback
+                           onChange={handleInputChange}>
+                <option value="">직책을 선택해 주세요.</option>
                 <option value={"부원"}>부원</option>
                 <option value={"임원"}>임원</option>
                 <option value={"부회장"}>부회장</option>
@@ -93,27 +138,48 @@ const AdminAddMemberModal = (props) => {
             </CInputGroup>
             <CInputGroup className="mb-3">
               <CInputGroupText>학번</CInputGroupText>
-              <CFormInput name="school_id" placeholder="학번" onChange={handleInputChange}/>
+              <CFormInput 
+                  name="school_id" 
+                  placeholder="학번"
+                  required
+                  feedbackInvalid="학번을 적어주세요."
+                  tooltipFeedback
+                  onChange={handleInputChange}/>
             </CInputGroup>
             <CInputGroup className="mb-3">
               <CInputGroupText>학과</CInputGroupText>
-              <CFormInput name="department" placeholder="학과" onChange={handleInputChange}/>
+              <CFormInput 
+                  name="department" 
+                  placeholder="학과"
+                  required
+                  feedbackInvalid="학과를 적어주세요."
+                  tooltipFeedback
+                  onChange={handleInputChange}/>
             </CInputGroup>
             <CInputGroup>
               <CInputGroupText>지불비</CInputGroupText>
-              <CFormInput name="accumulated_cost" type="number" placeholder="지불비" defaultValue={0} onChange={handleInputChange}/>
+              <CFormInput 
+                  name="accumulated_cost"
+                  type="number" 
+                  placeholder="지불비" 
+                  defaultValue={0}
+                  required
+                  feedbackInvalid="지불비를 적어주세요."
+                  tooltipFeedback
+                  onChange={handleInputChange}/>
             </CInputGroup>
-          </CForm>
-        </CModalBody>
-        <CModalFooter>
-          <CButton color="success" onClick={() => postMember()}>저장</CButton>
-          <CButton color="secondary" onClick={() => {
-            props.showFunc(false);
-            setMember({});
-          }}>
-            취소
-          </CButton>
-        </CModalFooter>
+          </CModalBody>
+          <CModalFooter>
+            <CButton type="submit" color="success">저장</CButton>
+            <CButton color="secondary" onClick={() => {
+              props.showFunc(false);
+              setMember({});
+              setValidated(false)
+            }}>
+              취소
+            </CButton>
+          </CModalFooter>
+        </CForm>
       </CModal>
     </>
   )
