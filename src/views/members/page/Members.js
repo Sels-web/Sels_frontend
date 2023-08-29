@@ -13,8 +13,12 @@ import React, {useEffect, useState} from "react";
 import {getMembers} from "../../../api/member";
 import {getMembersAction} from "../../../store/memberStore"
 import {useDispatch, useSelector} from "react-redux";
+import CIcon from "@coreui/icons-react";
+import {cilChevronBottom, cilChevronTop} from "@coreui/icons";
 
 const Members = () => {
+  const [attendanceOrder, setAttendanceOrder] = useState(true)
+
   const [searchParams, setSearchParams] = useState({
     name: '',
     school_id: '',
@@ -39,6 +43,18 @@ const Members = () => {
       ...prevEvent,
       [name]: value,
     }));
+  }
+
+  const orderChange = () => {
+    let orderText = ''
+    setAttendanceOrder(!attendanceOrder)
+    if(attendanceOrder) orderText = 'attendance'
+    else orderText = '-attendance'
+    setSearchParams((prevEvent) => ({
+      ...prevEvent,
+      ['order']: orderText,
+    }));
+    initMembers();
   }
 
   return (
@@ -66,7 +82,11 @@ const Members = () => {
               <CTableRow>
                 <CTableHeaderCell scope="col"></CTableHeaderCell>
                 <CTableHeaderCell scope="col">이름</CTableHeaderCell>
-                <CTableHeaderCell scope="col">참석 횟수</CTableHeaderCell>
+                <CTableHeaderCell scope="col" style={{cursor: 'pointer'}} onClick={orderChange}>{
+                  attendanceOrder ?
+                      <p className={'m-0 p-0'}>참석 횟수<CIcon className={'ms-2'} icon={cilChevronBottom} /></p> :
+                      <p className={'m-0 p-0'}>참석 횟수<CIcon className={'ms-2'} icon={cilChevronTop} /></p>}
+                </CTableHeaderCell>
                 <CTableHeaderCell scope="col">누적 봉사 시간</CTableHeaderCell>
                 <CTableHeaderCell scope="col">벌금</CTableHeaderCell>
                 <CTableHeaderCell scope="col">성별</CTableHeaderCell>
