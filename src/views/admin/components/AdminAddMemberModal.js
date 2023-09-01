@@ -44,7 +44,7 @@ const AdminAddMemberModal = (props) => {
       AddMember(member).then(r => {
         alert('회원이 추가되었습니다.');
         props.showFunc(false);
-        props.initMembers()
+        props.initMembers(props.activePage)
         setMember({});
         setValidated(false)
       }).catch(r => {

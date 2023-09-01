@@ -32,7 +32,7 @@ const ScheduleModifyMemberModal = (props) => {
     }
     modifyAttendance(data).then(r =>{
       alert('수정되었습니다.')
-      props.initSchedule()
+      props.initSchedule(props.activePage)
       props.showFunc(false)
     }).catch(r=> {
       alert('오류가 발생하였습니다.')

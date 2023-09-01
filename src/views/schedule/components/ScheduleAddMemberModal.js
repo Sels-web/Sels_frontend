@@ -35,9 +35,10 @@ const ScheduleAddMemberModal = (props) => {
       school_id: '',
       latencyCost: '',
       order: 'name',
+      page: 1,
     }
-    getMembers(params).then(r=> {
-      setSearchMembers(r.data)
+    getMembers(params, 1).then(r=> {
+      setSearchMembers(r.data.list)
     })
   },[])
 
@@ -50,7 +51,7 @@ const ScheduleAddMemberModal = (props) => {
     } else {
       addAttendance(newUser).then(r => {
         alert('참석자가 등록되었습니다.')
-        props.initSchedule()
+        props.initSchedule(props.activePage)
         props.showFunc(false)
         setValidated(false)
       }).catch(r => {
@@ -67,9 +68,10 @@ const ScheduleAddMemberModal = (props) => {
       school_id: '',
       latencyCost: 0,
       order: 'name',
+      page: 1
     }
-    getMembers(params).then(r=> {
-      setSearchMembers(r.data)
+    getMembers(params,1).then(r=> {
+      setSearchMembers(r.data.list)
     })
   };
 

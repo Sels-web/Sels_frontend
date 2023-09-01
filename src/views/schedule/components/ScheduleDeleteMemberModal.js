@@ -16,7 +16,7 @@ const ScheduleDeleteMemberModal = (props) => {
     }
     deleteAttendance(params).then(r => {
       alert('삭제 되었습니다.');
-      props.initSchedule();
+      props.initSchedule(props.activePage);
       props.showFunc(false);
     })
   }

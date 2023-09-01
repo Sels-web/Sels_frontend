@@ -8,10 +8,11 @@ export const addAttendance = (data) => {
   })
 }
 
-export const getAttendance = (eventId) => {
+export const getAttendance = (params ,eventId, page) => {
   return Send({
     method: 'get',
-    url: `/calendar-namelist/search/${eventId}`
+    url: `/calendar-namelist/search/${eventId}/${page}`,
+    params: params,
   })
 }
 

@@ -21,6 +21,8 @@ import {getSelectedScheduleAction, modifySelectedScheduleAction} from "../../../
 import ScheduleDeleteMemberModal from "../components/ScheduleDeleteMemberModal";
 import {getSelectedAttendanceAction} from "../../../store/selectedAttendanceStore";
 import ScheduleModifyMemberModal from "../components/ScheduleModifyMemberModal";
+import '../../../scss/_pagination.scss'
+import Pagination from "react-js-pagination";
 
 const ScheduleAttendance = () => {
   const {id} = useParams()
@@ -32,10 +34,8 @@ const ScheduleAttendance = () => {
     startDate: '',
     endDate: '',
   })
-  const [formattedDate, setFormattedDate] = useState({
-    start: '',
-    end: ''
-  })
+  const [activePage, setActivePage] = useState(1)
+  const [totalPage, setTotalPage] = useState(1)
 
   const [showAddModal, setShowAddModal] = useState(false)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
@@ -43,7 +43,7 @@ const ScheduleAttendance = () => {
   const [showModifyMemberModal, setShowModifyMemberModal] = useState(false)
   const [showModifyModal, setShowModifyModal] = useState(false)
 
-  const initSchedule = () => {
+  const initSchedule = (eventPage) => {
     let name ='eventId';
     let value = id;
     let params = {
@@ -79,13 +79,20 @@ const ScheduleAttendance = () => {
     }).catch(r => {
       alert('오류가 발생하였습니다.');
     })
-    getAttendance(id).then(r => {
-      dispatch(getAttendanceAction(r.data))
+    let attendanceParams = {
+      eventId: id,
+      page: eventPage
+    }
+    console.log(attendanceParams)
+    getAttendance(attendanceParams, id, eventPage).then(r => {
+      dispatch(getAttendanceAction(r.data.list))
+      setTotalPage(r.data.page_count)
+      setActivePage(r.data.page)
     })
   }
 
   useEffect(() => {
-    initSchedule()
+    initSchedule(1)
   }, [showModifyModal]);
 
   const checkAttend = (e) => {
@@ -165,15 +172,28 @@ const ScheduleAttendance = () => {
                 )})}
             </CTableBody>
           </CTable>
+          <Pagination
+              activePage={activePage}
+              itemsCountPerPage={10}
+              totalItemsCount={10*totalPage}
+              pageRangeDisplayed={5}
+              prevPageText={"‹"}
+              nextPageText={"›"}
+              itemClassPrev={'page-prev'}
+              itemClassNext={'page-next'}
+              itemClassFirst={'page-first'}
+              itemClassLast={'page-last'}
+              onChange={initSchedule}
+          />
         </CCardBody>
         <CCardFooter className={'d-flex justify-content-end'}>
           <CButton color="secondary" className={'me-2'} onClick={() => setShowModifyModal(true)}>수정</CButton>
           <CButton color="danger" onClick={() => setShowDeleteModal(true)}>삭제</CButton>
         </CCardFooter>
       </CCard>
-      <ScheduleAddMemberModal show={showAddModal} showFunc={setShowAddModal} initSchedule={initSchedule}/>
-      <ScheduleDeleteMemberModal show={showDeleteMemberModal} showFunc={setShowDeleteMemberModal} initSchedule={initSchedule}/>
-      <ScheduleModifyMemberModal show={showModifyMemberModal} showFunc={setShowModifyMemberModal} initSchedule={initSchedule}/>
+      <ScheduleAddMemberModal show={showAddModal} showFunc={setShowAddModal} initSchedule={initSchedule} page={activePage}/>
+      <ScheduleDeleteMemberModal show={showDeleteMemberModal} showFunc={setShowDeleteMemberModal} initSchedule={initSchedule} page={activePage}/>
+      <ScheduleModifyMemberModal show={showModifyMemberModal} showFunc={setShowModifyMemberModal} initSchedule={initSchedule} page={activePage}/>
       <ScheduleDeleteModal show={showDeleteModal} showFunc={setShowDeleteModal}/>
       <ScheduleModifyModal show={showModifyModal} showFunc={setShowModifyModal}/>
     </>
