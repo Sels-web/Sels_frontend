@@ -109,7 +109,7 @@ const ScheduleAttendance = () => {
     }
     attend(attendData).then(r => {
       alert('출석 처리 되었습니다.');
-      initSchedule();
+      initSchedule(activePage);
     }).catch(r => {
       alert('오류가 발생하였습니다.');
     })

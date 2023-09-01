@@ -55,7 +55,8 @@ const ScheduleAddMemberModal = (props) => {
         props.showFunc(false)
         setValidated(false)
       }).catch(r => {
-        alert('오류가 발생하였습니다.')
+        if(r.response.status === 400) alert('이미 존재하는 참석자입니다.')
+        else alert('오류가 발생하였습니다.')
       })
     }
   };

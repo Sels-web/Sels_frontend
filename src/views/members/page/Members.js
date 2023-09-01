@@ -58,6 +58,7 @@ const Members = () => {
     if(window.confirm('정산 하시겠습니까?')) {
       calculatedMember().then(r => {
         alert('정산 되었습니다.');
+        initMembers(activePage)
       }).catch(r => {
         alert('오류가 발생하였습니다.')
       })
