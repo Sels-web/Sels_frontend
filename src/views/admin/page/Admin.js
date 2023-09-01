@@ -2,9 +2,14 @@ import {
   CButton,
   CCard,
   CCardBody,
-  CCardHeader, CForm, CFormInput, CInputGroup,
+  CCardFooter,
+  CCardHeader,
+  CForm,
+  CFormInput,
+  CInputGroup,
   CTable,
-  CTableBody, CTableDataCell,
+  CTableBody,
+  CTableDataCell,
   CTableHead,
   CTableHeaderCell,
   CTableRow
@@ -17,6 +22,8 @@ import {getMembers} from "../../../api/member";
 import {useDispatch, useSelector} from "react-redux";
 import {getMembersAction} from "../../../store/memberStore";
 import {getSelectedMemberAction} from "../../../store/selectedMemberStore";
+import Pagination from "react-js-pagination";
+import '../../../scss/_pagination.scss'
 
 const Admin = () => {
   const [addVisible, setAddVisible] = useState(false)
@@ -25,21 +32,30 @@ const Admin = () => {
 
   const [searchParams, setSearchParams] = useState({
     name: '',
-    school_id: '',
     latencyCost: '',
-    order: 'name',
   });
+  const [activePage, setActivePage] = useState(1)
+  const [totalPage, setTotalPage] = useState(1)
 
   const members = useSelector(state => state.membersStore)
   const dispatch = useDispatch()
 
-  const initMembers = async () => {
-    let memberList = await getMembers(searchParams)
-    dispatch(getMembersAction(memberList.data))
+  const initMembers = async (eventPage) => {
+    let params = {
+      name: searchParams.name,
+      school_id: '',
+      latencyCost: searchParams.latencyCost,
+      order: 'name',
+      page: eventPage
+    }
+    let memberList = await getMembers(params,eventPage)
+    dispatch(getMembersAction(memberList.data.list))
+    setTotalPage(memberList.data.page_count)
+    setActivePage(memberList.data.page)
   }
 
   useEffect(() => {
-    initMembers()
+    initMembers(1)
   }, [])
 
   const inputChange = (event) => {
@@ -60,7 +76,7 @@ const Admin = () => {
           <CCardBody>
             <CForm onSubmit={(e) => {
               e.preventDefault()
-              initMembers()
+              initMembers(1)
             }}>
               <div className={'d-flex justify-content-end mb-3'}>
                 <CInputGroup className="w-25">
@@ -123,6 +139,17 @@ const Admin = () => {
               </CTableBody>
             </CTable>
           </CCardBody>
+          <CCardFooter>
+            <Pagination
+              activePage={activePage}
+              itemsCountPerPage={10}
+              totalItemsCount={10*totalPage}
+              pageRangeDisplayed={5}
+              prevPageText={"‹"}
+              nextPageText={"›"}
+              onChange={initMembers}
+            />
+          </CCardFooter>
         </CCard>
         <AdminAddMemberModal show={addVisible} showFunc={setAddVisible} initMembers={initMembers}/>
         <AdminDeleteMemberModal show={removeVisible} showFunc={setRemoveVisible} initMembers={initMembers}/>

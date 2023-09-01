@@ -1,10 +1,10 @@
 import Send from './Send.js'
 
-export const getMembers = (params) => {
+export const getMembers = (params,pages) => {
   return Send({
     method: 'get',
     params: params,
-    url: `/namelist/search`,
+    url: `/namelist/search/${pages}`,
   })
 }
 
