@@ -24,6 +24,13 @@ export const patchMember = (data) => {
   })
 }
 
+export const calculatedMember = () => {
+  return Send({
+    method: 'patch',
+    url: '/calculation',
+  })
+}
+
 export const deleteMember = (params) => {
   return Send({
     method: 'delete',

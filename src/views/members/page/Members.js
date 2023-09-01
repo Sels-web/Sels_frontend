@@ -10,7 +10,7 @@ import {
   CTableRow
 } from "@coreui/react";
 import React, {useEffect, useState} from "react";
-import {getMembers} from "../../../api/member";
+import {calculatedMember, getMembers} from "../../../api/member";
 import {getMembersAction} from "../../../store/memberStore"
 import {useDispatch, useSelector} from "react-redux";
 import Pagination from "react-js-pagination";
@@ -54,12 +54,20 @@ const Members = () => {
     }));
   }
 
+  const calculatedFunc = () => {
+    if(window.confirm('정산 하시겠습니까?')) {
+      calculatedMember().then(r => {
+        alert('정산 되었습니다.');
+      })
+    }
+  }
+
   return (
     <>
       <CCard>
         <CCardHeader className={'d-flex justify-content-between'}>
           <h3>셀스 명단</h3>
-          <CButton color="warning">정산하기</CButton>
+          <CButton color="warning" onClick={calculatedFunc}>정산하기</CButton>
         </CCardHeader>
         <CCardBody>
           <CForm onSubmit={(e) => {
