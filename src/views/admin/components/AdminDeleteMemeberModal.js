@@ -13,7 +13,7 @@ const AdminDeleteMemberModal = (props) => {
     }
     deleteMember(params).then(r => {
       alert('삭제 되었습니다.');
-      props.initMembers(props.activePage);
+      props.initMembers();
       props.showFunc(false);
     }).catch(r => {
       alert('오류가 발생하였습니다.')

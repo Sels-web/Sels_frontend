@@ -51,7 +51,7 @@ const ScheduleAddMemberModal = (props) => {
     } else {
       addAttendance(newUser).then(r => {
         alert('참석자가 등록되었습니다.')
-        props.initSchedule(props.activePage)
+        props.initSchedule()
         props.showFunc(false)
         setValidated(false)
       }).catch(r => {

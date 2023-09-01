@@ -154,9 +154,9 @@ const Admin = () => {
             />
           </CCardFooter>
         </CCard>
-        <AdminAddMemberModal show={addVisible} showFunc={setAddVisible} initMembers={initMembers} page={activePage}/>
-        <AdminDeleteMemberModal show={removeVisible} showFunc={setRemoveVisible} initMembers={initMembers} page={activePage}/>
-        <AdminModifyMemberModal show={modifyVisible} showFunc={setModifyVisible} initMembers={initMembers} page={activePage}/>
+        <AdminAddMemberModal show={addVisible} showFunc={setAddVisible} initMembers={() => initMembers(activePage)}/>
+        <AdminDeleteMemberModal show={removeVisible} showFunc={setRemoveVisible} initMembers={() => initMembers(activePage)}/>
+        <AdminModifyMemberModal show={modifyVisible} showFunc={setModifyVisible} initMembers={() => initMembers(activePage)}/>
       </>
   );
 }

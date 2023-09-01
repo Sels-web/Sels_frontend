@@ -34,7 +34,7 @@ const AdminModifyMemberModal = (props) => {
       patchMember(selectedMember).then(r => {
         alert('수정 되었습니다.')
         props.showFunc(false)
-        props.initMembers(props.activePage)
+        props.initMembers()
         setValidated(false)
         dispatch(getSelectedMemberAction({}))
       }).catch(r => {

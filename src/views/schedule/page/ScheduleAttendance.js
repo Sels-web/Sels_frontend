@@ -83,7 +83,6 @@ const ScheduleAttendance = () => {
       eventId: id,
       page: eventPage
     }
-    console.log(attendanceParams)
     getAttendance(attendanceParams, id, eventPage).then(r => {
       dispatch(getAttendanceAction(r.data.list))
       setTotalPage(r.data.page_count)
@@ -140,7 +139,7 @@ const ScheduleAttendance = () => {
             <CTableBody>
               {attendances.map((attendance, idx) => {
                 return (
-                  attendance.length !== 0 ? (
+                  attendances[0].school_id !== null ? (
                     <CTableRow align={'middle'} key={idx}>
                       <CTableHeaderCell className={'text-center'}>{idx + 1}</CTableHeaderCell>
                       <CTableDataCell className={'text-center'}>{attendance.name}</CTableDataCell>
@@ -165,8 +164,8 @@ const ScheduleAttendance = () => {
                       </CTableDataCell>
                     </CTableRow>
                   ) : (
-                    <CTableRow align={'middle'}>
-                      <CTableDataCell className={'text-center'} colSpan={7}>검색결과가 없습니다!</CTableDataCell>
+                    <CTableRow align={'middle'} key={idx}>
+                      <CTableDataCell className={'text-center'} colSpan={7}>참석자가 없습니다!</CTableDataCell>
                     </CTableRow>
                   )
                 )})}
@@ -191,9 +190,9 @@ const ScheduleAttendance = () => {
           <CButton color="danger" onClick={() => setShowDeleteModal(true)}>삭제</CButton>
         </CCardFooter>
       </CCard>
-      <ScheduleAddMemberModal show={showAddModal} showFunc={setShowAddModal} initSchedule={initSchedule} page={activePage}/>
-      <ScheduleDeleteMemberModal show={showDeleteMemberModal} showFunc={setShowDeleteMemberModal} initSchedule={initSchedule} page={activePage}/>
-      <ScheduleModifyMemberModal show={showModifyMemberModal} showFunc={setShowModifyMemberModal} initSchedule={initSchedule} page={activePage}/>
+      <ScheduleAddMemberModal show={showAddModal} showFunc={setShowAddModal} initSchedule={() =>initSchedule(activePage)}/>
+      <ScheduleDeleteMemberModal show={showDeleteMemberModal} showFunc={setShowDeleteMemberModal} initSchedule={() =>initSchedule(activePage)}/>
+      <ScheduleModifyMemberModal show={showModifyMemberModal} showFunc={setShowModifyMemberModal} initSchedule={() =>initSchedule(activePage)}/>
       <ScheduleDeleteModal show={showDeleteModal} showFunc={setShowDeleteModal}/>
       <ScheduleModifyModal show={showModifyModal} showFunc={setShowModifyModal}/>
     </>
