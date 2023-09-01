@@ -2,7 +2,7 @@
   "name": "sels",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://127.0.0.1:8000/",
+  "proxy": "http://127.0.0.1:8000/api",
   "dependencies": {
     "@coreui/coreui": "^5.0.0-alpha.1",
     "@coreui/icons": "^3.0.1",
@@ -26,6 +26,7 @@
     "body-parser": "^1.20.2",
     "bootstrap": "^5.3.1",
     "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
     "express": "^4.18.2",
     "moment-timezone": "^0.5.43",
     "mysql": "^2.18.1",
@@ -55,7 +56,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "env-cmd -f .env.production react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
