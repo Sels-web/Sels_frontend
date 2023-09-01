@@ -32,6 +32,7 @@ const Admin = () => {
 
   const [searchParams, setSearchParams] = useState({
     name: '',
+    school_id: '',
     latencyCost: '',
   });
   const [activePage, setActivePage] = useState(1)
@@ -43,7 +44,7 @@ const Admin = () => {
   const initMembers = async (eventPage) => {
     let params = {
       name: searchParams.name,
-      school_id: '',
+      school_id: searchParams.school_id,
       latencyCost: searchParams.latencyCost,
       order: 'name',
       page: eventPage
@@ -147,6 +148,8 @@ const Admin = () => {
               pageRangeDisplayed={5}
               prevPageText={"‹"}
               nextPageText={"›"}
+              itemClassPrev={'page-prev'}
+              itemClassNext={'page-next'}
               onChange={initMembers}
             />
           </CCardFooter>
