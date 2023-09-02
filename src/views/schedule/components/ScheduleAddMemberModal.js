@@ -38,6 +38,7 @@ const ScheduleAddMemberModal = (props) => {
       page: 1,
     }
     getMembers(params, 1).then(r=> {
+      console.log(r.data)
       setSearchMembers(r.data.list)
     })
   },[])
@@ -63,16 +64,17 @@ const ScheduleAddMemberModal = (props) => {
 
   const handleInputChange = (event) => {
     const { value } = event.target;
+    console.log(typeof value)
 
     let params = {
-      name: value,
+      name: value === null ? '' : value,
       school_id: '',
       latencyCost: 0,
       order: 'name',
       page: 1
     }
     getMembers(params,1).then(r=> {
-      setSearchMembers(r.data.list)
+      setSearchMembers(r.data.list === undefined ? [] : r.data.list)
     })
   };
 
@@ -111,7 +113,7 @@ const ScheduleAddMemberModal = (props) => {
                 tooltipFeedback
                 onChange={selectChange}>
               <option value="">참석자를 선택해 주세요.</option>
-              {searchMembers.map((searchMember,idx) => {
+              {searchMembers.length !== 0 && searchMembers.map((searchMember,idx) => {
                 return(
                   <option value={searchMember.school_id} key={idx}>{searchMember.name} {searchMember.school_id} {searchMember.department}</option>
                 )
