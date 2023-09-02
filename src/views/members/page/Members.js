@@ -44,7 +44,6 @@ const Members = () => {
 
   useEffect(() => {
     initMembers(1)
-
   }, [])
 
   const inputChange = (event) => {

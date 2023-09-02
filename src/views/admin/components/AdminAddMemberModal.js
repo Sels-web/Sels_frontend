@@ -45,14 +45,12 @@ const AdminAddMemberModal = (props) => {
         alert('회원이 추가되었습니다.');
         props.showFunc(false);
         props.initMembers()
-        setMember({});
         setValidated(false)
       }).catch(r => {
         if(r.response.status === 400) alert('이미 존재하는 학번입니다.')
         else alert('오류가 발생하였습니다.')
       })
     }
-
   }
 
   return (
@@ -62,7 +60,6 @@ const AdminAddMemberModal = (props) => {
               onClose={() => {
                 props.showFunc(false)
                 setValidated(false)
-                setMember({});
               }
       }>
         <CForm validated={validated} noValidate onSubmit={postMember}>
@@ -181,7 +178,6 @@ const AdminAddMemberModal = (props) => {
             <CButton color="secondary" onClick={() => {
               props.showFunc(false);
               setValidated(false)
-              setMember({});
             }}>
               취소
             </CButton>
