@@ -1,22 +1,14 @@
 import {CButton, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle} from "@coreui/react";
-import {deleteMember, getSearchMember} from "../../../api/member";
-import {useSelector} from "react-redux";
+import {deleteSchedule} from "../../../api/schedule";
+import {useNavigate, useParams} from "react-router-dom";
 
-const AdminDeleteMemberModal = (props) => {
-  const selectedMember = useSelector(state => state.selectedMemberStore)
-
-  const deleteMemberFunc = () => {
-    let params = {
-      range: 'one',
-      name: selectedMember.name,
-      school_id: selectedMember.school_id
-    }
-    deleteMember(params).then(r => {
+const ScheduleDeleteModal = (props) => {
+  const {id} = useParams()
+  const navigate = useNavigate();
+  const deleteScheduleFunc = () => {
+    deleteSchedule(id).then(r => {
       alert('삭제 되었습니다.');
-      props.initMembers();
-      props.showFunc(false);
-    }).catch(r => {
-      alert('오류가 발생하였습니다.')
+      navigate('/schedule');
     })
   }
 
@@ -24,7 +16,7 @@ const AdminDeleteMemberModal = (props) => {
       <>
         <CModal alignment="center" visible={props.show} onClose={() => props.showFunc(false)}>
           <CModalHeader onClose={() => props.showFunc(false)}>
-            <CModalTitle>회원 삭제</CModalTitle>
+            <CModalTitle>일정 삭제</CModalTitle>
           </CModalHeader>
           <CModalBody>
             <p className={'m-0'}>
@@ -33,7 +25,7 @@ const AdminDeleteMemberModal = (props) => {
             </p>
           </CModalBody>
           <CModalFooter>
-            <CButton color="primary" onClick={deleteMemberFunc}>예</CButton>
+            <CButton color="primary" onClick={deleteScheduleFunc}>예</CButton>
             <CButton color="secondary" onClick={() => props.showFunc(false)}>
               아니요
             </CButton>
@@ -43,4 +35,4 @@ const AdminDeleteMemberModal = (props) => {
   )
 }
 
-export default AdminDeleteMemberModal
+export default ScheduleDeleteModal

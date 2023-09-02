@@ -56,7 +56,7 @@ const BoardsAdd = () => {
             <CCol sm={10}>
               <CRow className={'m-0'}>
                 {files.map((file, idx) => {
-                  return <CFormInput type="file" id={file.name} className={idx != 0 ? 'mt-2' : ''} />
+                  return <CFormInput type="file" id={file.name} className={idx !== 0 ? 'mt-2' : ''} key={idx}/>
                 })}
               </CRow>
             </CCol>

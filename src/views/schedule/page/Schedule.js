@@ -1,136 +1,58 @@
 import React, { useState, useEffect } from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {useNavigate} from "react-router-dom";
 
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
-
-import { GithubPicker } from "react-color";
-
+import '../styles/Calendar.css'
 import moment from "moment";
 
 import {
-  CButton,
-  CModal,
-  CModalBody,
-  CModalFooter,
-  CModalHeader,
-  CModalTitle,
-  CForm,
-  CFormInput,
   CCard,
   CCardBody,
-  CCardHeader,
+  CCardHeader
 } from "@coreui/react";
 
-import ScheduleAddModal from "../components/ScheduleAddModal";
+import {getSchedules} from "../../../api/schedule";
+import {getScheduleAction} from "../../../store/scheduleStore";
+import ScheduleAddModal from '../components/ScheduleAddModal';
 
-import axios from "axios";
-
-const Dashboard = () => {
-  const [events, setEvents] = useState([]);
+const Schedule = () => {
   const [dialogVisible, setDialogVisible] = useState(false);
-  const [newEvent, setNewEvent] = useState({});
-  const [selectedEvent, setSelectedEvent] = useState(null);
-  const [scheduleVisible, setSchedulelVisible] = useState(false);
+  const [selectedObject, setSelectedObject] = useState({});
+  const dispatch = useDispatch();
+  const events = useSelector(state => state.scheduleStore)
+  const navigate = useNavigate();
+
+  const initSchedule = () => {
+    let params = {
+      range: 'all',
+      event_id: '',
+      month: '',
+    }
+    getSchedules(params).then(r => {
+      const eventsData = r.data.map((event) => ({
+        id: event.eventId,
+        title: event.title,
+        start: event.startDate,
+        end: event.endDate,
+        color: event.color,
+      }));
+      dispatch(getScheduleAction(eventsData))
+    }).catch(r => {
+      console.log(r);
+      alert('오류가 발생하였습니다.');
+    })
+  }
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8000/sels/getAllCalendar")
-      .then((response) => {
-        console.log(response.data.orders);
-        const eventsData = response.data.orders.map((event) => ({
-          id: event.eventId,
-          title: event.title,
-          start: moment(event.startDate)
-            .utcOffset(0 * 60)
-            .format("YYYY-MM-DD HH:mm:ss"),
-          end: moment(event.endDate)
-            .utcOffset(0 * 60)
-            .format("YYYY-MM-DD HH:mm:ss"),
-          color: event.color,
-          enterNames: event.enterNames,
-        }));
-        setEvents(eventsData);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    initSchedule()
   }, []);
 
   const handleDialogOpen = (arg) => {
+    setSelectedObject(arg);
     setDialogVisible(true);
-    setNewEvent({
-      id: Math.random().toString(36).substring(2, 11),
-      title: "",
-      start: moment(arg.startStr).format("YYYY-MM-DD 12:00:00"),
-      end: moment(arg.startStr).format("YYYY-MM-DD 13:00:00"),
-      color: "#fccb00", //default 노란색
-      enterNames: {},
-    });
-  };
-
-  const handleDialogClose = () => {
-    setNewEvent({});
-    setDialogVisible(false);
-  };
-
-  const handleColorChange = (color) => {
-    console.log(color.hex);
-    // setSelectedColor(color.hex);
-    setNewEvent((prevEvent) => ({
-      ...prevEvent,
-      color: color.hex,
-    }));
-  };
-
-  const handleEventClick = (arg) => {
-    setSelectedEvent({
-      id: arg.event.id,
-      title: arg.event.title,
-      start: arg.event.start,
-      end: arg.event.end,
-      color: arg.event.backgroundColor,
-      enterNames: arg.event.enterNames,
-    });
-
-    setSchedulelVisible(!scheduleVisible);
-  };
-
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setNewEvent((prevEvent) => ({
-      ...prevEvent,
-      [name]: value,
-    }));
-  };
-
-  const handleFormSubmit = (event) => {
-    event.preventDefault();
-    const New_event = {
-      eventId: newEvent.id,
-      title: newEvent.title,
-      start: newEvent.start,
-      end: newEvent.end,
-      color: newEvent.color,
-      enterNames: newEvent.enterNames,
-    };
-
-    axios
-      .post("http://localhost:8000/sels/postCalendar", New_event, {
-        headers: {
-          "Content-Type": `application/json`,
-        },
-        body: New_event,
-      })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((response) => {
-        console.log("Error!");
-      });
-    setEvents((prevEvents) => [...prevEvents, newEvent]);
-    console.log(events);
-    handleDialogClose();
   };
 
   return (
@@ -141,63 +63,24 @@ const Dashboard = () => {
         </CCardHeader>
         <CCardBody>
           <FullCalendar
-            className="react-calendar"
             plugins={[dayGridPlugin, interactionPlugin]}
             initialView="dayGridMonth"
             selectable={true}
             select={handleDialogOpen}
             events={events}
-            eventClick={handleEventClick}
+            eventClick={(arg) => navigate(`/schedule/attendance/${arg.event._def.publicId}`)}
             eventTimeFormat={{
               hour: "numeric",
               minute: "2-digit",
               hour12: false,
             }}
           />
-          <CModal
-            alignment="center"
-            visible={dialogVisible}
-            onClose={handleDialogClose}
-          >
-            <CModalHeader onClose={handleDialogClose}>
-              <CModalTitle>일정 추가</CModalTitle>
-            </CModalHeader>
-            <CModalBody>
-              <CForm onSubmit={handleFormSubmit}>
-                <CFormInput
-                  type="text"
-                  // id="exampleFormControlInput1"
-                  label="일정 제목"
-                  placeholder="일정 제목"
-                  name="title"
-                  onChange={handleInputChange}
-                  // text="Must be 8-20 characters long."
-                  // aria-describedby="exampleFormControlInputHelpInline"
-                />
-                <p>시작 시간</p>
-                <p>종료 시간</p>
-                <GithubPicker triangle="hide" onChange={handleColorChange} />
-              </CForm>
-            </CModalBody>
-            <CModalFooter>
-              <CButton type="submit" color="primary" onClick={handleFormSubmit}>
-                추가
-              </CButton>
-              <CButton color="secondary" onClick={handleDialogClose}>
-                취소
-              </CButton>
-            </CModalFooter>
-          </CModal>
         </CCardBody>
       </CCard>
-      <ScheduleAddModal
-        show={scheduleVisible}
-        showFunc={setSchedulelVisible}
-        events={events}
-        selectedEvent={selectedEvent}
-      />
+      <ScheduleAddModal show={dialogVisible} showFunc={setDialogVisible}
+                        selectObject={selectedObject} initSchedule={initSchedule}/>
     </>
   );
 };
 
-export default Dashboard;
+export default Schedule;
