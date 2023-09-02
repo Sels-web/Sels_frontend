@@ -167,13 +167,13 @@ const AdminModifyMemberModal = (props) => {
                             onChange={handleInputChange}/>
               </CInputGroup>
               <CInputGroup>
-                <CInputGroupText>지불비</CInputGroupText>
+                <CInputGroupText>누적 벌금</CInputGroupText>
                 <CFormInput name="accumulated_cost"
                             type="number"
-                            placeholder="지불비"
+                            placeholder="누적 벌금"
                             defaultValue={selectedMember.accumulated_cost}
                             required
-                            feedbackInvalid="지불비를 적어주세요."
+                            feedbackInvalid="누적 벌금을 적어주세요."
                             tooltipFeedback
                             onChange={handleInputChange}/>
               </CInputGroup>
