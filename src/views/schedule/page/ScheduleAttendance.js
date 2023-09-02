@@ -133,45 +133,48 @@ const ScheduleAttendance = () => {
                 <CTableHeaderCell scope="col">이름</CTableHeaderCell>
                 <CTableHeaderCell scope="col">학번</CTableHeaderCell>
                 <CTableHeaderCell scope="col">참석</CTableHeaderCell>
+                <CTableHeaderCell scope="col">참석 시간</CTableHeaderCell>
                 <CTableHeaderCell scope="col">기능</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableBody>
-              {attendances.map((attendance, idx) => {
+              {attendances.length !== 0 && attendances.map((attendance, idx) => {
                 return (
-                  attendances[0].school_id !== null ? (
-                    <CTableRow align={'middle'} key={idx}>
-                      <CTableHeaderCell className={'text-center'}>{idx + 1}</CTableHeaderCell>
-                      <CTableDataCell className={'text-center'}>{attendance.name}</CTableDataCell>
-                      <CTableDataCell className={'text-center'}>{attendance.school_id}</CTableDataCell>
-                      <CTableDataCell className={'text-center'}>{
-                        attendance.state === 0 ? '' :
-                        attendance.state === 1 ? <p className={'text-success m-0 p-0'}>출석</p> :
-                        attendance.state === 2 ? <p className={'text-warning m-0 p-0'}>10분 이내 지각</p> :
-                        attendance.state === 3 ? <p className={'text-warning m-0 p-0'}>10분 초과 지각</p> :
-                        attendance.state === 4 ? <p className={'text-danger m-0 p-0'}>결석</p> : ''
-                      }</CTableDataCell>
-                      <CTableDataCell className={'text-center'}>
-                        <CButton color={'success'} className={'me-2'} onClick={() => checkAttend(attendance.school_id)}>출석</CButton>
-                        <CButton color={'danger'} className={'me-2'} onClick={() => {
-                          setShowDeleteMemberModal(true)
-                          dispatch(getSelectedAttendanceAction(attendance))
-                        }}>삭제</CButton>
-                        <CButton color={'warning'} onClick={() => {
-                          setShowModifyMemberModal(true)
-                          dispatch(getSelectedAttendanceAction(attendance))
-                        }}>수정</CButton>
-                      </CTableDataCell>
-                    </CTableRow>
-                  ) : (
-                    <CTableRow align={'middle'} key={idx}>
-                      <CTableDataCell className={'text-center'} colSpan={7}>참석자가 없습니다!</CTableDataCell>
-                    </CTableRow>
-                  )
-                )})}
+                  <CTableRow align={'middle'} key={idx}>
+                    <CTableHeaderCell className={'text-center'}>{idx + 1}</CTableHeaderCell>
+                    <CTableDataCell className={'text-center'}>{attendance.name}</CTableDataCell>
+                    <CTableDataCell className={'text-center'}>{attendance.school_id}</CTableDataCell>
+                    <CTableDataCell className={'text-center'}>{
+                      attendance.state === 0 ? '' :
+                      attendance.state === 1 ? <p className={'text-success m-0 p-0'}>출석</p> :
+                      attendance.state === 2 ? <p className={'text-warning m-0 p-0'}>10분 이내 지각</p> :
+                      attendance.state === 3 ? <p className={'text-warning m-0 p-0'}>10분 초과 지각</p> :
+                      attendance.state === 4 ? <p className={'text-danger m-0 p-0'}>결석</p> : ''
+                    }</CTableDataCell>
+                    <CTableDataCell className={'text-center'}>{attendance.state === 0 ? '' : attendance.attendanceTime}</CTableDataCell>
+                    <CTableDataCell className={'text-center'}>
+                      <CButton color={'success'} className={'me-2'} onClick={() => checkAttend(attendance.school_id)}>출석</CButton>
+                      <CButton color={'danger'} className={'me-2'} onClick={() => {
+                        setShowDeleteMemberModal(true)
+                        dispatch(getSelectedAttendanceAction(attendance))
+                      }}>삭제</CButton>
+                      <CButton color={'warning'} onClick={() => {
+                        setShowModifyMemberModal(true)
+                        dispatch(getSelectedAttendanceAction(attendance))
+                      }}>수정</CButton>
+                    </CTableDataCell>
+                  </CTableRow>
+                )})
+              }
+              {attendances.length === 0 &&
+                <CTableRow align={'middle'}>
+                  <CTableDataCell className={'text-center'} colSpan={6}>참석자가 없습니다.</CTableDataCell>
+                </CTableRow>
+              }
             </CTableBody>
           </CTable>
-          <Pagination
+          {attendances.length !== 0 && totalPage >= 2 &&
+            <Pagination
               activePage={activePage}
               itemsCountPerPage={10}
               totalItemsCount={10*totalPage}
@@ -183,14 +186,15 @@ const ScheduleAttendance = () => {
               itemClassFirst={'page-first'}
               itemClassLast={'page-last'}
               onChange={initSchedule}
-          />
+            />
+          }
         </CCardBody>
         <CCardFooter className={'d-flex justify-content-end'}>
           <CButton color="secondary" className={'me-2'} onClick={() => setShowModifyModal(true)}>수정</CButton>
           <CButton color="danger" onClick={() => setShowDeleteModal(true)}>삭제</CButton>
         </CCardFooter>
       </CCard>
-      <ScheduleAddMemberModal show={showAddModal} showFunc={setShowAddModal} initSchedule={() =>initSchedule(activePage)}/>
+      <ScheduleAddMemberModal show={showAddModal} showFunc={setShowAddModal} initSchedule={() =>initSchedule(1)}/>
       <ScheduleDeleteMemberModal show={showDeleteMemberModal} showFunc={setShowDeleteMemberModal} initSchedule={() =>initSchedule(activePage)}/>
       <ScheduleModifyMemberModal show={showModifyMemberModal} showFunc={setShowModifyMemberModal} initSchedule={() =>initSchedule(activePage)}/>
       <ScheduleDeleteModal show={showDeleteModal} showFunc={setShowDeleteModal}/>

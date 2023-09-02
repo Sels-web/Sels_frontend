@@ -1,12 +1,10 @@
 import {CButton, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle} from "@coreui/react";
-import {deleteSchedule} from "../../../api/schedule";
 import {useNavigate, useParams} from "react-router-dom";
 import {deleteAttendance} from "../../../api/attendance";
 import {useSelector} from "react-redux";
 
 const ScheduleDeleteMemberModal = (props) => {
   const {id} = useParams()
-  const navigate = useNavigate();
   const selectedAttendance = useSelector(state => state.selectedAttendanceStore)
   const deleteAttendFunc = () => {
     let params = {

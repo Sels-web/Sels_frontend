@@ -105,56 +105,58 @@ const Admin = () => {
                 </CTableRow>
               </CTableHead>
               <CTableBody>
-                {members.map((member, idx) => {
+                {members.length !== 0 && members.map((member, idx) => {
                   return (
-                    members.length !== 0 ? (
-                      <CTableRow align={'middle'} key={idx}>
-                        <CTableHeaderCell className={'text-center'}>{idx + 1}</CTableHeaderCell>
-                        <CTableDataCell className={'text-center'}>{member.name}</CTableDataCell>
-                        <CTableDataCell className={'text-center'}>{member.attendance}회</CTableDataCell>
-                        <CTableDataCell className={'text-center'}>{member.accumulated_time}시간</CTableDataCell>
-                        <CTableDataCell className={'text-center'}>{member.latencyCost}원</CTableDataCell>
-                        <CTableDataCell className={'text-center'}>{member.sex}</CTableDataCell>
-                        <CTableDataCell className={'text-center'}>{member.is_admin}</CTableDataCell>
-                        <CTableDataCell className={'text-center'}>{member.school_id}</CTableDataCell>
-                        <CTableDataCell className={'text-center'}>{member.department}</CTableDataCell>
-                        <CTableDataCell className={'text-center'}>{member.penalty_cnt}</CTableDataCell>
-                        <CTableDataCell className={'text-center'}>{member.accumulated_cost}원</CTableDataCell>
-                        <CTableDataCell className={'text-center'}>
-                          <CButton color="danger" className={'me-2'} onClick={() => {
-                            setRemoveVisible(!removeVisible);
-                            dispatch(getSelectedMemberAction(member))
-                          }}>삭제</CButton>
-                          <CButton color="info" onClick={() => {
-                            setModifyVisible(!modifyVisible);
-                            dispatch(getSelectedMemberAction(member))
-                          }}>수정</CButton>
-                        </CTableDataCell>
-                      </CTableRow>
-                    ) : (
-                      <CTableRow align={'middle'}>
-                        <CTableDataCell className={'text-center'} colSpan={7}>검색결과가 없습니다!</CTableDataCell>
-                      </CTableRow>
-                    )
-                  )})}
+                    <CTableRow align={'middle'} key={idx}>
+                      <CTableHeaderCell className={'text-center'}>{idx + 1}</CTableHeaderCell>
+                      <CTableDataCell className={'text-center'}>{member.name}</CTableDataCell>
+                      <CTableDataCell className={'text-center'}>{member.attendance}회</CTableDataCell>
+                      <CTableDataCell className={'text-center'}>{member.accumulated_time}시간</CTableDataCell>
+                      <CTableDataCell className={'text-center'}>{member.latencyCost}원</CTableDataCell>
+                      <CTableDataCell className={'text-center'}>{member.sex}</CTableDataCell>
+                      <CTableDataCell className={'text-center'}>{member.is_admin}</CTableDataCell>
+                      <CTableDataCell className={'text-center'}>{member.school_id}</CTableDataCell>
+                      <CTableDataCell className={'text-center'}>{member.department}</CTableDataCell>
+                      <CTableDataCell className={'text-center'}>{member.penalty_cnt}</CTableDataCell>
+                      <CTableDataCell className={'text-center'}>{member.accumulated_cost}원</CTableDataCell>
+                      <CTableDataCell className={'text-center'}>
+                        <CButton color="danger" className={'me-2'} onClick={() => {
+                          setRemoveVisible(!removeVisible);
+                          dispatch(getSelectedMemberAction(member))
+                        }}>삭제</CButton>
+                        <CButton color="info" onClick={() => {
+                          setModifyVisible(!modifyVisible);
+                          dispatch(getSelectedMemberAction(member))
+                        }}>수정</CButton>
+                      </CTableDataCell>
+                    </CTableRow>
+                  )
+                })}
+                {members.length === 0 &&
+                  <CTableRow align={'middle'}>
+                    <CTableDataCell className={'text-center'} colSpan={12}>검색결과가 없습니다!</CTableDataCell>
+                  </CTableRow>
+                }
               </CTableBody>
             </CTable>
           </CCardBody>
-          <CCardFooter>
-            <Pagination
-              activePage={activePage}
-              itemsCountPerPage={10}
-              totalItemsCount={10*totalPage}
-              pageRangeDisplayed={5}
-              prevPageText={"‹"}
-              nextPageText={"›"}
-              itemClassPrev={'page-prev'}
-              itemClassNext={'page-next'}
-              onChange={initMembers}
-            />
-          </CCardFooter>
+          {members.length !== 0 && totalPage >= 2 &&
+            <CCardFooter>
+              <Pagination
+                activePage={activePage}
+                itemsCountPerPage={10}
+                totalItemsCount={10*totalPage}
+                pageRangeDisplayed={5}
+                prevPageText={"‹"}
+                nextPageText={"›"}
+                itemClassPrev={'page-prev'}
+                itemClassNext={'page-next'}
+                onChange={initMembers}
+              />
+            </CCardFooter>
+          }
         </CCard>
-        <AdminAddMemberModal show={addVisible} showFunc={setAddVisible} initMembers={() => initMembers(activePage)}/>
+        <AdminAddMemberModal show={addVisible} showFunc={setAddVisible} initMembers={() => initMembers(1)}/>
         <AdminDeleteMemberModal show={removeVisible} showFunc={setRemoveVisible} initMembers={() => initMembers(activePage)}/>
         <AdminModifyMemberModal show={modifyVisible} showFunc={setModifyVisible} initMembers={() => initMembers(activePage)}/>
       </>
