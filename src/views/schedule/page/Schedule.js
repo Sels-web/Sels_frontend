@@ -32,14 +32,17 @@ const Schedule = () => {
       month: '',
     }
     getSchedules(params).then(r => {
-      const eventsData = r.data.map((event) => ({
-        id: event.eventId,
-        title: event.title,
-        start: event.startDate,
-        end: event.endDate,
-        color: event.color,
-      }));
-      dispatch(getScheduleAction(eventsData))
+      if(r.data !== undefined && r.data.length !== 0) {
+        const eventsData = r.data.map((event) => ({
+          id: event.eventId,
+          title: event.title,
+          start: event.startDate,
+          end: event.endDate,
+          color: event.color,
+        }));
+        dispatch(getScheduleAction(eventsData))
+      }
+
     }).catch(r => {
       console.log(r);
       alert('오류가 발생하였습니다.');
