@@ -151,7 +151,7 @@ const ScheduleAttendance = () => {
                       attendance.state === 3 ? <p className={'text-warning m-0 p-0'}>10분 초과 지각</p> :
                       attendance.state === 4 ? <p className={'text-danger m-0 p-0'}>결석</p> : ''
                     }</CTableDataCell>
-                    <CTableDataCell className={'text-center'}>{attendance.state === 0 ? '' : attendance.attendanceTime}</CTableDataCell>
+                    <CTableDataCell className={'text-center'}>{attendance.state === 0 ? '' : attendance.time}</CTableDataCell>
                     <CTableDataCell className={'text-center'}>
                       <CButton color={'success'} className={'me-2'} onClick={() => checkAttend(attendance.school_id)}>출석</CButton>
                       <CButton color={'danger'} className={'me-2'} onClick={() => {
