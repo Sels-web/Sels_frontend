@@ -5,7 +5,7 @@ import {
   CCardFooter,
   CCardHeader,
   CForm,
-  CFormInput,
+  CFormInput, CFormSelect,
   CInputGroup,
   CTable,
   CTableBody,
@@ -34,6 +34,7 @@ const Admin = () => {
     name: '',
     school_id: '',
     latencyCost: '',
+    order: 'name',
   });
   const [activePage, setActivePage] = useState(1)
   const [totalPage, setTotalPage] = useState(1)
@@ -46,7 +47,7 @@ const Admin = () => {
       name: searchParams.name,
       school_id: searchParams.school_id,
       latencyCost: searchParams.latencyCost,
-      order: 'name',
+      order: searchParams.order,
       page: eventPage
     }
     let memberList = await getMembers(params,eventPage)
@@ -80,9 +81,15 @@ const Admin = () => {
               initMembers(1)
             }}>
               <div className={'d-flex justify-content-end mb-3'}>
-                <CInputGroup className="w-25">
+                <CInputGroup className="w-50">
                   <CFormInput name='name' placeholder="이름검색" onChange={inputChange}/>
                   <CFormInput type="number" name='latencyCost' placeholder="벌금" onChange={inputChange}/>
+                  <CFormSelect  onChange={inputChange} name="order">
+                    <option value="name">이름 오름차순</option>
+                    <option value="-name">이름 내림차순</option>
+                    <option value="attendance">참석 횟수 오름차순</option>
+                    <option value="-attendance">참석 횟수 내림차순</option>
+                  </CFormSelect>
                   <CButton type="submit" color="warning" variant="outline">검색</CButton>
                 </CInputGroup>
               </div>
