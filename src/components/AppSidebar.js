@@ -16,11 +16,12 @@ import Logo from "../assets/images/logo.jpg";
 
 // sidebar nav config
 import navigation from "../_nav";
+import sidebarStore, {setSidebarState} from "../store/sidebarStore";
 
 const AppSidebar = () => {
   const dispatch = useDispatch();
-  const unfoldable = useSelector((state) => state.sidebarUnfoldable);
-  const sidebarShow = useSelector((state) => state.sidebarShow);
+  const unfoldable = useSelector(state => state.sidebarStore.sidebarUnfoldable);
+  const sidebarShow = useSelector(state => state.sidebarStore.sidebarShow);
 
   return (
     <CSidebar
@@ -28,7 +29,7 @@ const AppSidebar = () => {
       unfoldable={unfoldable}
       visible={sidebarShow}
       onVisibleChange={(visible) => {
-        dispatch({ type: "set", sidebarShow: visible });
+        dispatch(setSidebarState({ type: "set", sidebarShow: visible }));
       }}
     >
       <CSidebarBrand className="d-none d-md-flex" to="/">
@@ -48,7 +49,7 @@ const AppSidebar = () => {
       <CSidebarToggler
         className="d-none d-lg-flex"
         onClick={() =>
-          dispatch({ type: "set", sidebarUnfoldable: !unfoldable })
+          dispatch(setSidebarState({ type: "set", sidebarUnfoldable: !unfoldable }))
         }
       />
     </CSidebar>

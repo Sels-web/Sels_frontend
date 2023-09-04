@@ -2,6 +2,7 @@ import {createSlice} from "@reduxjs/toolkit";
 
 const initialState = {
   sidebarShow: true,
+  sidebarUnfoldable: false,
 }
 
 const changeState = createSlice({
@@ -9,11 +10,12 @@ const changeState = createSlice({
   initialState: initialState,
   reducers: {
     setSidebarState: (state, action) => {
-      switch (action.type) {
+      console.log(action.payload)
+      switch (action.payload.type) {
         case 'set':
-          return { ...state}
+          return { ...action.payload}
         default:
-          return state
+          return action.payload
       }
     },
   },
@@ -27,5 +29,6 @@ const changeState = createSlice({
 //       return state
 //   }
 // }
+export const { setSidebarState } = changeState.actions
 
 export default changeState.reducer
